@@ -1,0 +1,18 @@
+%ul#top-nav{:class => current_view}
+  %li.settings
+    = link_to "#{t'settings'}"
+  %li.stuff
+    = link_to "#{t'stuff'}", :controller => :users, :action => :index
+  %li.payments
+    = link_to "#{t'payments'}", :controller => :payments, :action => :index
+  %li.clients
+    = link_to "#{t'clients'}", :controller => :companies, :action => :index, :category => "clients"      
+  %li.suppliers
+    = link_to "#{t'suppliers'}", :controller => :companies, :action => :index, :category => "suppliers"
+  %li.products
+    = link_to "#{t'products'}", :controller => :products, :action => :index            
+  %li.supplies
+    = link_to "#{t'supplies'}", :controller => :supplies, :action => :index      
+  %li.payment-conditions
+    = link_to "#{t'payment_conditions'}", :controller => :payment_conditions, :action => :index      
+

@@ -1,0 +1,11 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header
+  = link_to "#{t'payment.add'}", {:controller => :payments, :action => :new}, :class => "button"
+    
+  - if search ==  true
+    .search.clearfix
+      .icon
+        = "⚲ "
+      %input.input{:placeholder => "#{t'payment.search'}" }

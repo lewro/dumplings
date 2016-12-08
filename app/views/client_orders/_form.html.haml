@@ -1,0 +1,108 @@
+.page-content.clearfix  
+  #client-order
+    = form_for(@client_order) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+      = f.hidden_field :status, :value => 1
+
+      .half-page.left
+        .content       
+          .row.clearfix
+            .half        
+              %label
+                = t"client.title"
+                              
+              - unless @invoice_number  
+                = clients_select(f, @clients)
+              - else
+                .input-holder
+                  = @client.name                  
+            .half.last
+              %label
+                = t"orders.status"
+              - status = @client_order.status
+              = client_order_status_select(f, status)
+          .row.clearfix
+            .half
+              %label
+                = t"client.reference"                   
+                = f.text_field :reference_id
+            .half.las    
+              %label
+                = t"orders.exp_delivery_date"
+              - unless @invoice_number                  
+                = f.text_field :expected_delivery
+              - else
+                .input-holder
+                  = @client_order.expected_delivery    
+
+          .row.clearfix  
+            .half.ui-selectmenu-button
+              %label
+                = t"orders.distribution_date"
+              = f.text_field :distribution, :class => "datepicker"
+              %span.ui-icon.ui-icon-triangle-1-s          
+            .half.ui-selectmenu-button.last
+              %label
+                = t"orders.order_confirmation_date"
+              = f.text_field :order_confirmation, :class => "datepicker"
+              %span.ui-icon.ui-icon-triangle-1-s
+
+
+          - unless remove == true   
+            = render :partial => '/client_orders/client_order_products_form', :locals => { :f => f }
+          - else
+            = render :partial => '/client_orders/client_order_products_list', :locals => { :f => f }
+
+        
+      .half-page.scroll
+        .content
+          - if remove == true
+            .clearfix
+              = render :partial => '/client_orders/actions', :locals => { :f => f } 
+          .row.clearfix
+            .half
+              %label
+                = t"orders.sum"
+              .big#total-order-sum
+                = f.text_field :sum, :placeholder => 0
+            .half
+                         
+                      
+          - if @offer_id
+            = render :partial => '/client_orders/offer', :locals => { :f => f }              
+
+          .row.clearfix
+            %label          
+              = t"payment_conditions"
+              - unless @client_order.payment_condition.nil?
+                = payment_conditions_select(f, @payment_conditions, @client_order.payment_condition)   
+              - else
+                = payment_conditions_select(f, @payment_conditions)
+                                                   
+          .row.clearfix
+            %label
+              = t"delivery_terms"
+              = f.text_area :delivery_terms, :cols => 1, :rows => 2
+
+          .row.clearfix
+            %label
+              = t"notes"              
+              = f.text_area :note, :cols => 1, :rows => 2
+        
+
+      .action-cover.clearfix
+        = f.submit action, :class => "button"
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @client_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"          
+
+        - else
+          = link_to "#{t'actions.cancel'}",  @client_order, :class => "button remove"      
+
+
+
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/client_order_products/form'
+                  
+                              

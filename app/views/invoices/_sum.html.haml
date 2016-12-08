@@ -1,0 +1,11 @@
+.row.clearfix  
+  .half            
+    %label
+      = t"invoice.invoice_amount" 
+    .input-holder.big
+      = @invoice.sum
+  .half                                
+    %label
+      = t'invoice.proforma'
+    .input-holder.big
+      = @proforma.sum

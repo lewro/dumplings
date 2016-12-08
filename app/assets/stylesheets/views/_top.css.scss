@@ -1,0 +1,26 @@
+/**
+  * File          Top
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines helper classes
+ **/
+ 
+@import "globals/colours";
+@import "globals/mixins";
+@import "globals/sizes";
+
+
+.top {
+  height: 90px;
+  padding: 30px;  
+  background: $theme-1;
+}
+
+.logo {
+  float: left;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: $theme-3;
+}

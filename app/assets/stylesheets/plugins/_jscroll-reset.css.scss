@@ -1,0 +1,33 @@
+/**
+  * File          jScroll Reset
+  * Application   Little factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Adjusting the jScroll default styles
+ **/
+
+@import "globals/colours";
+
+.jspVerticalBar {
+  width: 5px;
+  display: none;
+}
+
+.jspTrack {
+  background: $primary-color !important;
+}
+
+.drop-down {
+  .jspTrack {
+    background: $primary-color !important;
+  }
+}
+
+.jspDrag {
+  background: $primary-color !important;
+}
+
+.jspScrollable:hover {
+  .jspVerticalBar {
+    display: block;
+  }
+}

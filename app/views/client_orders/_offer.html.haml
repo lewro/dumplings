@@ -1,0 +1,10 @@
+.row.clearfix        
+  .half
+    %label
+      = t"offer.title"  
+    .input-holder
+      = @offer_id
+      = f.hidden_field :offer_id, :value => @offer_id                
+    
+  .half
+    = link_to "#{t'offer.title'} →", {:controller => :offers, :action => :edit, :id => @offer_id}, :class => "link-button float-right"

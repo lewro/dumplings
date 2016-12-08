@@ -1,0 +1,31 @@
+/**
+  * File          Page Content
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines helper classes
+ **/
+ 
+ @import "globals/colours";
+ @import "globals/mixins";
+ @import "globals/sizes";
+ 
+.content {
+  padding: 30px;
+}
+ 
+.half-page {
+  border-bottom: 1px solid $grey-light1;
+  
+  &.left {
+    border-right: 1px solid $grey-light1;  
+  }
+}
+
+.row {
+  border-bottom: 1px solid $grey-light1;
+  margin-bottom: 30px;
+  &.last {
+    border-bottom: none;
+    margin: 0;
+  }
+}

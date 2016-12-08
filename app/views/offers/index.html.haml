@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'offers'}
+= render :partial => "offers/top", :locals => { :header => "#{t'offers'}" , :search => true }
+= render :partial => 'offers/list'

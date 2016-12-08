@@ -1,0 +1,18 @@
+%label.spacer-large            
+  = t"products"
+
+.row   
+  - if @client_order_products.size > 0
+    = render :partial => '/client_order_products/list_headers'
+    - @client_order_products.each do |cop|
+      = render :partial => '/client_order_products/list', :locals => { :cop => cop }
+  - else
+    .no-data
+      = t"no_data"
+      
+
+#hiden-form-cover
+.row.clearfix.last
+  #add-new-client-order-product-edit.circle-button.large
+    = "+"                                                    
+      

@@ -1,0 +1,12 @@
+.page-content.clearfix
+  .content
+    %table
+      = render :partial => 'payment_conditions/list_headers'
+      - @payment_conditions.each do |pc|
+        %tr.data{"data-stock-id" => "#{pc.id}", "data-link" => "/payment_conditions/#{pc.id}/edit"}     
+          %td
+            = pc.id
+          %td
+            = pc.name
+          %td
+            = pc.text

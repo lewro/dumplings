@@ -1,0 +1,39 @@
+.page-content.clearfix
+  .content
+    %table
+      = render :partial => 'client_orders/list_header'
+
+      - unless @client_orders.nil? || @client_orders.size == 0
+        - @client_orders.each do |order|
+          %tr.data{"data-order-id" => "#{order.order_id}", "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/client_orders/#{order.order_id}/edit", "data-status-progress" => "#{t'status.in_progress'}", "data-status-closed" => "#{t'status.closed'}" }    
+            %td
+              = order.order_id
+            %td
+              = order.company_name
+            %td.currency
+              = number_to_currency(order.order_sum, :unit => "")
+            %td
+              = order.order_expected_delivery
+            %td.distribution_date
+              - unless order.order_distribution.nil?
+                = display_date(order.order_distribution)
+            %td
+              %span.status
+                = status(order.order_status)
+            %td
+              - unless order.reference_id.nil?
+                = order.reference_id
+            %td          
+              %span
+                - if order.order_status == 1
+                  .link-button.float-right.mark-client-order-as-in-progress
+                    = t'status.in_progress'
+                    
+              - if order.order_distribution.nil?        
+                .link-button.float-right.mark-client-order-as-distributed
+                  = t'orders.mark_as_distributed'
+          
+      - else
+      .input-holder
+        =  t'no_data'
+          

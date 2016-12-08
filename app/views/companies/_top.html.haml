@@ -1,0 +1,20 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header
+    
+  - if search ==  true
+
+    - if @category == "clients"
+      = link_to "#{t'client.add'}", {:controller => :companies, :action => :new, :category => @category}, :class => "button"
+    - else  
+      = link_to "#{t'supplier.add'}", {:controller => :companies, :action => :new, :category => @category}, :class => "button"
+
+    .search.clearfix
+      .icon
+        = "⚲ "
+        
+      - if header == "clients"  
+        %input.input{:placeholder => "#{t'client.search'}" }
+      - else
+        %input.input{:placeholder => "#{t'supplier.search'}" }      

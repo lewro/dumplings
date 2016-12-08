@@ -1,0 +1,23 @@
+%tr
+  %th
+    = t'id'          
+  %th
+    = t'company.title'
+  %th
+    = t'address.street'    
+    %th
+      = t'address.street_number'
+  %th
+    = t'address.zipcode'    
+  %th
+    = t'address.city'    
+  - if @category == "clients"       
+    %th
+      = t'sales_representative.title'
+  - else
+    %th
+      = t'contact_person'  
+  %th
+    = t'orders.title'
+  %th
+    = t'status.title'

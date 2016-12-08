@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'products'}
+= render :partial => 'products/top', :locals => { :header => "#{t'product.title'}" }
+= render :partial => 'products/form', :locals => { :action =>  "#{t'actions.save'}", :remove => false }

@@ -1,0 +1,15 @@
+= f.fields_for :invoiceproducts do |invoiceproduct|
+  #invoice-products                
+    %label.spacer-large
+      = t"products"
+
+    = render :partial => '/invoices/invoice_products_list_headers'
+
+    - if @order_products
+      = render :partial => '/invoices/invoice_product_form_from_order', :locals => { :invoiceproduct => invoiceproduct }              
+    - else 
+      = render :partial => '/invoices/invoice_product_form', :locals => { :invoiceproduct => invoiceproduct }
+
+  .clearfix.spacer-large
+    #add-new-invoice-product.circle-button.large
+      = "+"

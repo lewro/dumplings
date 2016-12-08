@@ -1,0 +1,17 @@
+%label.spacer-large            
+  = t"products"
+.row
+  - if @offer_products.size > 0
+    = render :partial => '/offer_products/list_headers'
+    - @offer_products.each do |op|
+      = render :partial => '/offer_products/list', :locals => { :op => op }
+  - else
+    .no-data
+      = t"no_data"
+  
+
+- unless @order_number      
+  #hiden-form-cover
+  .row.clearfix.last
+    #add-new-offer-product-edit.circle-button.large
+      = "+"

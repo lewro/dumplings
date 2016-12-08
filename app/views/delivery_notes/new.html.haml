@@ -1,0 +1,5 @@
+= render :partial => 'generic/top', :locals => { :current_view => 'delivery-notes' }
+= render :partial => 'delivery_notes/top', :locals => { :header => "#{t'delivery_note.add'}" , :search => true }
+= render :partial => 'delivery_notes/form', :locals => { :action =>  "#{t'actions.create'}", :remove => false }
+
+		

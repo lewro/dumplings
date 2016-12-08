@@ -1,0 +1,10 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header
+  - unless current_view == 'proforma-invoices'
+    = link_to "#{t'invoice.add'}", {:controller => :invoices, :action => :new}, :class => "button"  
+  .search.clearfix
+    .icon
+      = "⚲ "
+    %input.input{:placeholder => "#{t'invoice.search'}" }

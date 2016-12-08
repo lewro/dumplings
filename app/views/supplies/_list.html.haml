@@ -1,0 +1,10 @@
+.page-content.clearfix
+  .content
+    %table
+      = render :partial => 'supplies/list_headers'
+      - @supplies.each do |supply|
+        %tr.data{"data-stock-id" => "#{supply.id}", "data-link" => "/supplies/#{supply.id}/edit"}     
+          %td
+            = supply.id
+          %td
+            = supply.name

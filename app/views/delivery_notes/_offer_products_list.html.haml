@@ -1,0 +1,7 @@
+%label.spacer-large            
+  = t"products"
+.row
+  - if @.size > 0
+    = render :partial => '/delivery_note_products/list_headers'
+    - @delivery_note_products.each do |op|
+      = render :partial => '/delivery_note_products/list', :locals => { :op => op }

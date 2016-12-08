@@ -1,0 +1,19 @@
+.clearfix.product{ "data-product-id" => ip.product_id }
+  .third
+    .input-holder
+      = ip.name
+  .fifth.packages-quantity
+    .input-holder      
+      = ip.packages_quantity      
+  .fifth
+    .input-holder      
+      = ip.packages_size
+      = " " 
+      = unit(ip.unit)     
+  .fifth.package-price
+    .input-holder      
+      = ip.package_price
+  
+  .small-button-column
+    .circle-button.small.remove-invoice-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
+      = "x"

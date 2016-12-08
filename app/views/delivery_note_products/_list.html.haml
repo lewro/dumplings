@@ -1,0 +1,19 @@
+.clearfix.product{ "data-product-id" => dnp.product_id }
+  .third
+    .input-holder
+      = dnp.name
+  .fifth.packages-quantity
+    .input-holder      
+      = dnp.packages_quantity      
+  .fifth
+    .input-holder      
+      = dnp.packages_size
+      = " " 
+      = unit(dnp.unit)     
+  .fifth.package-price
+    .input-holder      
+      = dnp.package_price
+  
+  .small-button-column
+    .circle-button.small.remove-delivery-note-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
+      = "x"

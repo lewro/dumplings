@@ -1,0 +1,30 @@
+.page-content.clearfix  
+  #offer
+    = form_for(@payment_condition) do  |f|
+      
+      = f.hidden_field :user_id, :value => current_user.id
+      
+      .half-page.left
+        .content               
+          .row.clearfix
+            %label
+              = t'product.name'
+            = f.text_field :name, "data-required" => "true"              
+            
+          .row.clearfix
+            %label
+              = t"payment_condition.text"
+            = f.text_area :text, :cols => 1, :rows => 2          
+    
+
+      .action-cover.clearfix
+        = f.submit action, :class => "button"
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @payment_condition,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"                   
+        - else
+          = link_to "#{t'actions.cancel'}",  @payment_condition, :class => "button remove"      
+           
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/offer_products/form'                  

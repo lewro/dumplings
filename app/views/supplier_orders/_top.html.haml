@@ -1,0 +1,9 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header  
+  = link_to "#{t'orders.new'}", {:controller => :supplier_orders, :action => :new }, :class => "button"
+  .search.clearfix
+    .icon
+      = "⚲ "
+    %input.input{:placeholder => "#{t'orders.search'}" }

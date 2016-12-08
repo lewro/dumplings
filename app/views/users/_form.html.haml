@@ -1,0 +1,56 @@
+.page-content.clearfix  
+  = form_for(@user) do  |f|      
+    .half-page.left
+      .content
+        .row.clearfix
+          .half      
+            %label
+              = t"user.first_name"
+            = f.text_field :first_name, "data-required" => "true"  
+          .half
+            %label
+              = t"user.last_name"
+            = f.text_field :last_name, "data-required" => "true"  
+      
+        - unless remove == true
+          .row.clearfix          
+            %label
+              = t"password"
+            = f.text_field :password, "data-required" => "true"  
+
+          
+        .row.clearfix          
+          %label
+            = t"user.email"
+            
+          - if remove == true
+            .input-holder
+              = @user.email
+          - else
+            = f.text_field :email, "data-required" => "true"            
+          
+
+    .half-page
+      .content
+        .row.clearfix
+          %label
+            = t"user.category"
+          - category = @user.category
+          = stuff_category_select(f, category)
+        
+        .row.clearfix
+          %label
+            = t"note"
+          = f.text_area :note, :cols => 1, :rows => 3          
+
+    .clearfix.action-cover
+      = f.submit action, :class => "button"
+      - if remove == true      
+        = link_to "#{t'actions.remove'}",  @user,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+        
+      - else
+        = link_to "#{t'actions.cancel'}",  @user, :class => "button remove"      
+        
+
+
+

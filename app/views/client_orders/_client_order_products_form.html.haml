@@ -1,0 +1,15 @@
+= f.fields_for :clientorderproducts do |clientorderproduct|
+  #client-order-products                
+    %label.spacer-large
+      = t"products"
+
+    = render :partial => '/client_orders/client_order_products_list_headers'
+
+    - if @offer_products
+      = render :partial => '/client_orders/client_order_product_form_from_offer', :locals => { :clientorderproduct => clientorderproduct }              
+    - else 
+      = render :partial => '/client_orders/client_order_product_form', :locals => { :clientorderproduct => clientorderproduct }
+
+  .clearfix.spacer-large
+    #add-new-client-order-product.circle-button.large
+      = "+"

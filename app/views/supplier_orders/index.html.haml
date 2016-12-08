@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'supplier-orders'}
+= render :partial => 'supplier_orders/top', :locals => { :header => "#{t'orders.supplier_orders'}" }
+= render :partial => 'supplier_orders/list'

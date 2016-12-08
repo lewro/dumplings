@@ -1,0 +1,188 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  dashboard: "Dashbaord"
+  clients: "Clients"
+  suppliers: "Suppliers"
+  client_orders: "Client orders"
+  supplier_orders: "Supplier orders"
+  invoices: "Invoices"
+  proforma_invoices: "Proforma invoices"
+  payments: "Payments"
+  products: "Products"  
+  stuff: "Stuff"
+  sales: "Sales"
+  invoiced: "Invoiced"
+  supplies: "Supplies"  
+  id: "Id"
+  notes: "Notes"
+  order: "Order"
+  password: "Password"
+  settings: "Settings"
+  offers: "Offers"
+  pieces: "pieces"
+  contact_person: "Contact person"
+  payment_conditions: "Payment conditions"
+  delivery_notes: "Delivery notes"
+  no_data: "No data"
+
+
+  client:
+    title: "Client"
+    add: "Add new client"
+    search: "Search for a client"
+    new: "New client"
+    registration_number: "Registration number"
+    var_number: "VAT number" 
+    reference: "Client reference"
+    
+  supplier:
+    title: "Supplier"
+    add: "Add new supplier"
+    search: "Search for a supplier"
+    new: "New supplier"
+    registration_number: "Registration number"
+    var_number: "VAT number"    
+        
+  company: 
+    title: "Company"
+    
+  address:
+    street: "Street"
+    street_number: "Street number"
+    zipcode: "Zipcode"
+    city: "City"
+    
+  sales_representative:
+    title: "Sales representative"
+    
+  orders:
+    title: "Orders"
+    client_orders: "Client orders"
+    client_order: "Client order"
+    supplier_orders: "Supplier orders"    
+    new: "Create new order"
+    search: "Search for an order"
+    sum: "Sum"
+    currency: "Currency"
+    exp_delivery_date: "Expected Delivery"
+    distribution_date: "Distribution Date"
+    delivery_date: "Delivery date"
+    packages_count: "Packages"
+    package_size: "Package size"
+    package_price: "Package price"
+    status: "Status"
+    mark_as_distributed: "Distributed Today"
+    mark_as_delivered: "Delivered Today"
+    progress: "Progress"
+    total_price: "Total price"
+    order_confirmation_date: "Order Confirmation Date"
+    
+  product:
+    title: "Product"
+    name: "Name"
+    add: "Add new product"
+    search: "Search products"
+    
+  supply:
+    title: "Supply"
+    add: "Add new supply"
+    search: "Search supplies"
+    
+  invoice:
+    number: "Invoice number"
+    title: "Invoice"
+    add: "Add new invoice"
+    search: "Search invoices"
+    due_date: "Due date"
+    paid_date: "Paid date" 
+    mark_as_paid: "Paid Fully Today"   
+    just_now: "Just now"
+    invoice_amount: "Invoice amount"
+    balance: "Balance"
+    proforma: "Pro forma invoice"
+    taxable_date: "Date of Taxable Supply"
+    issue_date: "Issue date"
+
+  delivery_note:
+    title: "Delivery note"
+
+  payment:
+    title: "Payment"
+    add: "Add new payment"
+    add_partial_payment: "Add partial payment"
+    search: "Search payments"
+
+  actions:
+    title: "Actions" 
+    save: "Save"
+    remove: "Remove"
+    create: "Create"
+    confirm: "Are you sure?"
+    cancel: "Cancel"
+    
+  status:
+    title: "Status"
+    open: "Open"
+    in_progress: "In progress"
+    closed: "Closed"
+    active: "Active"
+    inactive: "Inactive"
+    order_sent: "Order sent"
+    in_stock: "In stock"
+    received: "Received"
+    out_of_stock: "Out of stock"
+
+  user:
+    title: "User"
+    add: "Add new user"
+    search: "Search for an user"    
+    first_name: "First name"
+    last_name: "Last nam"
+    email: "Email"
+    category: "Category"    
+    
+  category:
+    sales_representant: "Sales representant"
+    factory_worker: "Factory worker"
+    admin: "Admin"
+    delivery: "Delivery"
+    management: "Management"
+
+  offer:
+    title: "Offer"
+    add: "Create new offer"
+    search: "Search for an offer"
+    issue_date: "Issue date"
+
+  delivery_note:
+    title: "Delivery note"
+    add: "Create new delivery note"
+    search: "Search for a note"
+    
+  stock:
+    title: "Stock"
+    search: "Search stock"    
+    percent_in_stock: "Percent in stock"
+    zero_stock: "Setting stock to 0% will remove the stock item. Are you sure?"    
+
+  payment_condition:
+    title: "Payment condition"
+    text: "Text"
+    add: "Add payment condition"
+
+  errors:
+    email_exists : "Email has been already registered with another account"
+    password_length: "Password length needs to be at least 6 characters long"
+    companies_exist: "The person can't be removed. There are clients assigned to this sales rep."
+
+  unit:
+    title: "units"
+    pieces: "pieces"
+    kg: "kilos"    
+    m: "meters"
+    cm: "centimeters"
+    mm: "milimeters"
+    l: "liters"
+    

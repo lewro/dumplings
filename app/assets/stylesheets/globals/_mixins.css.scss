@@ -1,0 +1,52 @@
+/**
+  * File          Mixins
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines application methods
+ **/
+ 
+@mixin circle() {
+  @include rounded_corner(999px);
+}
+
+@mixin rounded_corner($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin drop_shadow($left, $top, $blur, $colour) {
+  -moz-box-shadow: $left $top $blur $colour;
+  -webkit-box-shadow: $left $top $blur $colour;
+  box-shadow: $left $top $blur $colour;
+}
+
+@mixin box_sizing() {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin scroll(){
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin ellipse() {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+@mixin opacity_transition() {
+  transition: opacity .50s ease-in-out;
+  -moz-transition: opacity .50s ease-in-out;
+  -webkit-transition: opacity .50s ease-in-out  
+}

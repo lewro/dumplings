@@ -1,0 +1,8 @@
+- if @category == "clients"
+  - header = "#{t'client.new'}"
+- else
+  - header = "#{t'supplier.new'}"
+  
+= render :partial => 'generic/top', :locals => { :current_view => @category }
+= render :partial => "companies/top", :locals => { :header => header, :search => false }
+= render :partial => "companies/form", :locals => { :action =>  "#{t'actions.create'}", :remove => false }

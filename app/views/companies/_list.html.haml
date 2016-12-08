@@ -1,0 +1,30 @@
+.page-content.clearfix
+  .content
+    %table
+      = render :partial => "companies/list_headers"
+      - @companies.each do |company|
+        %tr.data{"data-link" => "/companies/#{company.id}/edit?category=#{@category}"}
+          %td
+            = company.id
+          %td
+            = company.name
+          %td
+            = company.street
+          %td
+            = company.street_number          
+          %td
+            = company.city
+          %td
+            = company.zip_code               
+          - if @category == "clients"   
+            %td
+              = company.first_name
+              = " "
+              = company.last_name
+          - else
+            %td
+              = company.contact_person
+          %td
+            = company.orders     
+          %td
+            = status(company.status)

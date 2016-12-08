@@ -1,0 +1,21 @@
+.page-content.clearfix  
+  = form_for(@supply) do  |f|  
+    = f.hidden_field :user_id, :value => current_user.id    
+
+    .half-page.left
+      .content
+        %label
+          = t"supply.title"
+        = f.text_field :name, "data-required" => "true"  
+    .half-page
+      .content    
+
+
+    .clearfix.action-cover
+      = f.submit action, :class => "button"
+      - if remove == true      
+        = link_to "#{t'actions.remove'}",  @supply,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+
+      - else
+        = link_to "#{t'actions.cancel'}",  @supply, :class => "button remove"      
+      

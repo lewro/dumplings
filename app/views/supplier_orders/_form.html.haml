@@ -1,0 +1,85 @@
+.page-content.clearfix  
+  #supplier-order
+    = form_for(@supplier_order) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+      = f.hidden_field :status, :value => 1
+    
+      .half-page.left
+        .content       
+          .row.clearfix
+            .half        
+              %label
+                = t"supplier.title"
+              - unless @order_disabled
+                = suppliers_select(f, @suppliers)
+              - else
+                .input-holder
+                  = @supplier.name
+            .half.last
+              %label
+                = t"orders.status"
+              - status = @supplier_order.status
+              = supplier_order_status_select(f, status)
+
+
+          .row.clearfix
+            %label
+              = t"contact_person"
+            - unless @order_disabled
+              = f.text_field :contact_person
+            - else
+              .input-holder
+                = @supplier_order.contact_person
+              
+          .row.clearfix
+            .half.ui-selectmenu-button       
+              %label
+                = t"orders.exp_delivery_date"
+              = f.text_field :expected_delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }                           
+              %span.ui-icon.ui-icon-triangle-1-s
+            .half.ui-selectmenu-button.last       
+              %label
+                = t"orders.delivery_date"
+              = f.text_field :delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' 
+              %span.ui-icon.ui-icon-triangle-1-s
+
+
+          - unless remove == true   
+            = render :partial => '/supplier_orders/supplier_order_products_form', :locals => { :f => f }
+          - else
+            = render :partial => '/supplier_orders/supplier_order_products_list', :locals => { :f => f }
+
+        
+      .half-page.scroll
+        .content  
+          .row.clearfix
+            .half
+              %label
+                = t"orders.sum"
+              - unless @order_disabled
+                .big#total-order-sum
+                  = f.text_field :sum, :placeholder => 0
+              - else
+                .input-holder.big
+                  = @supplier_order.sum
+                       
+          .row.clearfix.last
+            %label
+              = t"notes"
+            - unless @order_disabled
+              = f.text_area :note, :cols => 1, :rows => 3
+            - else
+              .input-holder
+                = @supplier_order.note
+      .action-cover.clearfix
+        = f.submit action, :class => "button"
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @supplier_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"          
+        - else
+          = link_to "#{t'actions.cancel'}",  @supplier_order, :class => "button remove"      
+
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/supplier_order_products/form'
+        

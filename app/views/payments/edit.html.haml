@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'payments'}
+= render :partial => "payments/top", :locals => { :header => "#{t'payment.title'} #{@payment.id}" , :search => false }
+= render :partial => "payments/form", :locals => { :action =>  "#{t'actions.save'}", :remove => true }

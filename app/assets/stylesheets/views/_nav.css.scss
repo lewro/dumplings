@@ -1,0 +1,70 @@
+/**
+  * File          Nav
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines helper classes
+ **/
+ 
+@import "globals/colours";
+@import "globals/mixins";
+@import "globals/sizes";
+
+nav, 
+#top-nav {
+
+  ul {
+    margin: 80px 0 0 0;
+    padding: 0;
+  }
+  
+  li {
+    float: left;
+    list-style: none;
+    margin: 0 20px 0 0;
+    font-weight: 100;
+    cursor: pointer;
+    color: $primary-color;   
+    font-size: $font-small;
+    text-transform: uppercase;
+    a {
+      color: $primary-color;
+      &:hover {
+        color: $accent-color;
+      }      
+    }
+  } 
+}
+
+#top-nav {
+  float: right;
+  margin: 0;
+  li {
+    float: right;  
+    margin: 0 0 0 20px;      
+    a {
+      opacity: .6;         
+      &:hover {
+        opacity: 1;                 
+      }
+    } 
+  }
+}
+
+// active state 
+.clients .clients a,
+.client-orders .client-orders a,
+.supplier-orders .supplier-orders a,
+.payment-conditions .payment-conditions a,
+.delivery-notes .delivery-notes a,
+.proforma-invoices .proforma-invoices a,
+.products .products a,
+.supplies .supplies a,
+.invoices .invoices a,
+.payments .payments a,
+.offers .offers a,
+.suppliers .suppliers a,
+.stock .stock a,
+.stuff .stuff a {      
+  color: $accent-color !important;
+  opacity: 1 !important;
+}

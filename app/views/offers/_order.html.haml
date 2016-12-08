@@ -1,0 +1,11 @@
+.row.clearfix
+  .half
+    %label
+      = t"orders.sum"
+
+    - unless @order_number
+      .big#total-offer-sum
+        = f.text_field :sum, :placeholder => 0
+    - else
+      .input-holder.big
+        = @offer.sum

@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'client-orders'}
+= render :partial => 'client_orders/top', :locals => { :header => "#{t'order'} #{@id}" , :search => false }
+= render :partial => 'client_orders/form', :locals => { :action =>  "#{t'actions.save'}", :remove => true }

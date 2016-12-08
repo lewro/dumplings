@@ -1,0 +1,22 @@
+%nav
+  %ul{:class => current_view}
+    %li.dashboard
+      = t'dashboard'
+    %li.offers    
+      = link_to "#{t'offers'}", :controller => :offers, :action => :index
+    %li.client-orders    
+      = link_to "#{t'client_orders'}", :controller => :client_orders, :action => :index
+    %li.delivery-notes 
+      = link_to "#{t'delivery_notes'}", :controller => :delivery_notes, :action => :index    
+    %li.proforma-invoices
+      = link_to "#{t'proforma_invoices'}", :controller => :invoices, :action => :index, :proforma => true
+    %li.invoices
+      = link_to "#{t'invoices'}", :controller => :invoices, :action => :index                  
+      
+    %li
+      = "//"
+          
+    %li.supplier-orders
+      = link_to "#{t'supplier_orders'}", :controller => :supplier_orders, :action => :index      
+    %li.stock
+      = link_to "#{t'stock.title'}", :controller => :stocks, :action => :index            

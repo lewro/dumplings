@@ -1,0 +1,10 @@
+- if @invoice.proforma 
+  - current_view = 'proforma-invoices'	 
+  - header = "#{t'invoice.proforma'} #{@invoice.id}"
+- else
+  - current_view = 'invoices'	 
+  - header = "#{t'invoice.title'} #{@invoice.id}"
+
+= render :partial => 'generic/top', :locals => {:current_view => current_view}
+= render :partial => "invoices/top", :locals => { :header => header , :search => false,  :current_view =>  current_view }
+= render :partial => "invoices/form", :locals => { :action =>  "#{t'actions.save'}", :remove => true, :current_view => current_view}

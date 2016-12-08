@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'supplier-orders'}
+= render :partial => 'supplier_orders/top', :locals => { :header => "#{t'orders.new'}", :search => true }
+= render :partial => 'supplier_orders/form', :locals => { :action =>  "#{t'actions.create'}", :remove => false }

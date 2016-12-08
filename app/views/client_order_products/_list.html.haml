@@ -1,0 +1,20 @@
+.clearfix.product{ "data-product-id" => cop.product_id }
+  .third
+    .input-holder
+      = cop.name
+  .fifth.packages-quantity
+    .input-holder      
+      = cop.packages_quantity       
+  .fifth
+    .input-holder      
+      = cop.packages_size
+      = " "
+      = unit(cop.packages_unit)
+  .fifth.package-price
+    .input-holder      
+      = cop.package_price
+
+  - unless @invoice_number      
+    .small-button-column
+      .circle-button.small.remove-client-order-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
+        = "x"

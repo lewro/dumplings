@@ -1,0 +1,89 @@
+.page-content.clearfix
+  #invoice
+    = form_for(@invoice) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+      = f.hidden_field :proforma, :value => @invoice.proforma   
+      - unless @order.nil?      
+        = f.hidden_field :order_id, :value => @order.id  
+      
+      .half-page.left
+        .content
+          .row.clearfix
+            %label
+              = t"client.title"
+            = clients_select(f, @clients)
+          
+          .row.clearfix
+            %label
+              = t"client.reference"      
+              = f.text_field :reference_id
+
+          .row.clearfix
+            .half.ui-selectmenu-button
+              %label
+                = t"invoice.due_date"      
+                = f.text_field :due_date, :class => "datepicker", "data-required" => "true"   
+                %span.ui-icon.ui-icon-triangle-1-s 
+            .half.ui-selectmenu-button.last
+              %label
+                = t"invoice.paid_date"      
+                = f.text_field :paid_date, :class => "datepicker"
+                %span.ui-icon.ui-icon-triangle-1-s
+
+          .row.clearfix
+            .half.ui-selectmenu-button
+              %label
+                = t"invoice.issue_date"      
+                = f.text_field :issue_date, :class => "datepicker", "data-required" => "true"   
+                %span.ui-icon.ui-icon-triangle-1-s 
+            .half.ui-selectmenu-button.last
+              %label
+                = t"invoice.taxable_date"      
+                = f.text_field :taxable_supply_date, :class => "datepicker", "data-required" => "true"   
+                %span.ui-icon.ui-icon-triangle-1-s                                                                                                      
+
+          - unless remove == true   
+            = render :partial => '/invoices/invoice_products_form', :locals => { :f => f }          
+          - else
+            = render :partial => '/invoices/invoice_products_list', :locals => { :f => f }                      
+                              
+                      
+      .half-page.scroll
+        .content           
+          = render :partial => "invoices/actions"
+                  
+          = render :partial => "invoices/sum", :locals => { :current_view => current_view }
+          
+          .row.clearfix
+            %label          
+              = t"payment_conditions"
+              - unless @invoice.payment_condition.nil?
+                = payment_conditions_select(f, @payment_conditions, @invoice.payment_condition)   
+              - else
+                = payment_conditions_select(f, @payment_conditions)
+                                                   
+          .row.clearfix
+            %label
+              = t"delivery_terms"
+              = f.text_area :delivery_terms, :cols => 1, :rows => 2
+
+          .row.clearfix
+            %label
+              = t"notes"
+            = f.text_area :note, :cols => 1, :rows => 2
+
+          - if remove == true
+            = render :partial => "invoices/payments"            
+                    
+      .clearfix.action-cover
+        = f.submit action, :class => "button"
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @invoice,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+
+        - else
+          = link_to "#{t'actions.cancel'}",  @invoice, :class => "button remove"      
+
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/invoice_products/form'

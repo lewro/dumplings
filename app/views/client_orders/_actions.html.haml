@@ -1,0 +1,15 @@
+.button-cover.clearfix
+  - if @invoice_number
+    = link_to "#{t'invoice.title'} →", {:controller => :invoices, :action => :edit, :id => @invoice_number}, :class => "link-button float-right"
+  - else
+    = link_to "+ #{t'invoice.title'}", {:controller => :invoices, :action => :new, :id => @client_order.id}, :class => "link-button float-right"
+
+  - if @proforma_invoice_number
+    = link_to "#{t'invoice.proforma'} →", {:controller => :invoices, :action => :edit, :id => @proforma_invoice_number, :proforma => true}, :class => "link-button float-right"
+  - else
+    = link_to "+ #{t'invoice.proforma'}", {:controller => :invoices, :action => :new, :id => @client_order.id, :proforma => true}, :class => "link-button float-right"
+
+  - if @delivery_note_number
+    = link_to "#{t'delivery_note.title'} →", {:controller => :delivery_notes, :action => :edit, :id => @delivery_note_number}, :class => "link-button float-right"
+  - else
+    = link_to "+ #{t'delivery_note.title'}", {:controller => :delivery_notes, :action => :new, :id => @client_order.id}, :class => "link-button float-right"

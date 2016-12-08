@@ -1,0 +1,105 @@
+.page-content.clearfix
+  = form_for(@client) do  |f|
+      
+    - if @category == 'clients'
+      - @category =  'client'
+    - if @category == 'suppliers'
+      - @category =  'supplier'      
+
+    = f.hidden_field :category, :value => @category     
+    = f.hidden_field :user_id, :value => current_user.id
+
+    .half-page.left
+      .content       
+        .row.clearfix
+          %label
+            - if @category == "client"
+              = t"client.title"
+            - else
+              = t"supplier.title" 
+          = f.text_field :name, "data-required" => "true"
+        .row.clearfix
+          .thwo-thirds  
+            %label
+              = t"client.registration_number"
+            = f.text_field :registration_number, "data-required" => "true"     
+          .third
+            %label
+              = t"client.vat_number"
+            = f.text_field :vat_number        
+        .row.clearfix
+          .thwo-thirds        
+            %label
+              = t"address.street"
+            = f.text_field :street, "data-required" => "true"
+          .third
+            %label
+              = t"address.street_number"
+            = f.text_field :street_number, "data-required" => "true"
+        .row.clearfix.last
+          .thwo-thirds
+            %label
+              = t"address.city"
+            = f.text_field :city, "data-required" => "true"
+          .third
+            %label
+              = t"address.zipcode"
+            = f.text_field :zip_code, "data-required" => "true"
+
+    .half-page
+      .content  
+        - if remove == true  && @category == 'client'
+          .row.clearfix
+            .half
+              %label
+                = t"orders.title"
+              .big
+                = @client.orders
+            .half
+              %label
+                = t"invoiced"
+              .big
+                = number_to_currency(@client.sales, :unit => "")
+
+        .row.clearfix
+          .half
+
+            - if @category == "client"
+              %label
+                = t "sales_representative.title"
+              = sale_reps_select(f, @reps)
+            - else
+              %label
+                = t "contact_person"
+              = f.text_field :contact_person
+
+          .half
+            %label
+              = t"orders.status"
+            - #New company form add status
+            - if remove == false                          
+              - status = 4 #Active status
+            - else
+              - status = @client.status
+            
+            = client_status_select(f, status)
+
+        .row.clearfix.last
+          %label
+            = t"notes"
+          = f.text_area :note, :cols => 1, :rows => 3
+    
+    .clearfix.action-cover
+      = f.submit action, :class => "button"
+
+      - if remove == true 
+
+        // Company can only be removed when No orders, delivery notes, invoices, proforma invoices exist
+        
+        - if  @orders == 0 && @delivery_notes == 0 && @offers == 0 && @invoices == 0
+          = link_to "#{t'actions.remove'}",  @client,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+
+        
+      - else
+        = link_to "#{t'actions.cancel'}",  @client, :class => "button remove"      
+        

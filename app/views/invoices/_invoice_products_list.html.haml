@@ -1,0 +1,18 @@
+%label.spacer-large            
+  = t"products"
+
+.row
+  - if @invoice_products.size > 0
+    = render :partial => '/invoice_products/list_headers'
+    - @invoice_products.each do |ip|
+      = render :partial => '/invoice_products/list', :locals => { :ip => ip }      
+  - else
+    .no-data
+      = t"no_data"
+      
+
+#hiden-form-cover
+.clearfix.last
+  #add-new-invoice-product-edit.circle-button.large
+    = "+"                                                    
+      

@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'supplies'}
+= render :partial => 'payment_conditions/top', :locals => { :header => "#{t'payment_condition.title'} #{@payment_condition.id}" }
+= render :partial => 'payment_conditions/form', :locals => { :action =>  "#{t'actions.save'}", :remove => true }

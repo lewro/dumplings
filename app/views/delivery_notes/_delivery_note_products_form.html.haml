@@ -1,0 +1,15 @@
+= f.fields_for :deliverynoteproducts do |deliverynoteproduct|
+  #delivery-note-products                
+    %label.spacer-large
+      = t"products"
+
+    = render :partial => '/delivery_notes/delivery_note_products_list_headers'
+
+    - if @order_products
+      = render :partial => '/delivery_notes/delivery_note_product_form_from_order', :locals => { :deliverynoteproduct => deliverynoteproduct }              
+    - else 
+      = render :partial => '/delivery_notes/delivery_note_product_form', :locals => { :deliverynoteproduct => deliverynoteproduct }
+
+  .clearfix.spacer-large
+    #add-new-delivery-note-product.circle-button.large
+      = "+"

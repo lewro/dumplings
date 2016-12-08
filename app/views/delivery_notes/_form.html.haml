@@ -1,0 +1,72 @@
+.page-content.clearfix  
+  #delivery-note
+    = form_for(@delivery_note) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+
+      - unless @order_id. nil?
+        = f.hidden_field :order_id, :value => @order_id
+
+      .half-page.left
+        .content               
+          .row.clearfix
+            %label
+              = t"client.title"
+            = clients_select(f, @clients)            
+
+          .row.clearfix
+            .half
+              %label
+                = t"client.reference"                                   
+              = f.text_field :reference_id
+            
+            .half.ui-selectmenu-button.last
+              %label
+                = t"invoice.issue_date"      
+              = f.text_field :issue_date, :class => "datepicker", "data-required" => "true"   
+              %span.ui-icon.ui-icon-triangle-1-s                 
+
+
+          - unless remove == true   
+            = render :partial => '/delivery_notes/delivery_note_products_form', :locals => { :f => f }
+          - else
+            = render :partial => '/delivery_notes/delivery_note_products_list', :locals => { :f => f }
+
+      .half-page.scroll
+        .content    
+        
+          = render :partial => "/delivery_notes/actions"        
+             
+          .row.clearfix
+            .half
+              %label
+                = t"orders.sum"
+              .big#delivery-note-sum
+                = f.text_field :sum, :placeholder => 0
+          
+
+          .row.clearfix
+            %label          
+              = t"payment_conditions"
+              - unless @delivery_note.payment_condition.nil?
+                = payment_conditions_select(f, @payment_conditions, @delivery_note.payment_condition)   
+              - else
+                = payment_conditions_select(f, @payment_conditions)
+                                                   
+          .row.clearfix
+            %label
+              = t"notes"              
+              = f.text_area :note, :cols => 1, :rows => 2
+
+
+
+      .action-cover.clearfix
+        = f.submit action, :class => "button"
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @delivery_note,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"                   
+        - else
+          = link_to "#{t'actions.cancel'}",  @delivery_note, :class => "button remove"      
+           
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/delivery_note_products/form'          

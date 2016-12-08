@@ -1,0 +1,90 @@
+.page-content.clearfix  
+  #offer
+    = form_for(@offer) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+      .half-page.left
+        .content               
+          .row.clearfix
+            %label
+              = t"client.title"
+            - unless @order_number      
+              = clients_select(f, @clients)
+            - else
+              .input-holder
+                = @client.name
+
+          .row.clearfix
+            .half
+              %label
+                = t"client.reference"   
+              - unless @order_number                   
+                = f.text_field :reference_id
+              - else
+                .input-holder
+                  = @offer.reference_id
+
+            .half.ui-selectmenu-button.last
+              %label
+                = t"offer.issue_date"
+              - unless @order_number
+                = f.text_field :issue_date, :class => "datepicker"
+                %span.ui-icon.ui-icon-triangle-1-s
+              - else
+                .input-holder
+                  - unless @offer.issue_date.nil?
+                    = display_date(@offer.issue_date)
+        
+          - unless remove == true
+            = render :partial => '/offers/offer_products_form', :locals => { :f => f }
+          - else  
+            = render :partial => '/offers/offer_products_list'
+        
+      .half-page.scroll
+        .content  
+
+          = render :partial => '/offers/action', :locals => { :f => f, :remove => remove }
+          = render :partial => '/offers/order'
+                  
+          .row.clearfix
+            %label          
+              = t"payment_conditions"
+              
+            - if remove == true              
+              - pc = @offer.payment_condition
+          
+            - unless @order_number
+              = payment_conditions_select(f, @payment_conditions, pc)            
+            - else
+              .input-holder
+                = @payment_condition
+
+
+          .row.clearfix
+            %label
+              = t"delivery_terms"
+            - unless @order_number              
+              = f.text_area :delivery_terms, :cols => 1, :rows => 2               
+            - else
+              .input-holder            
+                = @offer.delivery_terms
+                                           
+          .row.clearfix
+            %label
+              = t"notes"
+            - unless @order_number  
+              = f.text_area :note, :cols => 1, :rows => 2
+            - else
+              .input-holder
+                = @offer.note
+
+      .action-cover.clearfix
+        = f.submit action, :class => "button"
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @offer,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"                   
+        - else
+          = link_to "#{t'actions.cancel'}",  @offer, :class => "button remove"      
+           
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/offer_products/form'                  

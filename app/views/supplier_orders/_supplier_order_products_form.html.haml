@@ -1,0 +1,10 @@
+= f.fields_for :supplierorderproducts do |supplierorderproduct|
+  #supplier-order-products                
+    %label.spacer-large
+      = t"products"
+
+    = render :partial => '/supplier_orders/supplier_order_product_form', :locals => { :supplierorderproduct => supplierorderproduct }
+
+  .clearfix.spacer-large
+    #add-new-supplier-order-product.circle-button.large
+      = "+"

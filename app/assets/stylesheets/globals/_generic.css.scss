@@ -1,0 +1,148 @@
+/**
+  * File          Geneic
+  * Application   Movies Daily
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines generic styles applied across app
+ **/
+ 
+@import "mixins";
+@import "colours";
+@import "sizes";
+@import "fonts";
+
+body {
+    font-family: $font-family2;
+    line-height: 1.5em;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+    font-family: $font-family;
+}
+
+
+*:focus {
+    outline: none;
+}
+
+// Hide Scrollbars
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+* {
+  -ms-overflow-style: none;  // IE 10+
+  overflow: -moz-scrollbars-none;  // Firefox  
+}
+
+.h-line {
+  background: $accent-color;
+  width: 70px;
+  height: 5px;
+}
+
+table {
+  width: 100%;
+  
+  th {
+    font-weight: 100;
+    font-size: $font-small;
+    text-transform: uppercase;
+    color: $theme-5;    
+    text-align: left;
+    padding: 10px 10px 20px 10px;
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  td {
+    font-size: $font-medium;
+    font-weight: 100;  
+    padding: 10px; 
+
+  }
+    
+  tr.data {
+    &:hover {
+      background: $accent-color;
+      color: $primary-color;
+      cursor: pointer;
+      td {
+        color: $primary-color !important;        
+      }
+    }
+  }
+  tr:nth-child(even) {
+      background: $grey-light3;    
+  }
+}
+
+label {
+  font-weight: 100;
+  font-size: $font-small;
+  text-transform: uppercase;
+  color: $grey-dark3;
+  text-align: left;  
+  display: block;
+}
+
+.content {
+  input[type="text"], 
+  textarea, 
+  select,
+  .ui-selectmenu-text {
+    border: none;
+    float: left;
+    width: 100%;
+    padding: 10px 0px !important;
+    box-sizing: border-box;
+    font-weight: 100;
+    color: $grey-dark1;  
+    font-size: $font-medium;
+    border-bottom: 1px solid $primary-color;
+    font-family: $font-family2;
+    
+    &:focus {
+      border-bottom: 1px solid $accent-color-secondary;
+    }   
+    
+    &:hover {
+      border-bottom: 1px solid $accent-color-secondary !important;
+    }
+  }
+  select {
+    margin: 10px 0;
+  }  
+  textarea {
+     min-height: 50px;
+  }  
+  .ui-selectmenu-button {
+    float: left;
+  }
+  
+  .ui-widget-content.slider {
+    height: 1px;
+    padding: 0px !important;
+    background: $grey-light1 !important;
+  }
+
+  .ui-slider .ui-slider-handle {
+    width: 20px !important;
+    height: 20px !important;
+    background: $accent-color-secondary !important;
+    top: -15px !important;
+    border-radius: 50px !important;
+    font-size: $font-tiny !important;
+    color: $primary-color !important;
+    padding: 6px 3px 0 3px !important;
+    line-height: 14px;
+    z-index: 100;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+}

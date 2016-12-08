@@ -1,0 +1,26 @@
+%label
+  = t"payments"
+- unless @payments.nil? || @payments.size == 0    
+  .row.clearfix
+    %table.list-headers
+      %tr
+        %th
+          = t'id'
+        %th
+          = t'invoice.paid_date'
+        %th.currency
+          = t'orders.sum'
+
+      - @payments.each do |payment|  
+        %tr.data{"data-link" => "/payments/#{payment.id}/edit"}
+          %td
+            = payment.id 
+          %td
+            = payment.paid_date
+          %td.currency
+            = number_to_currency(payment.sum, :unit => "")
+
+.clearfix.spacer-large
+  = link_to "+ #{t'invoice.mark_as_paid'}", {:controller => :invoices, :action => :mark_invoice_as_paid, :id => @invoice.id, :invoice_edit => "true"}, :class => "link-button float-right"                 
+  = link_to "+ #{t'payment.add_partial_payment'}", {:controller => :payments, :action => :new, :id => @invoice.id}, :class => "link-button float-right"          
+  
