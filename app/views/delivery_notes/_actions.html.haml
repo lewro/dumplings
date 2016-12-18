@@ -4,10 +4,7 @@
   
   - unless @invoice.nil?
     = link_to "#{t'invoice.title'} →", {:controller => :invoices, :action => :edit, :id => @invoice.id}, :class => "link-button float-right"
-  - else
-    = link_to "+ #{t'invoice.title'}", {:controller => :invoices, :action => :new, :id => @order_id}, :class => "link-button float-right"
 
   - unless @proforma.nil?
     = link_to "#{t'invoice.proforma'} →", {:controller => :invoices, :action => :edit, :id => @proforma.id, :proforma => true}, :class => "link-button float-right"
-  - else
-    = link_to "+ #{t'invoice.proforma'}", {:controller => :invoices, :action => :new, :id => @order_id, :proforma => true}, :class => "link-button float-right"
+

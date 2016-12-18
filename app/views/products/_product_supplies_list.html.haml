@@ -1,0 +1,14 @@
+.row
+  - if @product_supplies.size > 0
+    = render :partial => '/product_supplies/list_headers'
+    - @product_supplies.each do |ps|
+      = render :partial => '/product_supplies/list', :locals => { :ps => ps }      
+  - else
+    .no-data
+      = t"no_data"
+      
+#hiden-form-cover
+.clearfix.last
+  #add-new-product-supply-edit.circle-button.large
+    = "+"
+      

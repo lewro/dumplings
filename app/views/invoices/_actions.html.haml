@@ -13,4 +13,5 @@
     - unless @invoice == @invoice_link
       = link_to "#{t'invoice.title'} →", {:controller => :invoices, :action => :edit, :id => @invoice_link.id}, :class => "link-button float-right"
   - else
-    = link_to "+ #{t'invoice.title'}", {:controller => :invoices, :action => :new, :id => @client_order.id}, :class => "link-button float-right"
+    - unless @invoice
+      = link_to "+ #{t'invoice.title'}", {:controller => :invoices, :action => :new, :id => @order.id}, :class => "link-button float-right"

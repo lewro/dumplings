@@ -1,0 +1,24 @@
+= f.fields_for :productsupplies do |productsupply|
+  #product-supplies                
+    .clearfix.list-headers
+      .two-sixths
+        %label
+          = t"product.name"
+      .sixth.packages-quantity
+        %label        
+          = t"orders.packages_count"      
+      .sixth
+        %label      
+          = t"orders.package_size"
+      .sixth
+        %label      
+          = t"unit.title"      
+      .sixth.package-price
+        %label      
+          = t"orders.package_price"
+
+    = render :partial => '/products/product_supply_form', :locals => { :f => f , :productsupply => productsupply} 
+
+  .clearfix.spacer-large
+    #add-new-product-supply.circle-button.large
+      = "+"

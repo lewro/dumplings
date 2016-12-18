@@ -11,7 +11,7 @@
               = clients_select(f, @clients)
             - else
               .input-holder
-                = @client.name
+                = @client.name                
 
           .row.clearfix
             .half
@@ -43,7 +43,7 @@
         .content  
 
           = render :partial => '/offers/action', :locals => { :f => f, :remove => remove }
-          = render :partial => '/offers/order'
+          = render :partial => '/offers/order', :locals => { :f => f }
                   
           .row.clearfix
             %label          

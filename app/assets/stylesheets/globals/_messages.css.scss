@@ -1,0 +1,21 @@
+/**
+  * File          Messages
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines message classes
+ **/
+ 
+@import "colours";
+@import "mixins";
+@import "sizes";
+@import "fonts";
+
+
+.notice {
+  background: $accent-color;
+  color: $primary-color;
+  padding: 10px;
+  font-size: $font-medium;
+  text-align: center;
+  display: none;
+}

@@ -1,7 +1,7 @@
 Dumplings::Application.routes.draw do
     
   devise_for :users
-  root :to => "companies#index"
+  root :to => "client_orders#index"
     
   #Invoices
   post "invoices/mark_invoice_as_paid"
@@ -21,7 +21,8 @@ Dumplings::Application.routes.draw do
   resources :client_order_products  
   resources :supplier_orders
   resources :supplier_order_products    
-  resources :products    
+  resources :products
+  resources :product_supplies
   resources :supplies
   resources :payments
   resources :invoices

@@ -26,8 +26,7 @@ en:
   payment_conditions: "Payment conditions"
   delivery_notes: "Delivery notes"
   no_data: "No data"
-
-
+  
   client:
     title: "Client"
     add: "Add new client"
@@ -170,7 +169,7 @@ en:
   payment_condition:
     title: "Payment condition"
     text: "Text"
-    add: "Add payment condition"
+    add: "Add payment condition"  
 
   errors:
     email_exists : "Email has been already registered with another account"

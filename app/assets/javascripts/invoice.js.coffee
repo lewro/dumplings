@@ -28,6 +28,8 @@
                                                                                  
           # Update total price
           $("#invoice_sum").val totalPrice
+
+          console.log "hop"
       return
 
   markInvoiceAsPaid : () ->

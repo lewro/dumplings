@@ -10,6 +10,7 @@
 
   stock : () ->
     
+    #NOT USED AT THE MOMENT BUT SHOULD BE USED TO SET REMINDER STOCK LIMITS
     $('.slider').each () -> 
 
       $(this).slider

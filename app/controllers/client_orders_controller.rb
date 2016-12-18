@@ -23,7 +23,7 @@ class ClientOrdersController < ApplicationController
       @client_order.note                = @offer.note
       @client_order.reference_id        = @offer.reference_id
       @client_order.delivery_terms      = @offer.delivery_terms
-      @client_order.client_id            = @offer.client_id
+      @client_order.client_id           = @offer.client_id
     end
   end
 

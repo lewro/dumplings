@@ -6,8 +6,9 @@ class PaymentsController < ApplicationController
     @payment.paid_date = Time.now
 
     if params[:id]
-      @payment.invoice_id = params[:id]
-    end    
+      @invoice              = Invoice.find_by_id(params[:id])      
+      @payment.invoice_id   = @invoice.id
+    end  
   end
 
   def create

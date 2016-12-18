@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   
   def index
+    #users set in application controller
   end
 
   def edit  
@@ -14,6 +15,8 @@ class UsersController < ApplicationController
   end  
   
   def create
+    #TODO: Only admin can create users
+
     @user       = User.create(user_params)    
     @email      = params[:user][:email]
     @password   = params[:user][:password]
@@ -28,6 +31,9 @@ class UsersController < ApplicationController
       @error = @error + " & #{t 'errors.password_length'}"
     end
     
+    #Admin ID
+    @user.admin_id = current_user.id
+
     if @user.save
         redirect_to action: "index"               
     else

@@ -1,0 +1,21 @@
+/**
+  * File          Interface
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Interface generic styles applied across app
+ **/
+
+ 
+*:focus {
+    outline: none;
+}
+
+// Hide Scrollbars
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+* {
+  -ms-overflow-style: none;  // IE 10+
+  overflow: -moz-scrollbars-none;  // Firefox  
+}

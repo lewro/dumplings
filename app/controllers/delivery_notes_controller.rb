@@ -11,6 +11,7 @@ class DeliveryNotesController < ApplicationController
       @order_id                     = params[:id]
       @order                        = ClientOrder.find_by_id(@order_id)
       @order_products               = ClientOrderProduct.where(:order_id => @order_id)
+      @client                       = Company.find_by_id(@order.client_id)
       @sum                          = 0
 
       @order_products.each do |op|

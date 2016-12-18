@@ -1,0 +1,17 @@
+/**
+  * File          ICONs
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines icon classes
+ **/
+ 
+@import "colours";
+@import "mixins";
+@import "sizes";
+@import "fonts";
+
+.search .icon {  
+  -webkit-transform: rotate(45deg); 
+  -moz-transform: rotate(45deg); 
+  -o-transform: rotate(45deg);  
+}

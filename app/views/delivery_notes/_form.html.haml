@@ -10,8 +10,13 @@
         .content               
           .row.clearfix
             %label
-              = t"client.title"
-            = clients_select(f, @clients)            
+              = t"client.title" 
+            - unless @order_id. nil?
+              .input-holder
+                = @client.name
+                = f.hidden_field :client_id, :value => @client.id
+            - else
+              = clients_select(f, @clients)
 
           .row.clearfix
             .half

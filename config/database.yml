@@ -5,7 +5,7 @@ development:
   database: dumplings_development
   pool: 9
   username: root
-  password:
+  password: namor07
   timeout: 5000
   socket: /tmp/mysql.sock
 

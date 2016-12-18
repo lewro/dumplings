@@ -2,7 +2,7 @@ class CreateDeliveryNoteProducts < ActiveRecord::Migration
   def change
     create_table :delivery_note_products do |t|
       t.integer :product_id, :null => false
-      t.integer :order_id, :null => false      
+      t.integer :delivery_note_id, :null => false      
       t.integer :user_id, :null => false
 
       t.integer :packages_quantity

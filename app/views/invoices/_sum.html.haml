@@ -1,11 +1,31 @@
-.row.clearfix  
-  .half            
-    %label
-      = t"invoice.invoice_amount" 
-    .input-holder.big
-      = @invoice.sum
-  .half                                
-    %label
-      = t'invoice.proforma'
-    .input-holder.big
-      = @proforma.sum
+.row.clearfix    
+  - if @invoice.sum
+    .half            
+      %label
+        = t"invoice.invoice_amount" 
+      .input-holder.big        
+        = @invoice.sum
+        = f.hidden_field :sum, :value => @invoice.sum
+
+    - if @balance
+      - @balance_class = balance_class(@balance)
+      .half  
+        %label
+          = t"invoice.balance"         
+        .input-holder.big
+          %span{:class => @balance_class}
+            = @balance
+
+  - else
+    .big 
+      = f.text_field :sum, :value => 0
+
+
+- if @proforma  
+  - unless @invoice == @proforma
+    .row.clearfix    
+      .half                                
+        %label
+          = t'invoice.proforma'
+        .input-holder.big
+          = @proforma.sum

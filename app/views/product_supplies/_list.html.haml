@@ -1,0 +1,19 @@
+.clearfix.product{ "data-product-supply-id" => ps.product_supply_id }
+  .third
+    .input-holder
+      = ps.name
+  .fifth.packages-quantity
+    .input-holder      
+      = ps.packages_quantity      
+  .fifth
+    .input-holder      
+      = ps.packages_size
+      = " " 
+      = unit(ps.unit)     
+  .fifth.package-price
+    .input-holder      
+      = ps.package_price
+  
+  .small-button-column
+    .circle-button.small.remove-product-supply.float-right{"remove-message" => "#{t'actions.confirm'}" }
+      = "x"

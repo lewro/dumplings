@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+  class ApplicationController < ActionController::Base
   protect_from_forgery
 
 
@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_products
   before_filter :set_payment_conditions
   before_filter :set_supplies
-  before_filter :set_users  
-
+  before_filter :set_users 
   
   def set_reps
     if current_user
@@ -47,7 +46,7 @@ class ApplicationController < ActionController::Base
       @supplies =  Supply.joins("JOIN users ON users.id = supplies.user_id").where("users.admin_id = #{current_user.admin_id }")
     end
   end
-  
+
   def set_users
     if current_user
       @users = User.where("users.admin_id =#{current_user.admin_id }") 

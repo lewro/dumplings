@@ -4,12 +4,26 @@
 
     .half-page.left
       .content
-        %label
-          = t"product.title"
-        = f.text_field :name, "data-required" => "true"  
-    .half-page
-      .content    
+        .row.clearfix
+          %label
+            = t"product.title"
+          = f.text_field :name, "data-required" => "true" 
+        .row.clearfix
+          %label
+            = t"notes"
+          = f.text_area :note, "data-required" => "true" 
 
+
+
+    .half-page
+      .content
+        %label
+          = t"supplies"
+        
+        - if @product_supplies
+          = render :partial => 'products/product_supplies_list', :locals => { :f => f } 
+        - else
+          = render :partial => 'products/product_supplies_form', :locals => { :f => f } 
 
     .clearfix.action-cover
       = f.submit action, :class => "button"
@@ -17,5 +31,9 @@
         = link_to "#{t'actions.remove'}",  @product,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
 
       - else
-        = link_to "#{t'actions.cancel'}",  @product, :class => "button remove"      
+        = link_to "#{t'actions.cancel'}",  @product, :class => "button remove"   
+
+  - if remove == true
+    .hide.hidden-form      
+      = render :partial => '/product_supplies/form'           
 

@@ -24,7 +24,7 @@ class DeliveryNoteProductsController < ApplicationController
   end
 
   def delivery_note_product_params
-     params.require(:delivery_note_product).permit(:order_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit, :delivery_note_id)
+     params.require(:delivery_note_product).permit(:product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit, :delivery_note_id)
   end
   
 end

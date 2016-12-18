@@ -14,14 +14,6 @@
   display: none;
 }
 
-.float-right {
-  float: right;
-}
-
-.float-left {
-  float: left;
-}
-
 .spacer-small {
   margin-top: 10px;
 }
@@ -34,95 +26,10 @@
   margin-top: 20px;
 }
 
-.button {
-  @include rounded_corner(3px);
-  padding: 10px 15px;
+.h-line {
   background: $accent-color;
-  color: $primary-color;
-  text-transform: uppercase;
-  font-weight: 100;
-  display: inline-block;
-  font-size: $font-small;
-  cursor: pointer;
-  border: none;
-  &:hover {
-    background: $accent-color-secondary;
-  }
-}
-
-.button.remove {
-  background: $grey-light3;
-  color: $grey-light1;
-  margin-left: 10px;  
-  a {
-    color: $grey-light1;    
-  }
-  &:hover {
-    background: $primary-color;
-    color: $grey-dark3;
-    a {
-      color: $grey-dark3;      
-    }
-  }
-}
-
-.link-button {
-  color: $accent-color;
-  text-transform: uppercase;
-  font-weight: 100;
-  display: inline-block;
-  font-size: $font-small;
-  cursor: pointer;  
-  @include rounded_corner(100px);
-  padding: 5px 15px;
-  background: $primary-color;
-  border: 1px solid $grey-light2;  
-  &:hover {
-    color: $primary-color;
-    background: $accent-color-secondary; 
-    border: 1px solid $accent-color-secondary;      
-  }  
-  &.float-right {
-    margin-left: 20px;
-  }
-}
-
-tr .link-button {
-  position: relative;
-  z-index: 99;
-  right: 10px;
-  top: 0px;
-}
-
-.circle-button {
-  @include rounded_corner(100px);  
-  color: $primary-color;
-  background: $accent-color;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    background: $accent-color-secondary;
-  }
-  &.large {
-    width: 50px;
-    height: 50px;
-    font-size: 25px;
-    line-height: 50px;    
-  }
-  &.small {
-    width: 25px;
-    height: 25px;
-    font-size: 11px;
-    line-height: 25px; 
-    margin-top: 5px;  
-    font-weight: 100;       
-  }
-}
-
-.search .icon {  
-  -webkit-transform: rotate(45deg); 
-  -moz-transform: rotate(45deg); 
-  -o-transform: rotate(45deg);  
+  width: 70px;
+  height: 5px;
 }
 
 .content .big, 
@@ -132,62 +39,18 @@ tr .link-button {
   font-size: $font-stats;
   font-family: $font-family3;  
   margin: 0;
+  line-height: 1.5em;
   &.input-holder {
     color: $grey-dark3;   
   }
 }    
 
-.input-holder {  
-  border: none;
-  float: left;
-  width: 100%;
-  padding: 10px 0px !important;
-  box-sizing: border-box;
-  font-weight: 100;
-  color: $grey-dark3;
-  font-size: $font-medium;
-  border-bottom: 1px solid $primary-color;
-  font-family: $font-family2;  
-}
-
-.button-cover {
-  margin: -10px 0 20px 0;
-}
-
-.validation_error {
-  border-bottom: 1px solid red !important;
-}
-
-.list-headers {
-  padding: 30px 0 10px 0;
-  label {
-    color: $theme-5;          
-  }
-}
-
-.action-cover {
-  float: left;
-  width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
-  background: $grey-light3;
-  border-bottom: 1px solid $grey-light1;
-}
-
 .active {
   color: $accent-color-secondary;
 }
+
 .pasive {
   color: $accent-color;
-}
-
-.notice {
-  background: $accent-color;
-  color: $primary-color;
-  padding: 10px;
-  font-size: $font-medium;
-  text-align: center;
-  display: none;
 }
 
 .currency {

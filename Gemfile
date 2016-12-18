@@ -20,7 +20,7 @@ gem 'puma'
 gem 'devise', '4.0.0'
 
 # Database
-gem 'mysql2'
+gem 'mysql2', '0.4.3'
 
 # Asset template engines
 gem 'haml'

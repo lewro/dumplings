@@ -14,6 +14,7 @@ class InvoicesController < ApplicationController
     @invoice                  = Invoice.new 
     @invoice_product          = InvoiceProduct.new 
   
+    #Client order ID available
     if params[:id]
       @order                   = ClientOrder.find_by_id(params[:id])
       @order_products          = ClientOrderProduct.where(:order_id => @order.id)
@@ -32,15 +33,16 @@ class InvoicesController < ApplicationController
       @invoice.delivery_terms       = @order.delivery_terms
       @invoice.client_id            = @order.client_id
       
-      if @invoice.sum.nil?
-        @invoice.sum = 0
-      end
-
       #Proforma already exists, creating invoice
       @proforma                     = Invoice.where(:order_id => @order.id, :proforma => 1).first
 
       #Delivery note exists
       @delivery_note                = DeliveryNote.where(:order_id => @order.id).first
+
+
+      if @invoice.sum.nil?
+        @invoice.sum = 0
+      end
 
       #GET THIS FROM USER SETTINGS!!
       if @order.distribution        
@@ -52,7 +54,7 @@ class InvoicesController < ApplicationController
         
     #Creating profrma
     if params[:proforma]
-      @invoice.proforma = true
+      @invoice.proforma = true      
     end
   end
   
@@ -103,7 +105,11 @@ class InvoicesController < ApplicationController
 
     @invoice.update(invoice_params)
     
-    redirect_to action: "index"    
+    if @invoice.proforma 
+      redirect_to action: "index", :proforma => true
+    else
+      redirect_to action: "index"
+    end
   end
 
   def edit  
@@ -115,15 +121,14 @@ class InvoicesController < ApplicationController
     @invoice_products     = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, products.name AS name")
     @invoice_product      = InvoiceProduct.new
     @delivery_note        = DeliveryNote.where(:order_id => @invoice.order_id).first
+    @order                = ClientOrder.find_by_id(@invoice.order_id)
 
     @proforma             = Invoice.where(:order_id => @invoice.order_id, :proforma => 1).first        
     @invoice_link         = Invoice.where(:order_id => @invoice.order_id, :proforma => 0).first 
     
     
-    
     #TODO: Make this clean!
-    #There could be Proforma & Invoice Payments and the balance needs to handle it
-               
+    #There could be Proforma & Invoice Payments and the balance needs to handle it           
 
   end
   
