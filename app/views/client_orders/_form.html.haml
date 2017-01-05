@@ -10,8 +10,8 @@
             .half        
               %label
                 = t"client.title"
-                              
-              - unless @invoice_number  
+
+              - unless @disabled
                 = clients_select(f, @clients)
               - else
                 .input-holder
@@ -19,17 +19,31 @@
             .half.last
               %label
                 = t"orders.status"
+
               - status = @client_order.status
-              = client_order_status_select(f, status)
+
+              - unless @disabled
+                = client_order_status_select(f, status)
+              - else
+                .input-holder
+                  = @client_order.status
+
           .row.clearfix
             .half
               %label
-                = t"client.reference"                   
-                = f.text_field :reference_id
+                = t"client.reference"
+                
+                - unless @disabled                                 
+                  = f.text_field :reference_id
+                - else
+                  .input-holder
+                    = @client_order.reference_id
+
             .half.las    
               %label
                 = t"orders.exp_delivery_date"
-              - unless @invoice_number                  
+              
+              - unless @disabled                  
                 = f.text_field :expected_delivery
               - else
                 .input-holder
@@ -39,14 +53,24 @@
             .half.ui-selectmenu-button
               %label
                 = t"orders.distribution_date"
-              = f.text_field :distribution, :class => "datepicker"
-              %span.ui-icon.ui-icon-triangle-1-s          
+
+              - unless @disabled
+                = f.text_field :distribution, :class => "datepicker"
+                %span.ui-icon.ui-icon-triangle-1-s
+              - else
+                .input-holder
+                  = @client_order.distribution
+
             .half.ui-selectmenu-button.last
               %label
                 = t"orders.order_confirmation_date"
-              = f.text_field :order_confirmation, :class => "datepicker"
-              %span.ui-icon.ui-icon-triangle-1-s
 
+              - unless @disabled
+                = f.text_field :order_confirmation, :class => "datepicker"
+                %span.ui-icon.ui-icon-triangle-1-s
+              - else
+                .input-holder
+                  = @client_order.order_confirmation
 
           - unless remove == true   
             = render :partial => '/client_orders/client_order_products_form', :locals => { :f => f }
@@ -56,7 +80,9 @@
         
       .half-page.scroll
         .content
+
           - if remove == true
+          
             .clearfix
               = render :partial => '/client_orders/actions', :locals => { :f => f } 
           .row.clearfix
@@ -64,7 +90,12 @@
               %label
                 = t"orders.sum"
               .big#total-order-sum
-                = f.text_field :sum, :placeholder => 0
+                - unless @disabled
+                  = f.text_field :sum, :placeholder => 0
+                - else
+                  .input-holder.big
+                    = @client_order.sum
+
             .half
                          
                       
@@ -74,25 +105,45 @@
           .row.clearfix
             %label          
               = t"payment_conditions"
-              - unless @client_order.payment_condition.nil?
-                = payment_conditions_select(f, @payment_conditions, @client_order.payment_condition)   
+
+              - unless @disabled
+                - unless @client_order.payment_condition.nil?
+                  = payment_conditions_select(f, @payment_conditions, @client_order.payment_condition)   
+                - else
+                  = payment_conditions_select(f, @payment_conditions)
               - else
-                = payment_conditions_select(f, @payment_conditions)
+                .input-holder                  
+                  = @payment_condition.name
+                  = " - "
+                  = @payment_condition.text
                                                    
           .row.clearfix
             %label
               = t"delivery_terms"
-              = f.text_area :delivery_terms, :cols => 1, :rows => 2
+              
+              - unless @disabled
+                = f.text_area :delivery_terms
+              - else
+                .input-holder
+                  = @client_order.delivery_terms
 
           .row.clearfix
             %label
-              = t"notes"              
-              = f.text_area :note, :cols => 1, :rows => 2
+              = t"notes"  
+              
+              - unless @disabled            
+                = f.text_area :note
+              - else
+                .input-holder
+                  = @client_order.note                
         
 
       .action-cover.clearfix
+
         = f.submit action, :class => "button"
-        - if remove == true      
+
+        - if remove == true    
+
           = link_to "#{t'actions.remove'}",  @client_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"          
 
         - else
@@ -102,6 +153,7 @@
 
 
     - if remove == true
+
       .hide.hidden-form      
         = render :partial => '/client_order_products/form'
                   

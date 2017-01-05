@@ -11,8 +11,8 @@ class ProductSuppliesController < ApplicationController
   end
 
   def create
-    @product_supply = ProductSupply.create(product_supply_params)
-    @product_id        = @product_supply.product_id
+    @product_supply     = ProductSupply.create(product_supply_params)
+    @product_id         = @product_supply.product_id
     
     redirect_to "/products/#{@product_id}/edit"
   end

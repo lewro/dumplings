@@ -1,0 +1,81 @@
+/**
+  * File          PDF
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines generic styles applied across app
+ **/
+ 
+@import "colours";
+@import "mixins";
+@import "sizes";
+@import "fonts";
+
+.pdf {
+	border: 1px dotted $grey-light1;	
+	margin: 50px;
+	font-weight: 100;
+}
+
+.pdf-top {
+	min-height: 500px;
+}
+
+.pdf-section {
+	margin-top: 30px;
+}
+
+.pdf-values {
+	margin-top: 20px;
+	font-size: $font-small;
+}
+
+.pdf-primary-number {
+  font-weight: 100;
+  font-size: $font-stats;
+  font-family: $font-family3;
+  line-height: 1.5em;	
+}
+
+.pdf-table {
+	th {
+		font-size: 10px;
+		background: #333;
+		color: #fff;
+		padding: 5px 10px !important;
+	}
+	tr {	
+		border-bottom: 1px dotted $grey-light1;
+	}
+	td {
+		background: #fff;
+	}
+	td, th {
+		width: 13%;		
+	}
+	td.name, 
+	th.name {
+		width: 31%;
+	}
+}
+
+.totals {
+	margin-top: 30px;
+	float: right;
+	width: 50%;
+	.total-header {
+		float: left;
+		width: 50%;
+	}
+	.total-sum {
+		float: left;
+		width: 50%;
+		text-align: right
+	}
+	.final {
+		font-weight: bold;
+	}
+}
+
+.pdf-footer {
+	font-size: $font-medium;
+}

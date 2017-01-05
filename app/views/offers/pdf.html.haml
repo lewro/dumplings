@@ -1,0 +1,175 @@
+.pdf
+	.clearfix
+		.half.content.last
+			= "[logo]"
+
+		.half.a-r.last.content
+			%h1
+				= "Offer"
+			.pdf-numbers.clearfix	
+				%label.a-r			
+					= t"offer.offer_id"			
+				.pdf-primary-number			
+					= @offer.id
+				%label.a-r			
+					= t"offer.reference_id"
+					= ":"
+					= @offer.reference_id
+					
+				.pdf-row
+					%label.a-r
+						= "Bank"
+						= ":"
+						= "Tatrabanka"
+				.pdf-row
+					%label.a-r
+						= "Account number"
+						= ":"
+						= "1341-3243-234-33232"
+				.pdf-row
+					%label.a-r
+						= "SWIFT"
+						= ":"
+						= "SK-4-3243-234-33232"
+				.pdf-row
+					%label.a-r
+						= "IBAN Code"
+						= ":"
+						= "1341-3243-234-33232"						
+
+				.pdf-row.m-t
+					%label.a-r
+						= "Date"
+						= ":"
+						= display_date(@offer.issue_date)	
+
+
+	.clearfix
+		.half.last
+			.devider
+			.content
+				.pdf-row
+					%label
+						= "To"			
+				.pdf-row
+					%strong
+						= @client.name
+				.pdf-row
+					= @client.street
+					= @client.street_number
+				.pdf-row				
+					= @client.city
+				.pdf-row				
+					= @client.zip_code		
+
+				.pdf-values.clearfix
+					.half	
+						%label
+							= "Registration #"			
+						= @client.registration_number
+					.half.last
+						%label
+							= "VAT #"			
+						= @client.vat_number
+
+		.half.last
+			.devider
+			.content.b-l
+				.pdf-row
+					%label
+						= "From"
+					%strong
+						= @client.name
+				.pdf-row
+					= @client.street
+					= @client.street_number
+				.pdf-row				
+					= @client.city
+				.pdf-row				
+					= @client.zip_code	
+
+				.pdf-values.clearfix
+					.half	
+						%label
+							= "Registration #"			
+						= @client.registration_number
+					.half.last
+						%label
+							= "VAT #"			
+						= @client.vat_number
+
+
+
+	.clearfix.pdf-table.content
+		%table
+			%thead
+				%tr
+					%th.name
+						= t"product.name"
+					%th				 	
+						= t"product.code" 
+					%th						
+						= t"orders.packages_count"
+					%th
+						= t"orders.package_size"
+						= "/"
+						= t"unit.title"
+					%th
+						= t"orders.package_price"
+					%th
+						= t"expiration_date"            
+
+			%tbody
+				- @offer_products.each do |op|
+					%tr
+						%td.name
+							= op.name
+						%td
+							= op.product_code
+						%td
+							= op.packages_quantity
+						%td
+							= op.packages_size
+							= " " 
+							= unit(op.unit)  
+						%td
+							= op.package_price
+						%td
+							= op.expiration_date
+		
+		.totals
+			.clearfix
+				.total-header
+					= "Sum"
+				.total-sum
+					= "423.000"
+			.clearfix
+				.total-header
+					= "Tax 21%"
+				.total-sum					
+					= "12.009"
+			.clearfix.final
+				.total-header
+					= "Total"
+				.total-sum
+					= "444.992"
+
+
+
+	.clearfix.content.pdf-footer
+		.pdf-row.clearfix
+			%label
+				= t"payment_conditions"
+			= @pc.text		
+		
+		.pdf-row.m-t.clearfix
+			%label
+				= t"delivery_terms"
+			= @offer.delivery_terms
+
+
+
+
+
+
+

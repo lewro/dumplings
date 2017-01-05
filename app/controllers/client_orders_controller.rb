@@ -53,7 +53,7 @@ class ClientOrdersController < ApplicationController
     @id                       = params[:id]
     @client_order             = ClientOrder.find_by_id(@id)
     @client                   = Company.find_by_id(@client_order.client_id)
-    @client_order_products    = ClientOrderProduct.joins("JOIN products ON client_order_products.product_id = products.id").where(:order_id => @id).select("client_order_products.packages_quantity AS packages_quantity, client_order_products.packages_size AS packages_size, client_order_products.unit AS packages_unit, client_order_products.package_price AS package_price, client_order_products.id AS product_id, products.name AS name")
+    @client_order_products    = ClientOrderProduct.joins("JOIN products ON client_order_products.product_id = products.id").where(:order_id => @id).select("client_order_products.packages_quantity AS packages_quantity, client_order_products.packages_size AS packages_size, client_order_products.unit AS packages_unit, client_order_products.package_price AS package_price, client_order_products.id AS product_id, client_order_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
     @client_order_product     = ClientOrderProduct.new
     @invoice_number           = Invoice.where(:order_id => @id, :proforma => false).first
     @proforma_invoice_number  = Invoice.where(:order_id => @id, :proforma => true).first
@@ -62,6 +62,15 @@ class ClientOrdersController < ApplicationController
     if @client_order.offer_id
       @offer_id               = Offer.find_by_id(@client_order.offer_id).id
     end
+
+    #Disable editing when these condtions
+    if @invoice_number || @proforma_invoice_number || @delivery_note_number
+
+      @disabled = true 
+
+      @payment_condition = PaymentCondition.find_by_id(@client_order.payment_condition)
+    end
+
   end
   
   def update
@@ -83,7 +92,7 @@ class ClientOrdersController < ApplicationController
 
     @client_order_products.each do |cop|
       unless cop[1]["packages_quantity"] == ""
-        ClientOrderProduct.create(:product_id => cop[1]["product_id"], :packages_quantity => cop[1]["packages_quantity"], :packages_size => cop[1]["packages_size"], :package_price => cop[1]["package_price"],  :unit => cop[1]["unit"],  :order_id => @client_order.id, :user_id => current_user.id)
+        ClientOrderProduct.create(:product_id => cop[1]["product_id"], :packages_quantity => cop[1]["packages_quantity"], :packages_size => cop[1]["packages_size"], :package_price => cop[1]["package_price"], :unit => cop[1]["unit"], :expiration_date => cop[1]["expiration_date"], :order_id => @client_order.id, :user_id => current_user.id)
       end
     end
     

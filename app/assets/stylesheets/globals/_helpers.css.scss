@@ -32,6 +32,27 @@
   height: 5px;
 }
 
+.a-r {
+  text-align: right;
+}
+
+.b-l {
+  border-left: 1px dotted $grey-light1; 
+}
+
+.b-t {
+  border-top: 1px dotted $grey-light1; 
+}
+
+.m-t {
+  margin-top: 20px;
+}
+
+.devider {
+  border-top: 1px dotted $grey-light1;
+  margin: 30px 0;
+}
+
 .content .big, 
 .content .big input[type="text"] {
   font-weight: 100;
@@ -61,7 +82,7 @@
   padding-right: 30px;
 }
 
-.no-data {
+.no-data, .note {
   width: 100%;
   padding: 10px 0px !important;
   box-sizing: border-box;

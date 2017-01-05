@@ -7,6 +7,7 @@ module ApplicationHelper
   end
   
   def status(value)
+    value = value.to_i
     if value == 1
       return "#{t'status.open'}"
     elsif value == 2  
@@ -27,6 +28,7 @@ module ApplicationHelper
   end
   
   def category(value)
+    value = value.to_i
     if value == 1
       return "#{t'category.sales_representant'}"
     elsif value == 2  
@@ -41,6 +43,7 @@ module ApplicationHelper
   end
     
   def unit(value)
+    value = value.to_i
     if value == 1
       return "#{t'unit.pieces'}"
     elsif value == 2  
@@ -90,17 +93,16 @@ module ApplicationHelper
   end
   
   def products_select(f, products, preselected=nil)    
-    return f.collection_select(:product_id, products, :id, :name, selected: preselected)      
+    return f.collection_select(:product_id, products, :id, :product_code_and_name, selected: preselected)      
   end
   
   def supplies_select(f, supplies, preselected=nil)    
-    return f.collection_select(:supply_id, supplies, :id, :name, selected: preselected)      
+    return f.collection_select(:supply_id, supplies, :id, :product_code_and_name, selected: preselected)      
   end
   
   def payment_conditions_select(f, payment_conditions, preselected=nil)    
     return f.collection_select(:payment_condition, payment_conditions, :id, :name_and_text, selected: preselected)      
   end
-
 
   def balance_class(balance)
     if balance >= 0

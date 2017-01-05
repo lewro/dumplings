@@ -40,11 +40,20 @@ class DeliveryNotesController < ApplicationController
     @id                       = params[:id]
     @delivery_note            = DeliveryNote.find_by_id(@id)
     @client                   = Company.find_by_id(@delivery_note.client_id) 
-    @delivery_note_products   = DeliveryNoteProduct.joins("JOIN products ON delivery_note_products.product_id = products.id").where(:delivery_note_id => @id).select("delivery_note_products.packages_quantity AS packages_quantity, delivery_note_products.packages_size AS packages_size, delivery_note_products.unit AS unit, delivery_note_products.package_price AS package_price, delivery_note_products.id AS product_id, products.name AS name")
+    @delivery_note_products   = DeliveryNoteProduct.joins("JOIN products ON delivery_note_products.product_id = products.id").where(:delivery_note_id => @id).select("delivery_note_products.packages_quantity AS packages_quantity, delivery_note_products.packages_size AS packages_size, delivery_note_products.unit AS unit, delivery_note_products.package_price AS package_price, delivery_note_products.id AS product_id, delivery_note_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
     @delivery_note_product    = DeliveryNoteProduct.new    
     @order_id                 = @delivery_note.order_id   
     @invoice                  = Invoice.where(:order_id => @delivery_note.order_id, :proforma => false).first
     @proforma                 = Invoice.where(:order_id => @delivery_note.order_id, :proforma => true).first
+
+    #Disable editing when these conditions
+    if @invoice || @proforma
+      
+      @disabled = true
+
+      @payment_condition = PaymentCondition.find_by_id(@delivery_note.payment_condition)
+    end
+
   end
 
   def create
@@ -53,7 +62,7 @@ class DeliveryNotesController < ApplicationController
 
     @delivery_note_products.each do |dnp|
       unless dnp[1]["packages_quantity"] == ""
-        DeliveryNoteProduct.create(:product_id => dnp[1]["product_id"], :packages_quantity => dnp[1]["packages_quantity"], :packages_size => dnp[1]["packages_size"], :package_price => dnp[1]["package_price"],  :unit => dnp[1]["unit"],  :delivery_note_id => @delivery_note.id, :user_id => current_user.id)
+        DeliveryNoteProduct.create(:product_id => dnp[1]["product_id"], :packages_quantity => dnp[1]["packages_quantity"], :packages_size => dnp[1]["packages_size"], :package_price => dnp[1]["package_price"],  :unit => dnp[1]["unit"],  :expiration_date => dnp[1]["expiration_date"], :delivery_note_id => @delivery_note.id, :user_id => current_user.id)
       end
     end
 

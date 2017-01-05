@@ -9,7 +9,7 @@ class CreateDeliveryNoteProducts < ActiveRecord::Migration
       t.integer :packages_size
       
       t.decimal :package_price
-      t.string :unit
+      t.integer :unit
 
       t.timestamps
     end

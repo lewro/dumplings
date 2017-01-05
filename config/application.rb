@@ -58,7 +58,9 @@ module Dumplings
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-  
-    
+
+    # PDF Gem
+    require 'pdfkit'
+    config.middleware.use PDFKit::Middleware
   end
 end

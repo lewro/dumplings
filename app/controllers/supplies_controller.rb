@@ -37,7 +37,7 @@ class SuppliesController < ApplicationController
   end  
 
   def supply_params
-     params.require(:supply).permit(:name, :user_id)    
+     params.require(:supply).permit(:name, :user_id, :note, :product_code)    
   end
 end
 

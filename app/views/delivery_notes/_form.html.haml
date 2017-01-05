@@ -10,25 +10,40 @@
         .content               
           .row.clearfix
             %label
-              = t"client.title" 
-            - unless @order_id. nil?
+              = t"client.title"
+
+            - if @disabled            
               .input-holder
                 = @client.name
-                = f.hidden_field :client_id, :value => @client.id
+
             - else
-              = clients_select(f, @clients)
+              - unless @order_id. nil?
+                .input-holder
+                  = @client.name
+                  = f.hidden_field :client_id, :value => @client.id
+              - else
+                = clients_select(f, @clients)
 
           .row.clearfix
             .half
               %label
-                = t"client.reference"                                   
-              = f.text_field :reference_id
+                = t"client.reference" 
+              - unless @disabled                                  
+                = f.text_field :reference_id
+              - else
+                .input-holder
+                  = @delivery_note.reference_id
             
             .half.ui-selectmenu-button.last
               %label
-                = t"invoice.issue_date"      
-              = f.text_field :issue_date, :class => "datepicker", "data-required" => "true"   
-              %span.ui-icon.ui-icon-triangle-1-s                 
+                = t"invoice.issue_date" 
+              
+              - unless @disabled     
+                = f.text_field :issue_date, :class => "datepicker", "data-required" => "true"   
+                %span.ui-icon.ui-icon-triangle-1-s                 
+              - else
+                .input-holder
+                  = @delivery_note.issue_date
 
 
           - unless remove == true   
@@ -45,27 +60,46 @@
             .half
               %label
                 = t"orders.sum"
-              .big#delivery-note-sum
-                = f.text_field :sum, :placeholder => 0
+
+              - unless @disabled
+                .big#delivery-note-sum
+                  = f.text_field :sum, :placeholder => 0
+              - else
+                .input-holder.big
+                  = @delivery_note.sum
           
 
           .row.clearfix
             %label          
               = t"payment_conditions"
-              - unless @delivery_note.payment_condition.nil?
-                = payment_conditions_select(f, @payment_conditions, @delivery_note.payment_condition)   
+
+              - unless @disabled
+              
+                - unless @delivery_note.payment_condition.nil?
+                  = payment_conditions_select(f, @payment_conditions, @delivery_note.payment_condition)   
+                - else
+                  = payment_conditions_select(f, @payment_conditions)
               - else
-                = payment_conditions_select(f, @payment_conditions)
+                .input-holder
+                  = @payment_condition.name
+                  = " - "
+                  = @payment_condition.text
                                                    
           .row.clearfix
             %label
-              = t"notes"              
-              = f.text_area :note, :cols => 1, :rows => 2
+              = t"notes"      
 
+              - unless @disabled        
+                = f.text_area :note
+              - else
+                .input-holder
+                  = @delivery_note.note
 
 
       .action-cover.clearfix
+
         = f.submit action, :class => "button"
+     
         - if remove == true      
           = link_to "#{t'actions.remove'}",  @delivery_note,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"                   
         - else

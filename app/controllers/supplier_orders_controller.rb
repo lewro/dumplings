@@ -16,7 +16,7 @@ class SupplierOrdersController < ApplicationController
 
     @supplier_order_products.each do |sop|
       unless sop[1]["packages_quantity"] == ""
-        SupplierOrderProduct.create(:supply_id => sop[1]["supply_id"], :packages_quantity => sop[1]["packages_quantity"], :packages_size => sop[1]["packages_size"], :package_price => sop[1]["package_price"],  :unit => sop[1]["unit"],  :order_id => @supplier_order.id, :user_id => current_user.id)
+        SupplierOrderProduct.create(:supply_id => sop[1]["supply_id"], :packages_quantity => sop[1]["packages_quantity"], :packages_size => sop[1]["packages_size"], :package_price => sop[1]["package_price"],  :unit => sop[1]["unit"], :expiration_date => sop[1]["expiration_date"],  :order_id => @supplier_order.id, :user_id => current_user.id)
       end
     end
     
@@ -46,7 +46,7 @@ class SupplierOrdersController < ApplicationController
     @id                       = params[:id]
     @supplier_order           = SupplierOrder.find_by_id(@id)
     @supplier                 = Company.find_by_id(@supplier_order.supplier_id)
-    @supplier_order_products  = SupplierOrderProduct.joins("JOIN supplies ON supplies.id = supplier_order_products.supply_id").where(:order_id => @id).select("supplier_order_products.id AS id, supplier_order_products.supply_id AS supply_id, supplier_order_products.packages_quantity AS packages_quantity, supplier_order_products.packages_size AS packages_size, supplier_order_products.unit AS packages_unit, supplier_order_products.package_price AS package_price, supplier_order_products.id AS product_id, supplies.name AS name")
+    @supplier_order_products  = SupplierOrderProduct.joins("JOIN supplies ON supplies.id = supplier_order_products.supply_id").where(:order_id => @id).select("supplier_order_products.id AS id, supplier_order_products.supply_id AS supply_id, supplier_order_products.packages_quantity AS packages_quantity, supplier_order_products.packages_size AS packages_size, supplier_order_products.unit AS packages_unit, supplier_order_products.package_price AS package_price, supplier_order_products.id AS product_id, supplier_order_products.expiration_date AS expiration_date, supplies.name AS name, supplies.product_code AS product_code")
     @supplier_order_product   = SupplierOrderProduct.new
     @order_disabled           = false
     
@@ -113,6 +113,5 @@ class SupplierOrdersController < ApplicationController
     
   def supplier_order_params
      params.require(:supplier_order).permit(:supplier_id, :user_id, :contact_person, :sum, :expected_delivery, :delivery, :status, :supplierorderproducts, :note)
-  end
-  
+  end  
 end

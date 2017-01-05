@@ -33,7 +33,10 @@
   color: $grey-dark3;
   font-size: $font-medium;
   border-bottom: 1px solid $primary-color;
-  font-family: $font-family2;  
+  font-family: $font-family2; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;  
 }
 
 .button-cover {
@@ -43,6 +46,14 @@
 .list-headers {
   padding: 30px 0 10px 0;
   label {
-    color: $theme-5;          
+    color: $theme-5;
+    font-size: 9px;          
   }
+}
+
+.hidden-form {
+  border: 1px dashed #46ccbb;
+  padding: 0 20px 20px 20px;
+  @include rounded_corner(3px);
+  @include drop-shadow(0px, 5px, 20px); 
 }

@@ -14,3 +14,8 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require_tree .
+//= require jquery-fileupload/basic/
+//= require jquery-fileupload/vendor/tmpl
+
+
+

@@ -2,6 +2,9 @@ Dumplings::Application.routes.draw do
     
   devise_for :users
   root :to => "client_orders#index"
+
+  #PDF
+  get "offers/pdf"
     
   #Invoices
   post "invoices/mark_invoice_as_paid"
@@ -34,7 +37,7 @@ Dumplings::Application.routes.draw do
   resources :payment_conditions
   resources :delivery_notes
   resources :delivery_note_products
-
+  resources :file_uploads
 
   get ":controller(/:action(/:id(.:format)))"    
 end

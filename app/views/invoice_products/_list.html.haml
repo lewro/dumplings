@@ -1,8 +1,11 @@
 .clearfix.product{ "data-product-id" => ip.product_id }
-  .third
+  .sixth
     .input-holder
       = ip.name
-  .fifth.packages-quantity
+  .seventh
+    .input-holder
+      = ip.product_code      
+  .eight.packages-quantity
     .input-holder      
       = ip.packages_quantity      
   .fifth
@@ -10,10 +13,14 @@
       = ip.packages_size
       = " " 
       = unit(ip.unit)     
-  .fifth.package-price
+  .sixth.package-price
     .input-holder      
       = ip.package_price
+  .sixth.package-price
+    .input-holder      
+      = ip.expiration_date
   
-  .small-button-column
-    .circle-button.small.remove-invoice-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
-      = "x"
+  - unless @disabled ||  @proforma
+    .small-button-column
+      .circle-button.small.remove-invoice-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
+        = "x"

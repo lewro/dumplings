@@ -24,7 +24,7 @@ class InvoiceProductsController < ApplicationController
   end
 
   def invoice_product_params
-     params.require(:invoice_product).permit(:invoice_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit)
+     params.require(:invoice_product).permit(:invoice_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit, :expiration_date)
   end
 
 end

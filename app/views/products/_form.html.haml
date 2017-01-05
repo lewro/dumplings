@@ -10,16 +10,21 @@
           = f.text_field :name, "data-required" => "true" 
         .row.clearfix
           %label
+            = t"product.code"
+          = f.text_field :product_code          
+        .row.clearfix
+          %label
             = t"notes"
-          = f.text_area :note, "data-required" => "true" 
-
-
+          = f.text_area :note
 
     .half-page
       .content
         %label
           = t"supplies"
         
+        .note
+          = t"product.stock_note"
+
         - if @product_supplies
           = render :partial => 'products/product_supplies_list', :locals => { :f => f } 
         - else

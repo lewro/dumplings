@@ -32,16 +32,18 @@
                 = @supplier_order.contact_person
               
           .row.clearfix
-            .half.ui-selectmenu-button       
+            .half
               %label
                 = t"orders.exp_delivery_date"
-              = f.text_field :expected_delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }                           
-              %span.ui-icon.ui-icon-triangle-1-s
-            .half.ui-selectmenu-button.last       
+              .ui-selectmenu-button
+                = f.text_field :expected_delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }                           
+                %span.ui-icon.ui-icon-triangle-1-s
+            .half.last
               %label
                 = t"orders.delivery_date"
-              = f.text_field :delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
-              %span.ui-icon.ui-icon-triangle-1-s
+              .ui-selectmenu-button
+                = f.text_field :delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
+                %span.ui-icon.ui-icon-triangle-1-s
 
 
           - unless remove == true   

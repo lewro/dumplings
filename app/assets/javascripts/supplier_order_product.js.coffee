@@ -61,7 +61,12 @@
 
       #Remov the span elements created by Jqeury UI
       $(".product:last").find('span').each ->
-        $(this).remove()
+        unless $(this).hasClass("ui-icon")
+          $(this).remove()
+
+      #Remove haDatepicker class to fix the issue with calendar not appearing
+      $(".datepicker").removeClass("hasDatepicker")
+
       $(".product:last").find('select, input').show()
 
       #Reinitiate the UI

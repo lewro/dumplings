@@ -21,7 +21,6 @@
   %meta{:name => "description", :content => "Little factory"}/
 
   = stylesheet_link_tag    'application', media: 'all'
-  = javascript_include_tag 'application'
   = csrf_meta_tags
 
 %body
@@ -30,6 +29,8 @@
   .alert
     = alert
   = yield
+
+  = javascript_include_tag 'application'
   
 :javascript
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -24,7 +24,7 @@ class ClientOrderProductsController < ApplicationController
   end
 
   def client_order_product_params
-     params.require(:client_order_product).permit(:order_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit)
+     params.require(:client_order_product).permit(:order_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit, :expiration_date)
   end
 
 end

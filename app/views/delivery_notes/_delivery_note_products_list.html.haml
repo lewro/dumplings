@@ -11,8 +11,9 @@
       = t"no_data"
       
 
-#hiden-form-cover
-.row.clearfix.last
-  #add-new-delivery-note-product-edit.circle-button.large
-    = "+"                                                    
-      
+- unless @disabled
+  #hiden-form-cover
+  .row.clearfix.last
+    #add-new-delivery-note-product-edit.circle-button.large
+      = "+"                                                    
+        

@@ -1,7 +1,7 @@
 .product
   = deliverynoteproduct.fields_for "deliverynoteproduct[#{0}]" do |deliverynoteproduct|
     .row.clearfix
-      .two-sixths
+      .fifth
         = products_select(deliverynoteproduct, @products)
       .sixth.packages-quantity      
         = deliverynoteproduct.text_field :packages_quantity, "data-required" => "true"         
@@ -11,3 +11,8 @@
         = units_select(deliverynoteproduct)        
       .sixth.package-price
         = deliverynoteproduct.text_field :package_price, "data-required" => "true" 
+      .sixth
+        .ui-selectmenu-button
+          = deliverynoteproduct.text_field :expiration_date , :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
+          %span.ui-icon.ui-icon-triangle-1-s
+

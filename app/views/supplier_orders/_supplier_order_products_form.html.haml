@@ -3,6 +3,8 @@
     %label.spacer-large
       = t"products"
 
+    = render :partial => '/supplier_orders/supplier_order_products_list_headers'
+
     = render :partial => '/supplier_orders/supplier_order_product_form', :locals => { :supplierorderproduct => supplierorderproduct }
 
   .clearfix.spacer-large

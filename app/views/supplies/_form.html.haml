@@ -4,9 +4,18 @@
 
     .half-page.left
       .content
-        %label
-          = t"supply.title"
-        = f.text_field :name, "data-required" => "true"  
+        .row.clearfix
+          %label
+            = t"supply.title"
+          = f.text_field :name, "data-required" => "true"  
+        .row.clearfix
+          %label
+            = t"product.code"
+          = f.text_field :product_code                    
+        .row.clearfix
+          %label
+            = t"notes"
+          = f.text_area :note
     .half-page
       .content    
 

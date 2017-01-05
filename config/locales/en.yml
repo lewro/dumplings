@@ -26,6 +26,8 @@ en:
   payment_conditions: "Payment conditions"
   delivery_notes: "Delivery notes"
   no_data: "No data"
+  expiration_date: "Expiration date"
+  delivery_terms: "Delivery terms"
   
   client:
     title: "Client"
@@ -83,6 +85,8 @@ en:
     name: "Name"
     add: "Add new product"
     search: "Search products"
+    code: "Product code"
+    stock_note: "These supplies will be deducted from stock on product sale."
     
   supply:
     title: "Supply"
@@ -120,7 +124,8 @@ en:
     create: "Create"
     confirm: "Are you sure?"
     cancel: "Cancel"
-    
+    create_pdf_document: "Create PDF document"
+  
   status:
     title: "Status"
     open: "Open"
@@ -154,6 +159,7 @@ en:
     add: "Create new offer"
     search: "Search for an offer"
     issue_date: "Issue date"
+    offer_id: "Offer Id"
 
   delivery_note:
     title: "Delivery note"

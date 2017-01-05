@@ -24,7 +24,7 @@ class OfferProductsController < ApplicationController
   end
 
   def offer_product_params
-     params.require(:offer_product).permit(:offer_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit)
+     params.require(:offer_product).permit(:offer_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit, :expiration_date)
   end
   
 end

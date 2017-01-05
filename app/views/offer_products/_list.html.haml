@@ -1,8 +1,11 @@
 .clearfix.product{ "data-product-id" => op.product_id }
-  .third
-    .input-holder
+  .sixth
+    .input-holder{ "title" => op.name } 
       = op.name
-  .fifth.packages-quantity
+  .seventh
+    .input-holder
+      = op.product_code      
+  .eight.packages-quantity
     .input-holder      
       = op.packages_quantity      
   .fifth
@@ -10,11 +13,14 @@
       = op.packages_size
       = " " 
       = unit(op.unit)     
-  .fifth.package-price
+  .sixth.package-price
     .input-holder      
       = op.package_price
+  .sixth.package-price
+    .input-holder      
+      = op.expiration_date
 
-  - unless @order_number      
+  - unless @disabled      
     .small-button-column
       .circle-button.small.remove-offer-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
         = "x"

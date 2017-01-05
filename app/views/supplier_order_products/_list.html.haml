@@ -1,18 +1,24 @@
 .clearfix.product{ "data-product-id" =>  sop.id }
-  .third
+  .sixth
     .input-holder
       = sop.name
-  .fifth.packages-quantity
+  .sixth
+    .input-holder
+      = sop.product_code      
+  .eight.packages-quantity
     .input-holder      
       = sop.packages_quantity       
-  .fifth
+  .sixth
     .input-holder      
       = sop.packages_size
       = " "
       = unit(sop.packages_unit)
-  .fifth.package-price
+  .sixth.package-price
     .input-holder      
       = sop.package_price
+  .sixth.package-price   
+    .input-holder      
+      = sop.expiration_date   
 
   - unless @order_disabled
     .small-button-column

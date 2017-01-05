@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161218143020) do
+ActiveRecord::Schema.define(version: 20170105085300) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20161218143020) do
     t.datetime "updated_at"
     t.decimal  "package_price",               precision: 10
     t.integer  "unit",              limit: 4
+    t.datetime "expiration_date"
   end
 
   create_table "client_orders", force: :cascade do |t|
@@ -62,15 +63,16 @@ ActiveRecord::Schema.define(version: 20161218143020) do
   end
 
   create_table "delivery_note_products", force: :cascade do |t|
-    t.integer  "product_id",        limit: 4,                  null: false
-    t.integer  "delivery_note_id",  limit: 4,                  null: false
-    t.integer  "user_id",           limit: 4,                  null: false
+    t.integer  "product_id",        limit: 4,                null: false
+    t.integer  "delivery_note_id",  limit: 4,                null: false
+    t.integer  "user_id",           limit: 4,                null: false
     t.integer  "packages_quantity", limit: 4
     t.integer  "packages_size",     limit: 4
-    t.decimal  "package_price",                 precision: 10
-    t.string   "unit",              limit: 255
+    t.decimal  "package_price",               precision: 10
+    t.integer  "unit",              limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "expiration_date"
   end
 
   create_table "delivery_notes", force: :cascade do |t|
@@ -86,16 +88,28 @@ ActiveRecord::Schema.define(version: 20161218143020) do
     t.datetime "issue_date"
   end
 
-  create_table "invoice_products", force: :cascade do |t|
-    t.integer  "product_id",        limit: 4,                  null: false
-    t.integer  "invoice_id",        limit: 4,                  null: false
-    t.integer  "user_id",           limit: 4,                  null: false
-    t.integer  "packages_quantity", limit: 4
-    t.integer  "packages_size",     limit: 4
-    t.decimal  "package_price",                 precision: 10
-    t.string   "unit",              limit: 255
+  create_table "file_uploads", force: :cascade do |t|
+    t.string   "upload_file_name", limit: 255
+    t.string   "content_type",     limit: 255
+    t.integer  "file_size",        limit: 4
+    t.string   "file_name",        limit: 255
+    t.string   "type",             limit: 255
+    t.integer  "user_id",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "invoice_products", force: :cascade do |t|
+    t.integer  "product_id",        limit: 4,                null: false
+    t.integer  "invoice_id",        limit: 4,                null: false
+    t.integer  "user_id",           limit: 4,                null: false
+    t.integer  "packages_quantity", limit: 4
+    t.integer  "packages_size",     limit: 4
+    t.decimal  "package_price",               precision: 10
+    t.integer  "unit",              limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "expiration_date"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -126,6 +140,7 @@ ActiveRecord::Schema.define(version: 20161218143020) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit",              limit: 4
+    t.datetime "expiration_date"
   end
 
   create_table "offers", force: :cascade do |t|
@@ -159,35 +174,37 @@ ActiveRecord::Schema.define(version: 20161218143020) do
   end
 
   create_table "product_supplies", force: :cascade do |t|
-    t.integer  "product_id",        limit: 4,                  null: false
-    t.integer  "supply_id",         limit: 4,                  null: false
-    t.integer  "user_id",           limit: 4,                  null: false
+    t.integer  "product_id",        limit: 4,                null: false
+    t.integer  "supply_id",         limit: 4,                null: false
+    t.integer  "user_id",           limit: 4,                null: false
     t.integer  "packages_quantity", limit: 4
     t.integer  "packages_size",     limit: 4
-    t.decimal  "package_price",                 precision: 10
-    t.string   "unit",              limit: 255
+    t.decimal  "package_price",               precision: 10
+    t.integer  "unit",              limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",       limit: 255,   null: false
-    t.integer  "user_id",    limit: 4,     null: false
+    t.string   "name",         limit: 255,   null: false
+    t.integer  "user_id",      limit: 4,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "note",       limit: 65535
+    t.text     "note",         limit: 65535
+    t.string   "product_code", limit: 255
   end
 
   create_table "stock_group_products", force: :cascade do |t|
-    t.integer  "product_id",        limit: 4,                  null: false
-    t.integer  "stock_group_id",    limit: 4,                  null: false
-    t.integer  "user_id",           limit: 4,                  null: false
+    t.integer  "product_id",        limit: 4,                null: false
+    t.integer  "stock_group_id",    limit: 4,                null: false
+    t.integer  "user_id",           limit: 4,                null: false
     t.integer  "packages_quantity", limit: 4
     t.integer  "packages_size",     limit: 4
-    t.decimal  "package_price",                 precision: 10
-    t.string   "unit",              limit: 255
+    t.decimal  "package_price",               precision: 10
+    t.integer  "unit",              limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "expiration_date"
   end
 
   create_table "stock_groups", force: :cascade do |t|
@@ -218,6 +235,7 @@ ActiveRecord::Schema.define(version: 20161218143020) do
     t.integer  "packages_size",     limit: 4
     t.decimal  "package_price",               precision: 10
     t.integer  "unit",              limit: 4
+    t.datetime "expiration_date"
   end
 
   create_table "supplier_orders", force: :cascade do |t|
@@ -234,10 +252,12 @@ ActiveRecord::Schema.define(version: 20161218143020) do
   end
 
   create_table "supplies", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.integer  "user_id",    limit: 4,   null: false
+    t.string   "name",         limit: 255,   null: false
+    t.integer  "user_id",      limit: 4,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "note",         limit: 65535
+    t.string   "product_code", limit: 255
   end
 
   create_table "users", force: :cascade do |t|

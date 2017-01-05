@@ -1,7 +1,7 @@
 .product
   = invoiceproduct.fields_for "invoiceproduct[#{0}]" do |invoiceproduct|
     .row.clearfix
-      .two-sixths
+      .fifth
         = products_select(invoiceproduct, @products)
       .sixth.packages-quantity      
         = invoiceproduct.text_field :packages_quantity, "data-required" => "true"         
@@ -11,3 +11,8 @@
         = units_select(invoiceproduct)        
       .sixth.package-price
         = invoiceproduct.text_field :package_price, "data-required" => "true" 
+      .sixth
+        .ui-selectmenu-button
+          = invoiceproduct.text_field :expiration_date , :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
+          %span.ui-icon.ui-icon-triangle-1-s
+

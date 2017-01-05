@@ -1,8 +1,11 @@
 .clearfix.product{ "data-product-id" => dnp.product_id }
-  .third
+  .sixth
     .input-holder
       = dnp.name
-  .fifth.packages-quantity
+  .seventh
+    .input-holder
+      = dnp.product_code      
+  .eight.packages-quantity
     .input-holder      
       = dnp.packages_quantity      
   .fifth
@@ -10,10 +13,14 @@
       = dnp.packages_size
       = " " 
       = unit(dnp.unit)     
-  .fifth.package-price
+  .sixth.package-price
     .input-holder      
       = dnp.package_price
-  
-  .small-button-column
-    .circle-button.small.remove-delivery-note-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
-      = "x"
+  .sixth.package-price
+    .input-holder      
+      = dnp.expiration_date
+
+  - unless @disabled
+    .small-button-column
+      .circle-button.small.remove-delivery-note-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
+        = "x"

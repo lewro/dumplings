@@ -7,11 +7,19 @@ gem 'json'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
+
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '5.0.5'
+
 gem 'jbuilder'
 gem 'sdoc'
 gem 'spring'
+
+# File upload
+gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
+gem 'mini_magick', '~> 3.4'
+gem 'jquery-fileupload-rails'
+
 
 #Server
 gem 'puma'
@@ -25,4 +33,9 @@ gem 'mysql2', '0.4.3'
 # Asset template engines
 gem 'haml'
 
+# PDF
+gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
+gem 'pdfkit'
+
+# Ruby multiversion
 gem 'rvm'

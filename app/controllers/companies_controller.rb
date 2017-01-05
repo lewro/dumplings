@@ -9,6 +9,7 @@ class CompaniesController < ApplicationController
   def create
     @category         = params[:company][:category]
     @company          = Company.create(company_params)
+    @file             = FileUpload.new
   
     if @category == 'client'
       @category = 'clients'
@@ -34,6 +35,7 @@ class CompaniesController < ApplicationController
   def edit
     @category           = params[:category]    
     @id                 = params[:id]
+    @file               = FileUpload.new
     @client             = Company.joins('LEFT JOIN client_orders ON client_orders.client_id = companies.id LEFT JOIN invoices ON invoices.client_id = companies.id').where("companies.id" => @id).select("companies.id AS id, companies.sales_id AS sales_id, companies.name AS name, companies.street AS street, companies.street_number AS street_number, companies.city AS city, companies.zip_code AS zip_code,  companies.status AS status, companies.registration_number AS registration_number, companies.vat_number AS vat_number, companies.note AS note, companies.contact_person AS contact_person, count(client_orders.id) AS orders, sum(invoices.sum) AS sales").group("id").first    
     @orders             = ClientOrder.where(:client_id => @id).size
     @delivery_notes     = DeliveryNote.where(:client_id => @id).size

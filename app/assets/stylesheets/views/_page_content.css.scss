@@ -13,6 +13,14 @@
   padding: 30px;
 }
  
+.row {
+  margin-bottom: 20px;
+  border-bottom: 1px dotted #ddd;
+  &.last {
+    border-bottom: 0px;
+  }
+}
+
 .half-page {
   border-bottom: 1px solid $grey-light1;
   
@@ -21,11 +29,10 @@
   }
 }
 
-.row {
+.half-page, .two-thirds-page, .third-page {
   border-bottom: 1px solid $grey-light1;
-  margin-bottom: 30px;
-  &.last {
-    border-bottom: none;
-    margin: 0;
+  
+  &.left {
+    border-right: 1px solid $grey-light1;  
   }
 }

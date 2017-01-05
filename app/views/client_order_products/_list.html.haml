@@ -1,8 +1,11 @@
 .clearfix.product{ "data-product-id" => cop.product_id }
-  .third
+  .sixth
     .input-holder
       = cop.name
-  .fifth.packages-quantity
+  .seventh
+    .input-holder
+      = cop.product_code      
+  .eight.packages-quantity
     .input-holder      
       = cop.packages_quantity       
   .fifth
@@ -10,11 +13,14 @@
       = cop.packages_size
       = " "
       = unit(cop.packages_unit)
-  .fifth.package-price
+  .sixth.package-price
     .input-holder      
       = cop.package_price
+  .sixth.package-price
+    .input-holder      
+      = cop.expiration_date
 
-  - unless @invoice_number      
+  - unless @disabled      
     .small-button-column
       .circle-button.small.remove-client-order-product.float-right{"remove-message" => "#{t'actions.confirm'}" }
         = "x"

@@ -31,8 +31,6 @@
         $(this).parents('.product').remove()
 
 
-
-
   #Add New Client Order Product on NEW View
   addNewClientOrderProduct : () ->  
     $('body').delegate '#add-new-client-order-product', 'click', ->
@@ -62,10 +60,15 @@
         $(this).attr 'id', (i, old) ->
           old.replace digit, newDigit
 
-      #Remov the span elements created by Jqeury UI
+      #Remove the span elements created by Jqeury UI
       $(".product:last").find('span').each ->
-        $(this).remove()
+        unless $(this).hasClass("ui-icon")
+          $(this).remove()
+
       $(".product:last").find('select, input').show()
+
+      #Remove haDatepicker class to fix the issue with calendar not appearing
+      $(".datepicker").removeClass("hasDatepicker")
 
       #Reinitiate the UI
       core.init()       

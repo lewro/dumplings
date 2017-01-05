@@ -1,16 +1,19 @@
 .clearfix.product{ "data-product-supply-id" => ps.product_supply_id }
-  .third
+  .fifth
     .input-holder
       = ps.name
-  .fifth.packages-quantity
+  .fifth
+    .input-holder
+      = ps.product_code      
+  .sixth.packages-quantity
     .input-holder      
       = ps.packages_quantity      
   .fifth
     .input-holder      
       = ps.packages_size
       = " " 
-      = unit(ps.unit)     
-  .fifth.package-price
+      = unit(ps.unit)
+  .sixth.package-price
     .input-holder      
       = ps.package_price
   

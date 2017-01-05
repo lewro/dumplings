@@ -5,11 +5,12 @@
 
     = render :partial => '/invoices/invoice_products_list_headers'
 
-    - if @order_products
+    - if @existing_products
       = render :partial => '/invoices/invoice_product_form_from_order', :locals => { :invoiceproduct => invoiceproduct }              
     - else 
       = render :partial => '/invoices/invoice_product_form', :locals => { :invoiceproduct => invoiceproduct }
 
-  .clearfix.spacer-large
-    #add-new-invoice-product.circle-button.large
-      = "+"
+  - unless @disabled || @proforma
+    .clearfix.spacer-large
+      #add-new-invoice-product.circle-button.large
+        = "+"

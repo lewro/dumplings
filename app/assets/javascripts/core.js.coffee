@@ -25,20 +25,26 @@
   halfBoxes : () ->
     $('.page-content').each ->
 
-      first   =  $('.half-page:first .content').height() + 100
-      last    =  $('.half-page:last .content').height() + 100
+      first_page    = $('.half-page:first')
+      last_page     = $('.half-page:last')            
+      first_height  = $(first_page).find('.content').height() + 100      
+      last_height   = $(last_page).find('.content').height() + 100        
 
-      if first > last
-        $('.half-page:first').height(first)        
-        $('.half-page:last').height(first)
+      if first_height > last_height
+        $(first_page).height(first_height)        
+        $(last_page).height(first_height)
       else
-        $('.half-page:first').height(last)
-        $('.half-page:last').height(last)        
+        $(first_page).height(last_height)
+        $(last_page).height(last_height)        
       
 
-  uiElements : () ->
+  uiElements : () ->  
     $(".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
     $("select:visible").selectmenu()
+  
+    #Tooltip
+    $( document ).tooltip();
+  
     
   fixUiElements : () ->
     $(".ui-selectmenu-button").each -> 
@@ -173,6 +179,7 @@
     else
       @invalidate element
 
+  #Not using this, when inline forms showned this does not make sense
   focusFirstInput : () ->
     inputs = $('.page-content .half-page:first').find('input[type=text]')
     inputs.each ->
@@ -209,8 +216,7 @@
 
   init : () ->
     core.uiRepaint()    
-    core.windowResize()
-    core.focusFirstInput()
+    core.windowResize()    
 
 jQuery ($) ->
   core.init()  

@@ -25,6 +25,6 @@ class SupplierOrderProductsController < ApplicationController
   end
 
   def supplier_order_product_params
-     params.require(:supplier_order_product).permit(:order_id, :supply_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit)
+     params.require(:supplier_order_product).permit(:order_id, :supply_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit, :expiration_date)
   end
 end

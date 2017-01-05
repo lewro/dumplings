@@ -9,10 +9,10 @@
   - else
     .no-data
       = t"no_data"
-      
-
-#hiden-form-cover
-.clearfix.last
-  #add-new-invoice-product-edit.circle-button.large
-    = "+"                                                    
-      
+            
+- unless @disabled || @proforma
+  #hiden-form-cover
+  .clearfix.last
+    #add-new-invoice-product-edit.circle-button.large
+      = "+"                                                    
+        
