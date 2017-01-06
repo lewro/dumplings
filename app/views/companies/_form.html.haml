@@ -1,33 +1,4 @@
 .page-content.clearfix
-
-
-  .content       
-    .row.clearfix
-      %label
-        = "File Upload"
-
-      %script#template-upload{:type => "text/x-tmpl"}
-        <div class="upload clearfix">
-        <div class="file-name">{%=o.name%}</div>
-        <div class="file-size">{%=o.size%} b</div>
-        <div class="progress clearfix">
-        <div class="bar" style="width: 0%"></div>
-        </div>
-        </div>
-
-      = form_for @file, :url => { :controller => "file_uploads", :action => "create" }, :multipart => false, :html => { :id => "file_upload" } do |f|
-        = f.hidden_field :file_type, { :value => "company-logo" }
-        = f.hidden_field :model_id, { :value => @client.id }
-        = f.hidden_field :model, { :value => "company" }
-        = f.hidden_field :user_id, { :value => current_user.id }
-        = f.file_field :upload, :multiple => false
-        .hide
-          = f.submit
-
-  .file-list
-    = "...."
-
-
   = form_for(@client) do  |f|
       
     - if @category == 'clients'

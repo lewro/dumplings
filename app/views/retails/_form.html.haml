@@ -1,0 +1,44 @@
+.page-content.clearfix
+  #invoice
+    = form_for(@retail) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+      
+      .half-page.left
+        .content
+          .row.clearfix
+
+          - unless remove == true   
+            = render :partial => '/retails/retail_products_form', :locals => { :f => f } 
+          - else
+            = render :partial => '/retails/retail_products_list', :locals => { :f => f }                      
+                             
+                      
+      .half-page.scroll
+        .content           
+          = render :partial => "retails/actions"
+                  
+          = render :partial => "retails/sum", :locals => { :current_view => current_view, :f => f }                       
+                                                   
+          .row.clearfix
+            %label
+              = t"notes"
+
+            - unless @disabled
+              = f.text_area :note
+            - else
+              .input-holder
+                = @retail.note              
+                  
+      .clearfix.action-cover
+
+        = f.submit action, :class => "button"
+        
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @retail,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+
+        - else
+          = link_to "#{t'actions.cancel'}",  @retail, :class => "button remove"      
+
+    - if remove == true
+      .hide.hidden-form      
+        = render :partial => '/retail_products/form'                

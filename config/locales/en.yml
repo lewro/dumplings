@@ -22,6 +22,7 @@ en:
   settings: "Settings"
   offers: "Offers"
   pieces: "pieces"
+  retails: "Retails"
   contact_person: "Contact person"
   payment_conditions: "Payment conditions"
   delivery_notes: "Delivery notes"
@@ -77,6 +78,7 @@ en:
     mark_as_distributed: "Distributed Today"
     mark_as_delivered: "Delivered Today"
     progress: "Progress"
+    price: "Price"
     total_price: "Total price"
     order_confirmation_date: "Order Confirmation Date"
     

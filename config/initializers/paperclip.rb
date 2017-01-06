@@ -6,3 +6,8 @@ module Paperclip
     end
   end
 end
+
+#Allows me to use user_id in path 
+Paperclip.interpolates :user_id do |attachment, style|
+  "#{attachment.instance.user_id}"
+end

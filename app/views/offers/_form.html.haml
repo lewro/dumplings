@@ -80,7 +80,7 @@
         
         = f.submit action, :class => "button"
 
-        = link_to "#{t'actions.create_pdf_document'}", {:controller => "offers",  :action => "pdf", :id => @offer.id} , :class => "button"
+        = link_to "#{t'actions.create_pdf_document'}", {:controller => "offers",  :action => "pdf/#{@offer.id.to_s}.pdf"} , :class => "button"
 
         - if remove == true      
           = link_to "#{t'actions.remove'}",  @offer,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"                   

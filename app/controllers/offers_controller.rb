@@ -36,13 +36,17 @@ class OffersController < ApplicationController
     @offer_products         = OfferProduct.joins("JOIN offers ON offers.id = offer_products.offer_id JOIN products ON offer_products.product_id = products.id").where("offers.id" => @id).select("offer_products.unit AS unit, offer_products.packages_quantity AS packages_quantity, offer_products.packages_size AS packages_size, offer_products.package_price AS package_price, offer_products.id AS product_id, offer_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
     @pc                     = PaymentCondition.find_by_id(@offer.payment_condition)
     
+    @logo                   = FileUpload.where(:file_type => "company-logo", :model => "user" , :model_id => current_user.admin_id).last    
+    @signature              = FileUpload.where(:file_type => "signature", :model => "user" , :model_id => current_user.admin_id).last    
     
+    @path_logo              = "/assets/uploads/" + @logo.user_id.to_s + "/" + @logo.id.to_s + "/medium/" + @logo.upload_file_name
+    @path_signature         = "/assets/uploads/" + @signature.user_id.to_s + "/" + @signature.id.to_s + "/medium/" + @signature.upload_file_name
 
     #PDF
     html_string             = render_to_string(:layout => 'pdf_invoice')
-    kit                     = PDFKit.new(html_string) 
-        
-    render :layout => "pdf_invoice"
+    kit                     = PDFKit.new(html_string)
+         
+    render :layout => "pdf_invoice" 
   end
 
   def create

@@ -5,6 +5,9 @@ Dumplings::Application.routes.draw do
 
   #PDF
   get "offers/pdf"
+
+  #Users
+  get "users/settings"
     
   #Invoices
   post "invoices/mark_invoice_as_paid"
@@ -38,6 +41,8 @@ Dumplings::Application.routes.draw do
   resources :delivery_notes
   resources :delivery_note_products
   resources :file_uploads
+  resources :retails
+  resources :retail_products
 
   get ":controller(/:action(/:id(.:format)))"    
 end

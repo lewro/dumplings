@@ -5,17 +5,15 @@ class FileUploadsController < ApplicationController
     @file_upload  		= FileUpload.new(file_params)  
     @file_type 			= params[:file_upload][:file_type]
     @model_id 			= params[:file_upload][:model_id] 
-	@file_name			= @file_upload.upload_file_name
+		@file_name			= @file_upload.upload_file_name
     
-	@path = ":rails_root/app/assets/images/uploads/" + @file_upload.id.to_s + "/medium/" + @file_name
-
     if @file_upload.save
+    	@path = "/assets/uploads/" + @file_upload.user_id.to_s + "/" + @file_upload.id.to_s + "/medium/" + @file_name
       render :partial => "file"
     else
       flash[:notice] = t "errors.update"
     end  	
   end
-
 
   def file_params
     params.require(:file_upload).

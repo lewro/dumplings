@@ -20,9 +20,9 @@ gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523b
 gem 'mini_magick', '~> 3.4'
 gem 'jquery-fileupload-rails'
 
-
 #Server
-gem 'puma'
+#gem 'puma'
+gem 'passenger'
 
 #Auth
 gem 'devise', '4.0.0'
@@ -32,6 +32,9 @@ gem 'mysql2', '0.4.3'
 
 # Asset template engines
 gem 'haml'
+
+#Fonts
+gem "font-awesome-rails"
 
 # PDF
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'

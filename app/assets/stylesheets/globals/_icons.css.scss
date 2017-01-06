@@ -9,6 +9,17 @@
 @import "mixins";
 @import "sizes";
 @import "fonts";
+@import "font-awesome";
+
+.fa.action {
+  color: $accent-color-secondary;
+	padding: 30px;
+}
+
+.fa.action:hover {
+	color: $accent-color-secondary;
+  background: $theme-2;
+}
 
 .search .icon {  
   -webkit-transform: rotate(45deg); 

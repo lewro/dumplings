@@ -12,10 +12,8 @@
       = link_to "#{t'proforma_invoices'}", :controller => :invoices, :action => :index, :proforma => true
     %li.invoices
       = link_to "#{t'invoices'}", :controller => :invoices, :action => :index                  
-      
-    %li
-      = "//"
-          
+    %li.retails
+      = link_to "#{t'retails'}", :controller => :retails, :action => :index                            
     %li.supplier-orders
       = link_to "#{t'supplier_orders'}", :controller => :supplier_orders, :action => :index      
     %li.stock

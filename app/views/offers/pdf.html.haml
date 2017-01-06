@@ -1,11 +1,10 @@
 .pdf
 	.clearfix
 		.half.content.last
-			= "[logo]"
-
+			-#%img.logo{ :src => @path_logo }
 		.half.a-r.last.content
 			%h1
-				= "Offer"
+				= t"offer.title"
 			.pdf-numbers.clearfix	
 				%label.a-r			
 					= t"offer.offer_id"			
@@ -74,7 +73,7 @@
 
 		.half.last
 			.devider
-			.content.b-l
+			.content
 				.pdf-row
 					%label
 						= "From"
@@ -100,7 +99,7 @@
 
 
 
-	.clearfix.pdf-table.content
+	.clearfix.pdf-table
 		%table
 			%thead
 				%tr
@@ -117,10 +116,16 @@
 					%th
 						= t"orders.package_price"
 					%th
-						= t"expiration_date"            
+						= t"expiration_date" 
+					%th
+						= t"orders.price"           
 
 			%tbody
+
+				- total = 0
+				
 				- @offer_products.each do |op|
+				
 					%tr
 						%td.name
 							= op.name
@@ -136,25 +141,33 @@
 							= op.package_price
 						%td
 							= op.expiration_date
+						%td
+							= op.packages_quantity * op.package_price
+							- total = total + (op.packages_quantity * op.package_price)
 		
 		.totals
+
 			.clearfix
 				.total-header
 					= "Sum"
 				.total-sum
-					= "423.000"
+					= total
+		
 			.clearfix
 				.total-header
-					= "Tax 21%"
+					- tax = 21 #TODO: Get % from profile settings
+					= "Tax"
+					= tax
+					= "%"
 				.total-sum					
-					= "12.009"
+					- tax_total = (total / 100 ) * tax
+					= tax_total
+
 			.clearfix.final
 				.total-header
 					= "Total"
 				.total-sum
-					= "444.992"
-
-
+					= total + tax_total
 
 	.clearfix.content.pdf-footer
 		.pdf-row.clearfix
@@ -166,7 +179,9 @@
 			%label
 				= t"delivery_terms"
 			= @offer.delivery_terms
-
+		
+		.pdf-row.m-t.clearfix
+			-#%img.signature.m-t{ :src => @path_signature }
 
 
 

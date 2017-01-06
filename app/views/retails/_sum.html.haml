@@ -1,0 +1,11 @@
+.row.clearfix    
+  - if @retail.sum
+    .half            
+      %label
+        = t"invoice.invoice_amount" 
+      .input-holder.big        
+        = @retail.sum
+        = f.hidden_field :sum, :value => @retail.sum    
+  - else
+    .big 
+      = f.text_field :sum, :value => 0

@@ -1,11 +1,9 @@
 class FileUpload < ActiveRecord::Base
 
-  user_id = User.find(self.user_id).admin_id
-
   if Rails.env.production?
-    path = "/var/www/sites/getquantify/current/public/system/:attachment/" + user_id + "/:id/:style/:basename.:extension"
+    path = "/var/www/sites/getquantify/current/public/system/:attachment/:user_id/:id/:style/:basename.:extension"
   else
-    path = ":rails_root/app/assets/images/:attachment/" + user_id + "/:id/:style/:basename.:extension"
+    path = ":rails_root/app/assets/images/:attachment/:user_id/:id/:style/:basename.:extension"
   end
 
   has_attached_file :upload, :styles => {:thumb => "50x50#", :medium => "300x300>" },

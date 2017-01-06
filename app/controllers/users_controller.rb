@@ -63,7 +63,21 @@ class UsersController < ApplicationController
       redirect_to action: "index"      
     end
   end  
-  
+
+  def settings
+    @id                     = current_user.id    
+    @user                   = User.find_by_id(@id)
+        
+    @logo_new               = FileUpload.new
+    @signature_new          = FileUpload.new
+
+    @logo                   = FileUpload.where(:file_type => "company-logo", :model => "user" , :model_id => current_user.admin_id).last    
+    @signature              = FileUpload.where(:file_type => "signature", :model => "user" , :model_id => current_user.admin_id).last    
+    @path_logo              = "/assets/uploads/" + @logo.user_id.to_s + "/" + @logo.id.to_s + "/medium/" + @logo.upload_file_name
+    @path_signature         = "/assets/uploads/" + @signature.user_id.to_s + "/" + @signature.id.to_s + "/medium/" + @signature.upload_file_name
+
+
+  end
 
   def user_params
      params.require(:user).permit(:first_name, :last_name, :email, :category, :note, :password)

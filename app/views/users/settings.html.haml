@@ -1,0 +1,45 @@
+= render :partial => 'generic/top', :locals => { :current_view => 'settings' }
+= render :partial => 'users/top', :locals => { :header => "#{t'settings'}" }
+
+
+.half-page.left
+	.content.clearfix     
+		.half
+			%label
+				= "UPDATE: Logo"	
+			.image-cover			
+				= render :partial => 'generic/file_upload', :locals => { :@file => @logo_new, :@file_type =>  "company-logo", :@model => "user", :@model_id => current_user.admin_id }
+				.old-file
+					%img{ :src => @path_logo }				
+
+		.half.last
+			%label
+				= "UPDATE: Signature"		
+			.image-cover						
+				= render :partial => 'generic/file_upload', :locals => { :@file => @signature_new, :@file_type =>  "signature", :@model => "user", :@model_id => current_user.admin_id }
+				.old-file
+					%img{ :src => @path_signature }
+
+
+= form_for(@user) do  |f| 
+	.half-page.left
+		.content
+			.row.clearfix
+				.half      
+					%label
+						= t"user.first_name"
+						= f.text_field :first_name, "data-required" => "true"  
+		
+				.half
+					%label
+						= t"user.last_name"
+						= f.text_field :last_name, "data-required" => "true"  
+
+	
+	.half-page
+		.content
+			.row.clearfix
+	
+
+	.clearfix.action-cover
+		= f.submit "#{t'actions.save'}", :class => "button"

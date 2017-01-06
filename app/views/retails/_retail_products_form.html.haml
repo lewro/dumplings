@@ -1,0 +1,12 @@
+= f.fields_for :retailroducts do |retailroduct|
+  #invoice-products                
+    %label.spacer-large
+      = t"products"
+
+    = render :partial => '/retails/retail_products_list_headers'                    
+    = render :partial => '/retails/retail_product_form', :locals => { :retailproduct => retailproduct }
+
+  - unless @disabled
+    .clearfix.spacer-large
+      #add-new-retial-product.circle-button.large
+        = "+"

@@ -1,0 +1,18 @@
+%label.spacer-large            
+  = t"products"
+
+.row
+  - if @retail_products.size > 0
+    = render :partial => '/retail_products/list_headers'
+    - @retail_products.each do |ip|
+      = render :partial => '/retail_products/list', :locals => { :ip => ip }      
+  - else
+    .no-data
+      = t"no_data"
+            
+- unless @disabled
+  #hiden-form-cover
+  .clearfix.last
+    #add-new-retail-product-edit.circle-button.large
+      = "+"                                                    
+        
