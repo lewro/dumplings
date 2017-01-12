@@ -1,7 +1,7 @@
 Dumplings::Application.routes.draw do
     
   devise_for :users
-  root :to => "client_orders#index"
+  root :to => "events#index"
 
   #PDF
   get "offers/pdf"
@@ -20,6 +20,16 @@ Dumplings::Application.routes.draw do
   #Supplier Orders
   post "supplier_orders/mark_order_as_sent"
   post "supplier_orders/mark_order_as_in_stock"
+
+  #Companies
+  get "companies/edit_ownership"
+
+  #Settings
+  get "settings/edit_settings"
+
+  #File uploads
+  post "file_uploads/remove_pdf"
+  get "file_uploads/remove_pdf"
 
   #Resources
   resources :companies
@@ -43,6 +53,9 @@ Dumplings::Application.routes.draw do
   resources :file_uploads
   resources :retails
   resources :retail_products
+  resources :settings
+  resources :dashboards
+  resources :events
 
   get ":controller(/:action(/:id(.:format)))"    
 end

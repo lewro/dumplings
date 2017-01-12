@@ -9,7 +9,54 @@
   before_filter :set_payment_conditions
   before_filter :set_supplies
   before_filter :set_users 
+  before_filter :set_currency
+  before_filter :set_tax
+  before_filter :set_file_upload_path
+  before_filter :set_images
+
+
+  def set_file_upload_path
+    if current_user
+      @file_upload_images_path  = "/assets/img/"
+      @file_upload_pdf_path     = "/assets/pdf/#{current_user.admin_id}/"
+      @file_download_pdf_path   = "#{Rails.root}/app/assets/uploads/pdf/" + current_user.admin_id.to_s + "/"
+    end
+  end
+
+  def set_images
+    if current_user
+      @logo                   = FileUpload.where(:file_type => "company-logo", :model => "user" , :model_id => current_user.admin_id).last    
+      @signature              = FileUpload.where(:file_type => "signature", :model => "user" , :model_id => current_user.admin_id).last    
   
+     #Account / Admin ID    
+      @admin_id               = current_user.admin_id
+
+      if @logo
+        @path_logo = @file_upload_images_path + @admin_id.to_s + "/" + @logo.id.to_s + "/medium/" + @logo.upload_file_name
+      end
+
+      if @signature
+        @path_signature = @file_upload_images_path + @admin_id.to_s + "/" + @signature.id.to_s + "/medium/" + @signature.upload_file_name
+      end
+    end
+  end
+
+  def set_currency
+    if current_user
+      @currency = Setting.where(:user_id => current_user.admin_id).first.currency
+      return @currency
+    end
+  end
+
+  def set_tax
+    if current_user
+      @settings   = Setting.where(:user_id => current_user.admin_id).first
+      @tax        = @settings.tax
+      @use_tax    = @settings.use_tax      
+    end
+  end
+
+
   def set_reps
     if current_user
   	 @reps = User.where(:category => 1, :admin_id => "#{current_user.admin_id}")

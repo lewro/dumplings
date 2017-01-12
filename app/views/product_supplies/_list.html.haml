@@ -15,7 +15,7 @@
       = unit(ps.unit)
   .sixth.package-price
     .input-holder      
-      = ps.package_price
+      = number_to_currency(ps.package_price, :unit => "")
   
   .small-button-column
     .circle-button.small.remove-product-supply.float-right{"remove-message" => "#{t'actions.confirm'}" }

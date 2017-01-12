@@ -51,7 +51,8 @@
   font-size: $font-small;
   cursor: pointer;  
   @include rounded_corner(100px);
-  padding: 5px 15px;
+  padding: 10px 25px;
+  line-height: 1em;  
   background: $primary-color;
   border: 1px solid $grey-light2;  
   &:hover {
@@ -61,6 +62,17 @@
   }  
   &.float-right {
     margin-left: 20px;
+  }
+}
+
+.link {  
+  font-weight: 100;
+  font-size: $font-small;
+  display: inline-block;
+  color: $accent-color-secondary; 
+  text-transform: uppercase;
+  &:hover {
+    color: $accent-color;
   }
 }
 

@@ -13,9 +13,9 @@
       = ip.packages_size
       = " " 
       = unit(ip.unit)     
-  .sixth.package-price
+  .sixth.package-price.a-r
     .input-holder      
-      = ip.package_price
+      = number_to_currency(ip.package_price, :unit => "")
   .sixth.package-price
     .input-holder      
       = ip.expiration_date

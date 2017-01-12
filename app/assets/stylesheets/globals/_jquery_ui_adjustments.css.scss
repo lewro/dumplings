@@ -231,3 +231,7 @@
   padding: 10px !important;
 }
 
+.switchable-holder.switchable-checked {
+  background: $accent-color-secondary !important;
+  border: 1px solid $accent-color-secondary !important;
+}

@@ -60,13 +60,14 @@
             .half
               %label
                 = t"orders.sum"
-
+                = " (#{@currency})"
+                
               - unless @disabled
                 .big#delivery-note-sum
                   = f.text_field :sum, :placeholder => 0
               - else
                 .input-holder.big
-                  = @delivery_note.sum
+                  = number_to_currency(@delivery_note.sum, :unit => "")
           
 
           .row.clearfix
@@ -95,10 +96,19 @@
                 .input-holder
                   = @delivery_note.note
 
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
+
+              .spacer-large.clearfix
+                = link_to "#{t'actions.create_pdf_document'}", "/delivery_notes/pdf/#{@delivery_note.id}.pdf", :class => "button", :target => "_blank"     
+
+
 
       .action-cover.clearfix
 
         = f.submit action, :class => "button"
+        = f.submit "#{t'save_pdf'}", :class => "link-button"        
      
         - if remove == true      
           = link_to "#{t'actions.remove'}",  @delivery_note,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"                   

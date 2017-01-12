@@ -37,7 +37,7 @@ nav,
 
 #top-nav {
   position: absolute;
-  padding: 30px;
+  padding: 30px 30px 20px 30px;
   width: 200px;
   top: 0px;
   right: 0px;
@@ -50,7 +50,7 @@ nav,
 
   li {
     width: 100%;  
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     a:hover{
       color: $theme-1;
     }
@@ -78,17 +78,21 @@ nav,
 .delivery-notes .delivery-notes a,
 .proforma-invoices .proforma-invoices a,
 .offers .offers a,
+.invoices .invoices a,
+.retails .retails a,
+.events .events a,
 .stock .stock a {      
   color: $accent-color-secondary !important;
   opacity: 1 !important;
 }
+
 .clients .clients a,
 .products .products a,
 .supplies .supplies a,
-.invoices .invoices a,
 .payments .payments a,
 .payment-conditions .payment-conditions a,
 .suppliers .suppliers a,
+.ownership .ownership a,
 .stuff .stuff a {
   color: $theme-2 !important;
   opacity: 1 !important;

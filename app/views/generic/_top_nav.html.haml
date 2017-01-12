@@ -4,7 +4,9 @@
   %i{:class => "fa fa-times top-nav-close action"}
   %ul
     %li.settings
-      = link_to "#{t'settings'}", :controller => :users, :action => :settings
+      = link_to "#{t'settings'}", :controller => :settings, :action => :edit_settings
+    %li.ownership
+      = link_to "#{t'your_company'}", :controller => :companies, :action => :edit_ownership
     %li.stuff
       = link_to "#{t'stuff'}", :controller => :users, :action => :index
     %li.payments

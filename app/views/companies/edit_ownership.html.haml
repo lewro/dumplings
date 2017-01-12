@@ -1,0 +1,10 @@
+- @category = "ownership"
+
+- unless @company.nil?
+	- header = @company.name
+- else
+	- header = t"company.ownership_new"
+
+= render :partial => 'generic/top', :locals => { :current_view => @category }
+= render :partial => "companies/top", :locals => { :header => header, :search => false }
+= render :partial => "companies/form_ownership", :locals => { :action =>  "#{t'actions.save'}", :category => "ownerhip", :remove => true }

@@ -1,0 +1,37 @@
+= form_for(@retail_product) do  |f|  
+
+  = f.hidden_field :retail_id, :value => @id
+  = f.hidden_field :user_id, :value => current_user.id
+    
+  .product
+    .clearfix.list-headers
+      .two-sevenths
+        %label
+          = t"products.name"
+        = products_select(f, @products)
+      .seventh.packages-quantity
+        %label        
+          = t"orders.packages_count"
+        = f.text_field :packages_quantity, "data-required" => "true"   
+      .seventh
+        %label      
+          = t"orders.package_size"
+        = f.text_field :packages_size
+      .seventh
+        %label      
+          = t"unit.title"
+        = units_select(f)           
+      .seventh.package-price
+        %label      
+          = t"orders.package_price"
+        = f.text_field :package_price, "data-required" => "true"    
+      .seventh
+        %label      
+          = t"expiration_date"
+        .ui-selectmenu-button
+          = f.text_field :expiration_date, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
+          %span.ui-icon.ui-icon-triangle-1-s          
+      .clearfix
+        %label
+          = " "
+        = f.submit "#{t'actions.create'}", :class => "button float-right spacer-medium"

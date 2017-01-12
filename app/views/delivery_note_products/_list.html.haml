@@ -13,9 +13,9 @@
       = dnp.packages_size
       = " " 
       = unit(dnp.unit)     
-  .sixth.package-price
+  .sixth.package-price.a-r
     .input-holder      
-      = dnp.package_price
+      = number_to_currency(dnp.package_price, :unit => "")
   .sixth.package-price
     .input-holder      
       = dnp.expiration_date

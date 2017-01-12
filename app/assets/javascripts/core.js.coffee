@@ -37,6 +37,11 @@
         $(first_page).height(last_height)
         $(last_page).height(last_height)        
       
+  
+  # Switch Buttons - uses Switchable plugin
+  switchButtons: () ->  
+    $("input[type='checkbox']").switchable()
+
 
   uiElements : () ->  
     $(".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
@@ -54,7 +59,17 @@
   formSubmit : () ->
     $("form").on 'submit', (e) ->
       core.validateForm(this)
-  
+
+  autosubmitLink : () ->    
+    if $(".autosubmit").length > 0      
+      url  = $(".autosubmit").data("url")
+      win = window.open url, '_blank'
+
+      if (win)          
+          win.focus();
+      else    
+        alert('Please allow popups for this website');
+    
   validateForm : (form) ->
     #Empty Input?
     if $(form).find('input[type="text"]').length > 0
@@ -207,7 +222,9 @@
     core.scroll() 
     core.tableRows()
     core.formSubmit()
-    core.messages()  
+    core.messages() 
+    core.switchButtons()
+    core.autosubmitLink()
     
   windowResize : () ->
     $(window).resize ->

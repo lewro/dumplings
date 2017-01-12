@@ -1,6 +1,6 @@
-.page-content.clearfix  
-  = form_for(@user) do  |f|      
-    .half-page.left
+.page-content.clearfix
+  .half-page.left
+    = form_for(@user) do  |f| 
       .content
         .row.clearfix
           .half      
@@ -19,6 +19,12 @@
             = f.text_field :password, "data-required" => "true"  
 
           
+        .row.clearfix
+          %label
+            = t"user.category"
+          - category = @user.category
+          = stuff_category_select(f, category)
+
         .row.clearfix          
           %label
             = t"user.email"
@@ -27,29 +33,27 @@
             .input-holder
               = @user.email
           - else
-            = f.text_field :email, "data-required" => "true"            
-          
+            = f.text_field :email, "data-required" => "true"    
 
-    .half-page
-      .content
-        .row.clearfix
-          %label
-            = t"user.category"
-          - category = @user.category
-          = stuff_category_select(f, category)
-        
         .row.clearfix
           %label
             = t"note"
-          = f.text_area :note, :cols => 1, :rows => 3          
+          = f.text_area :note, :cols => 1, :rows => 3      
 
-    .clearfix.action-cover
-      = f.submit action, :class => "button"
-      - if remove == true      
-        = link_to "#{t'actions.remove'}",  @user,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
-        
-      - else
-        = link_to "#{t'actions.cancel'}",  @user, :class => "button remove"      
+        .row.clearfix.last
+          = f.submit action, :class => "button"
+          - if remove == true
+            - unless @user.id == @user.admin_id      
+              = link_to "#{t'actions.remove'}",  @user,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+          - else            
+            = link_to "#{t'actions.cancel'}",  @user, :class => "button remove"      
+          
+
+  .half-page.scroll
+    .content
+      - unless @event.nil?
+        = render :partial => "events/events"
+        = render :partial => 'events/event_form'
         
 
 

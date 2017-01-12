@@ -63,7 +63,7 @@
                   = f.text_field :sum, :placeholder => 0
               - else
                 .input-holder.big
-                  = @supplier_order.sum
+                  = number_to_currency(@supplier_order.sum, :unit => "")
                        
           .row.clearfix.last
             %label

@@ -115,12 +115,21 @@
             - else
               .input-holder
                 = @invoice.note
+
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
+
+              .spacer-large.clearfix
+                = link_to "#{t'actions.create_pdf_document'}", "/invoices/pdf/#{@invoice.id}.pdf", :class => "button", :target => "_blank"     
+
                 
           = render :partial => "invoices/payments", :locals => { :remove => remove }
                   
       .clearfix.action-cover
 
         = f.submit action, :class => "button"
+        = f.submit "#{t'save_pdf'}", :class => "link-button"
         
         - if remove == true      
           = link_to "#{t'actions.remove'}",  @invoice,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"

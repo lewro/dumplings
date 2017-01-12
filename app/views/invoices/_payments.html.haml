@@ -10,6 +10,7 @@
           = t'invoice.paid_date'
         %th.currency
           = t'orders.sum'
+          = " (#{@currency})"
 
       - @payments.each do |payment|  
         %tr.data{"data-link" => "/payments/#{payment.id}/edit"}

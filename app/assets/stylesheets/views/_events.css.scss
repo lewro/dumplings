@@ -1,0 +1,74 @@
+/**
+  * File          Events
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines events classes
+ **/
+ 
+ @import "globals/colours";
+ @import "globals/mixins";
+ @import "globals/sizes";
+  @import "globals/fonts";
+
+.event-items {
+	font-size: $font-medium;
+	padding-bottom: 30px;
+	font-weight: 100;
+}
+
+.event-date {
+	margin: 10px 0 20px 0;
+	color: $theme-5;
+	font-size: $font-small;
+	text-transform: uppercase;
+}
+
+.event-item {
+	margin-left: 15px;
+	padding-left: 25px;
+	border-left: 1px dashed $accent-color-secondary;
+	padding-bottom: 30px;
+}
+
+.event-item:before {
+	display: block;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	margin-left: -41px;
+	margin-top: -5px;
+	@include rounded_corner(100px);
+	background: $primary-color;
+	border: 10px solid $accent-color;
+}
+
+.event-item:hover .event-actions {
+	visibility: visible;
+}
+
+.event-time {
+	color: $grey-dark3;
+	float: left;
+	width: 50px;
+	margin-bottom: 10px;
+}
+
+.event-name {
+	float: left;
+	margin-bottom: 10px;
+}
+
+.event-note {
+	line-height: 1.5;
+	color: $grey-dark3;
+	margin-left: 50px;
+}
+
+.event-actions {
+	visibility: hidden;
+	font-size: $font-small;
+	margin: 15px 0 0 40px;
+	.button {
+		padding: 5px 15px;
+	}	
+}

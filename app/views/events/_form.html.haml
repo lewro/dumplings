@@ -1,0 +1,43 @@
+.page-content.clearfix  
+  #event
+    = form_for(@event) do  |f|
+      .half-page.left.scroll
+        .content        
+          .row.clearfix      
+            %label
+              = t"client.title"
+            = clients_select(f, @clients)
+
+          .row.clearfix
+            .half           
+              %label
+                = t"date"
+              .ui-selectmenu-button               
+                = f.text_field :date, :class => "datepicker", "data-required" => "true"   
+                %span.ui-icon.ui-icon-triangle-1-s      
+            .half.last            
+              %label
+                = t"time"
+              - unless @event.time.nil?
+                = f.text_field :time, :value => @event.time.strftime('%R'), "data-required" => "true"   
+              - else
+                = f.text_field :time, "data-required" => "true"   
+        
+          .row.clearfix           
+            %label
+              = t"note"
+            = f.text_area :note  
+                        
+              
+   
+      .half-page
+        .content
+
+      .clearfix.action-cover
+        = f.submit action, :class => "button"
+
+        - if remove == true      
+          = link_to "#{t'actions.remove'}",  @event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+          
+        - else
+          = link_to "#{t'actions.cancel'}",  @event, :class => "button remove"   

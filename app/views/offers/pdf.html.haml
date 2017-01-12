@@ -14,32 +14,30 @@
 					= t"offer.reference_id"
 					= ":"
 					= @offer.reference_id
-					
+									
 				.pdf-row
 					%label.a-r
-						= "Bank"
+						= t"bank.title"
 						= ":"
-						= "Tatrabanka"
+						= @ownership.bank
 				.pdf-row
 					%label.a-r
-						= "Account number"
+						= t"bank.account_number"
 						= ":"
-						= "1341-3243-234-33232"
+						= @ownership.account_number
 				.pdf-row
 					%label.a-r
-						= "SWIFT"
+						= t"bank.swift_code"
 						= ":"
-						= "SK-4-3243-234-33232"
+						= @ownership.swift_code
 				.pdf-row
 					%label.a-r
-						= "IBAN Code"
+						= t"bank.iban_code"
 						= ":"
-						= "1341-3243-234-33232"						
+						= @ownership.iban_code
 
 				.pdf-row.m-t
-					%label.a-r
-						= "Date"
-						= ":"
+					.a-r
 						= display_date(@offer.issue_date)	
 
 
@@ -49,7 +47,7 @@
 			.content
 				.pdf-row
 					%label
-						= "To"			
+						= t"to"			
 				.pdf-row
 					%strong
 						= @client.name
@@ -64,11 +62,11 @@
 				.pdf-values.clearfix
 					.half	
 						%label
-							= "Registration #"			
+							= t"client.registration_number"				
 						= @client.registration_number
 					.half.last
 						%label
-							= "VAT #"			
+							= t"client.vat_number"			
 						= @client.vat_number
 
 		.half.last
@@ -76,26 +74,29 @@
 			.content
 				.pdf-row
 					%label
-						= "From"
+						= t"from"
 					%strong
-						= @client.name
+						= @ownership.name
 				.pdf-row
-					= @client.street
-					= @client.street_number
+					= @ownership.street
+					= @ownership.street_number
 				.pdf-row				
-					= @client.city
+					= @ownership.city
 				.pdf-row				
-					= @client.zip_code	
+					= @ownership.zip_code	
 
 				.pdf-values.clearfix
 					.half	
 						%label
-							= "Registration #"			
+							= t"client.registration_number"			
 						= @client.registration_number
 					.half.last
 						%label
-							= "VAT #"			
+							= t"client.vat_number"
 						= @client.vat_number
+				.pdf-fow
+					%small
+						= @ownership.legal
 
 
 
@@ -145,30 +146,33 @@
 							= op.packages_quantity * op.package_price
 							- total = total + (op.packages_quantity * op.package_price)
 		
-		.totals
 
-			.clearfix
-				.total-header
-					= "Sum"
-				.total-sum
-					= total
+		.totals
+			- tax_total = 0
+			- if @use_tax == true
+				.clearfix
+					.total-header
+						= t"orders.sum"
+					.total-sum
+						= total
 		
-			.clearfix
-				.total-header
-					- tax = 21 #TODO: Get % from profile settings
-					= "Tax"
-					= tax
-					= "%"
-				.total-sum					
-					- tax_total = (total / 100 ) * tax
-					= tax_total
+				.clearfix
+					.total-header
+						- tax = @tax
+						= "Tax"
+						= tax
+						= "%"
+					.total-sum					
+						- tax_total = (total / 100 ) * tax
+						= tax_total			
 
 			.clearfix.final
 				.total-header
-					= "Total"
+					= t"orders.total_price"
 				.total-sum
 					= total + tax_total
 
+	.devider
 	.clearfix.content.pdf-footer
 		.pdf-row.clearfix
 			%label
@@ -180,8 +184,11 @@
 				= t"delivery_terms"
 			= @offer.delivery_terms
 		
+		.devider			
 		.pdf-row.m-t.clearfix
 			-#%img.signature.m-t{ :src => @path_signature }
+	
+
 
 
 

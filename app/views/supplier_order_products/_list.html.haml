@@ -13,9 +13,9 @@
       = sop.packages_size
       = " "
       = unit(sop.packages_unit)
-  .sixth.package-price
+  .sixth.package-price.a-r
     .input-holder      
-      = sop.package_price
+      = number_to_currency(sop.package_price, :unit => "")
   .sixth.package-price   
     .input-holder      
       = sop.expiration_date   

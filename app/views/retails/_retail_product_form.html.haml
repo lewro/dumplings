@@ -1,18 +1,18 @@
 .product
-  = retailroduct.fields_for "retailroduct[#{0}]" do |retailroduct|
+  = retailproduct.fields_for "retailproduct[#{0}]" do |retailproduct|
     .row.clearfix
       .fifth
-        = products_select(retailroduct, @products)
+        = products_select(retailproduct, @products)
       .sixth.packages-quantity      
-        = retailroduct.text_field :packages_quantity, "data-required" => "true"         
+        = retailproduct.text_field :packages_quantity, "data-required" => "true"         
       .sixth
-        = retailroduct.text_field :packages_size
+        = retailproduct.text_field :packages_size
       .sixth
-        = units_select(retailroduct)        
+        = units_select(retailproduct)        
       .sixth.package-price
-        = retailroduct.text_field :package_price, "data-required" => "true" 
+        = retailproduct.text_field :package_price, "data-required" => "true" 
       .sixth
         .ui-selectmenu-button
-          = retailroduct.text_field :expiration_date , :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
+          = retailproduct.text_field :expiration_date , :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
           %span.ui-icon.ui-icon-triangle-1-s
 

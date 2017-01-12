@@ -1,0 +1,33 @@
+.row.clearfix
+	%label
+		= t"meetings"
+
+	.events		
+		- unless @events.nil?
+			- if @events.size < 1
+				.note
+					= t"no_data"
+
+			- @events.all.group_by(&:date).each do |date, events|
+				
+				.event-date
+					= display_date(date)
+
+				- events.each do |event|
+
+					.event-item.clearfix
+						.clearfix
+							.event-time
+								- unless event.time.nil?
+									= event.time.strftime('%R')
+								- else
+									= ""
+							.event-name
+								= event.name
+						.clearfix
+							.event-note
+								= simple_format(event.note)
+							.event-actions	
+								= link_to "#{t'actions.edit'}", 	[:edit, event], :class => "button remove"
+								= link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "	button remove"          							
+								

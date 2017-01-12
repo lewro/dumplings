@@ -3,18 +3,20 @@
     .half            
       %label
         = t"invoice.invoice_amount" 
+        = " (#{@currency})"
       .input-holder.big        
-        = @invoice.sum
+        = number_to_currency(@invoice.sum, :unit => "")
         = f.hidden_field :sum, :value => @invoice.sum
 
     - if @balance
       - @balance_class = balance_class(@balance)
       .half  
         %label
-          = t"invoice.balance"         
+          = t"invoice.balance"  
+          = " (#{@currency})"       
         .input-holder.big
           %span{:class => @balance_class}
-            = @balance
+            = number_to_currency(@balance, :unit => "")
 
   - else
     .big 
@@ -27,5 +29,6 @@
       .half                                
         %label
           = t'invoice.proforma'
+          = " (#{@currency})"
         .input-holder.big
-          = @proforma.sum
+          = number_to_currency(@proforma.sum, :unit => "")

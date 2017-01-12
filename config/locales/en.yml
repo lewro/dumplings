@@ -29,14 +29,30 @@ en:
   no_data: "No data"
   expiration_date: "Expiration date"
   delivery_terms: "Delivery terms"
-  
+  retials: "Retails"
+  your_company: "Your company"
+  legal: "Legal requirement"
+  date: "Date"
+  time: "Time"
+  from: "From"
+  to: "To"
+  meetings: "Agenda"
+  pdfs: "PDF Documents"
+  tax: "Tax"
+  id_format: "ID Format"
+  save_pdf: "Save and Create PDF"
+
+  meeting: 
+    title: "Meeting"
+    new: "Add new meeting"
+
   client:
     title: "Client"
     add: "Add new client"
     search: "Search for a client"
     new: "New client"
-    registration_number: "Registration number"
-    var_number: "VAT number" 
+    registration_number: "Registration #"
+    vat_number: "VAT #" 
     reference: "Client reference"
     
   supplier:
@@ -44,11 +60,10 @@ en:
     add: "Add new supplier"
     search: "Search for a supplier"
     new: "New supplier"
-    registration_number: "Registration number"
-    var_number: "VAT number"    
         
   company: 
     title: "Company"
+    ownership_new: "Specify your company details"
     
   address:
     street: "Street"
@@ -58,7 +73,13 @@ en:
     
   sales_representative:
     title: "Sales representative"
-    
+
+  bank:
+    title: "Bank"
+    account_number: "Account number"
+    swift_code: "Swift code"
+    iban_code: "Iban code"
+
   orders:
     title: "Orders"
     client_orders: "Client orders"
@@ -81,6 +102,7 @@ en:
     price: "Price"
     total_price: "Total price"
     order_confirmation_date: "Order Confirmation Date"
+    id: "Order ID"
     
   product:
     title: "Product"
@@ -109,7 +131,12 @@ en:
     proforma: "Pro forma invoice"
     taxable_date: "Date of Taxable Supply"
     issue_date: "Issue date"
+    id: "Invoice ID"
 
+  proforma_invoice: 
+    title: "Proforma Invoice"
+    id: "Proforma ID"
+  
   delivery_note:
     title: "Delivery note"
 
@@ -119,11 +146,30 @@ en:
     add_partial_payment: "Add partial payment"
     search: "Search payments"
 
+  payment_type:
+    cash: "Cash"
+    card: "Card"
+    transfer: "Bank transfer"
+
+  delivery_type:
+    service: "Delivery service"
+    collection: "Personal collection"
+
+  retail:
+    title: "Retail sale"
+    add: "Add new retail sale"    
+    search: "Search retail sales"
+    payment_type: "Payment type"
+    delivery_type: "Delivery type"
+    transport: "Transport cost"
+
   actions:
     title: "Actions" 
     save: "Save"
     remove: "Remove"
     create: "Create"
+    edit: "Edit"
+    download: "Download"
     confirm: "Are you sure?"
     cancel: "Cancel"
     create_pdf_document: "Create PDF document"
@@ -167,6 +213,7 @@ en:
     title: "Delivery note"
     add: "Create new delivery note"
     search: "Search for a note"
+    id: "Delivery note ID"
     
   stock:
     title: "Stock"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106070126) do
+ActiveRecord::Schema.define(version: 20170111140941) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                null: false
@@ -60,6 +60,11 @@ ActiveRecord::Schema.define(version: 20170106070126) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "contact_person",      limit: 255
+    t.string   "bank",                limit: 255
+    t.string   "account_number",      limit: 255
+    t.string   "swift_code",          limit: 255
+    t.string   "iban_code",           limit: 255
+    t.string   "legal",               limit: 255
   end
 
   create_table "delivery_note_products", force: :cascade do |t|
@@ -86,6 +91,16 @@ ActiveRecord::Schema.define(version: 20170106070126) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "issue_date"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4,     null: false
+    t.integer  "client_id",  limit: 4,     null: false
+    t.text     "note",       limit: 65535
+    t.date     "date"
+    t.time     "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "file_uploads", force: :cascade do |t|
@@ -218,6 +233,16 @@ ActiveRecord::Schema.define(version: 20170106070126) do
     t.text     "note",           limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4,   null: false
+    t.integer  "id_format",  limit: 4
+    t.string   "currency",   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tax",        limit: 4
+    t.boolean  "use_tax"
   end
 
   create_table "stock_group_products", force: :cascade do |t|

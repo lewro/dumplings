@@ -1,11 +1,30 @@
 .page-content.clearfix
-  #invoice
+  #retail
     = form_for(@retail) do  |f|
       = f.hidden_field :user_id, :value => current_user.id
       
       .half-page.left
         .content
           .row.clearfix
+            .half
+              %label
+                = t"retail.payment_type" 
+              - unless @disabled           
+                = payment_type_select(f, @retail.payment_type)
+              - else
+                .input-holder
+                  = payment_type(@retail.payment_type)
+
+            .half.last
+              %label
+                = t"retail.delivery_type" 
+              - unless @disabled                                       
+                = delivery_type_select(f, @retail.delivery_type)
+              - else
+                .input-holder
+                  = @retail.delivery_type       
+
+
 
           - unless remove == true   
             = render :partial => '/retails/retail_products_form', :locals => { :f => f } 
@@ -14,9 +33,7 @@
                              
                       
       .half-page.scroll
-        .content           
-          = render :partial => "retails/actions"
-                  
+        .content                                       
           = render :partial => "retails/sum", :locals => { :current_view => current_view, :f => f }                       
                                                    
           .row.clearfix

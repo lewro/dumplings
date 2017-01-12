@@ -1,3 +1,6 @@
 = render :partial => 'generic/top', :locals => {:current_view => 'client-orders'}
 = render :partial => 'client_orders/top', :locals => { :header => "#{t'orders.client_orders'}" , :search => true }
 = render :partial => 'client_orders/list'
+
+- if @pdf_id
+	.autosubmit{"data-url" => "/client_orders/pdf/#{@pdf_id}.pdf"}

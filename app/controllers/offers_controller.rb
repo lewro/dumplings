@@ -7,7 +7,8 @@ class OffersController < ApplicationController
   end
   
   def index
-    @offers = Offer.joins("JOIN companies ON companies.id = offers.client_id").select('companies.name AS company_name, offers.id AS offer_id, offers.sum AS offer_sum, offers.client_id AS client_id, offers.reference_id AS reference_id, offers.issue_date AS issue_date')    
+    @offers       = Offer.joins("JOIN companies ON companies.id = offers.client_id").select('companies.name AS company_name, offers.id AS offer_id, offers.sum AS offer_sum, offers.client_id AS client_id, offers.reference_id AS reference_id, offers.issue_date AS issue_date')    
+    @pdf_id       = params[:pdf_id]
   end
   
   def edit
@@ -18,7 +19,8 @@ class OffersController < ApplicationController
     @offer_product          = OfferProduct.new
     @order_number           = ClientOrder.where(:offer_id => @offer.id).first
     @pc                     = PaymentCondition.find_by_id(@offer.payment_condition)
-    
+    @pdfs                   = FileUpload.where(:model => "offer", :model_id => @id, :user_id => current_user.admin_id)
+
     unless @pc.nil?
       @payment_condition = @pc.text
     end
@@ -32,26 +34,38 @@ class OffersController < ApplicationController
   def pdf
     @id                     = params[:id]
     @offer                  = Offer.find_by_id(@id)    
-    @client                 = Company.find_by_id(@offer.client_id)        
+    @client                 = Company.find_by_id(@offer.client_id)     
+    @ownership              = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
     @offer_products         = OfferProduct.joins("JOIN offers ON offers.id = offer_products.offer_id JOIN products ON offer_products.product_id = products.id").where("offers.id" => @id).select("offer_products.unit AS unit, offer_products.packages_quantity AS packages_quantity, offer_products.packages_size AS packages_size, offer_products.package_price AS package_price, offer_products.id AS product_id, offer_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
     @pc                     = PaymentCondition.find_by_id(@offer.payment_condition)
-    
-    @logo                   = FileUpload.where(:file_type => "company-logo", :model => "user" , :model_id => current_user.admin_id).last    
-    @signature              = FileUpload.where(:file_type => "signature", :model => "user" , :model_id => current_user.admin_id).last    
-    
-    @path_logo              = "/assets/uploads/" + @logo.user_id.to_s + "/" + @logo.id.to_s + "/medium/" + @logo.upload_file_name
-    @path_signature         = "/assets/uploads/" + @signature.user_id.to_s + "/" + @signature.id.to_s + "/medium/" + @signature.upload_file_name
-
+        
     #PDF
-    html_string             = render_to_string(:layout => 'pdf_invoice')
+    html_string             = render_to_string(:layout => 'pdf_document')
     kit                     = PDFKit.new(html_string)
-         
-    render :layout => "pdf_invoice" 
+    file_unique_name        = @id.to_s+".pdf"
+  
+    if Rails.env.production?
+      file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
+    else
+      file_path = "#{Rails.root}/app/assets/uploads/pdf/" + file_unique_name
+    end
+
+    #File object
+    file = kit.to_file(file_path)         
+      
+    #Create file object, dtb record and upload in folder structure
+    PdfFileUpload.upload_pdf_file(file, @offer.id, @admin_id, "offer", "document")
+
+    #Remove the tmp file
+    FileUtils.rm(file_path)
+
+    render :layout => "pdf_document" 
   end
 
   def create
-    @offer                  = Offer.create(offer_params)    
+    @offer                  = Offer.create(offer_params) 
     @offer_products         = params[:offer][:offerproducts][:offerproduct]
+    @commit                 = params[:commit]
 
     @offer_products.each do |op|
       unless op[1]["packages_quantity"] == ""
@@ -59,16 +73,25 @@ class OffersController < ApplicationController
       end
     end
     
-    redirect_to action: "index"  
+    if @commit.include? "PDF"
+      redirect_to "/offers/?pdf_id=#{@offer.id}"
+    else      
+      redirect_to action: "index"  
+    end
   end
   
   def update
     @id                     = params[:id]          
     @offer                  = Offer.find_by_id(@id)
+    @commit                 = params[:commit]
 
     @offer.update(offer_params)
         
-    redirect_to action: "index"       
+    if @commit.include? "PDF"
+      redirect_to "/offers/?pdf_id=#{@offer.id}"
+    else      
+      redirect_to action: "index"  
+    end     
   end  
 
   def destroy

@@ -26,6 +26,7 @@
         newTotal      = oldTotal - productPrice   
 
         $('#offer_sum').val(newTotal)
+        $('#offer_sum').prev('.input-holder.big').html(newTotal)
         
         actions.ajax 'delete', "/offer_products/#{id}", ""      
         $(this).parents('.product').remove()

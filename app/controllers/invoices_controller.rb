@@ -3,6 +3,8 @@ class InvoicesController < ApplicationController
   
   def index
     @proforma = params[:proforma]
+    @pdf_id   = params[:pdf_id]
+
     if @proforma == 'true'
       @invoices = Invoice.joins("JOIN companies ON companies.id = invoices.client_id").select("companies.name AS client_name, invoices.id AS id, invoices.sum AS sum, invoices.due_date AS due_date, invoices.paid_date AS paid_date, (SELECT SUM(sum) FROM payments WHERE invoices.id = payments.invoice_id) AS balance").where(:proforma => true)
     else
@@ -93,6 +95,7 @@ class InvoicesController < ApplicationController
   def create
     @invoice            = Invoice.create(invoice_params)
     @invoice_products   = params[:invoice][:invoiceproducts][:invoiceproduct]
+    @commit             = params[:commit]
 
     @invoice_products.each do |ip|
       unless ip[1]["packages_quantity"] == ""
@@ -100,10 +103,11 @@ class InvoicesController < ApplicationController
       end
     end
 
-    if @invoice.proforma
-      redirect_to action: "index", :proforma => true
-    else
-      redirect_to action: "index", :proforma => false      
+    #Load Index but aftercall PDF document in new TAB
+    if @commit.include? "PDF"
+      redirect_to "/invoices/?pdf_id=#{@invoice.id}&proforma=#{@invoice.proforma}"
+    else      
+      redirect_to action: "index", :proforma => @invoice.proforma
     end
     
   end
@@ -134,13 +138,15 @@ class InvoicesController < ApplicationController
   def update
     @id       = params[:id]    
     @invoice  = Invoice.find_by_id(@id)
+    @commit   = params[:commit]
 
     @invoice.update(invoice_params)
-    
-    if @invoice.proforma 
-      redirect_to action: "index", :proforma => true
-    else
-      redirect_to action: "index"
+
+    #Load Index but aftercall PDF document in new TAB
+    if @commit.include? "PDF"
+      redirect_to "/invoices/?pdf_id=#{@invoice.id}&proforma=#{@invoice.proforma}"
+    else      
+      redirect_to action: "index", :proforma => @invoice.proforma
     end
   end
 
@@ -153,6 +159,7 @@ class InvoicesController < ApplicationController
   
     @order                = ClientOrder.find_by_id(@invoice.order_id)
     @client               = Company.find_by_id(@invoice.client_id)
+    @pdfs                 = FileUpload.where(:model => "invoice", :model_id => @id, :user_id => current_user.admin_id)
 
     unless @order.nil?
       @delivery_note        = DeliveryNote.where(:order_id => @order.id).first
@@ -205,8 +212,39 @@ class InvoicesController < ApplicationController
       @disabled           = true
       @payment_condition  = PaymentCondition.find_by_id(@invoice.payment_condition)
     end
-
   end
+
+  def pdf
+    @id                     = params[:id]
+    @invoice                = Invoice.find_by_id(@id)
+    @client                 = Company.find_by_id(@invoice.client_id)     
+    @ownership              = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
+    @invoice_products       = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code ")
+    @pc                     = PaymentCondition.find_by_id(@invoice.payment_condition)
+    
+    #PDF
+    html_string             = render_to_string(:layout => 'pdf_document')
+    kit                     = PDFKit.new(html_string)
+    file_unique_name        = @id.to_s+".pdf"
+  
+    if Rails.env.production?
+      file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
+    else
+      file_path = "#{Rails.root}/app/assets/uploads/pdf/" + file_unique_name
+    end
+
+    #File object
+    file = kit.to_file(file_path)         
+      
+    #Create file object, dtb record and upload in folder structure
+    PdfFileUpload.upload_pdf_file(file, @invoice.id, @admin_id, "invoice", "document")
+
+    #Remove the tmp file
+    FileUtils.rm(file_path)
+
+    render :layout => "pdf_document" 
+  end  
+
   
   def destroy
     @id       = params[:id]    

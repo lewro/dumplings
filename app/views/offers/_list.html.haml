@@ -2,15 +2,24 @@
   .content
     %table
       = render :partial => 'offers/list_headers'
-      - @offers.each do |offer|
-        %tr.data{"data-order-id" => "#{offer.offer_id}", "data-link" => "/offers/#{offer.offer_id}/edit"}    
-          %td
-            = offer.offer_id
-          %td
-            = offer.company_name
-          %td.currency
-            = number_to_currency(offer.offer_sum, :unit => "")
-          %td
-            = offer.reference_id
-          %td
-            = offer.issue_date
+      
+      - if @offers.size > 0
+        - @offers.each do |offer|
+          %tr.data{"data-order-id" => "#{offer.offer_id}", "data-link" => "/offers/#{offer.offer_id}/edit"}    
+            %td
+              = offer.offer_id
+            %td
+              = offer.company_name
+            %td.currency
+              = number_to_currency(offer.offer_sum, :unit => "")
+            %td
+              = offer.reference_id
+            %td
+              = offer.issue_date
+
+      - else
+        %tr
+          %td{:colspan => 5}
+            .note
+              = t"no-data"
+          

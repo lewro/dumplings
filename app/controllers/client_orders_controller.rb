@@ -28,9 +28,10 @@ class ClientOrdersController < ApplicationController
   end
 
   def index
-    @client_orders = ClientOrder.joins("JOIN companies ON companies.id = client_orders.client_id").select('companies.name AS company_name, client_orders.id AS order_id, client_orders.sum AS order_sum, client_orders.expected_delivery AS order_expected_delivery, client_orders.distribution AS order_distribution, client_orders.status AS order_status, client_orders.reference_id AS reference_id')
+    @client_orders  = ClientOrder.joins("JOIN companies ON companies.id = client_orders.client_id").select('companies.name AS company_name, client_orders.id AS order_id, client_orders.sum AS order_sum, client_orders.expected_delivery AS order_expected_delivery, client_orders.distribution AS order_distribution, client_orders.status AS order_status, client_orders.reference_id AS reference_id')
+    @pdf_id         = params[:pdf_id]
   end
-  
+
   def mark_order_as_distributed
     @id                     = params[:id]
     @client_order           = ClientOrder.find_by_id(@id)
@@ -58,6 +59,7 @@ class ClientOrdersController < ApplicationController
     @invoice_number           = Invoice.where(:order_id => @id, :proforma => false).first
     @proforma_invoice_number  = Invoice.where(:order_id => @id, :proforma => true).first
     @delivery_note_number     = DeliveryNote.where(:order_id => @id).first
+    @pdfs                     = FileUpload.where(:model => "client_order", :model_id => @id, :user_id => current_user.admin_id)
         
     if @client_order.offer_id
       @offer_id               = Offer.find_by_id(@client_order.offer_id).id
@@ -70,12 +72,44 @@ class ClientOrdersController < ApplicationController
 
       @payment_condition = PaymentCondition.find_by_id(@client_order.payment_condition)
     end
-
   end
+
+  def pdf
+    @id                     = params[:id]
+    @client_order           = ClientOrder.find_by_id(@id)  
+    @client                 = Company.find_by_id(@client_order.client_id)     
+    @ownership              = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
+    @client_order_products  = ClientOrderProduct.joins("JOIN products ON client_order_products.product_id = products.id").where(:order_id => @id).select("client_order_products.packages_quantity AS packages_quantity, client_order_products.packages_size AS packages_size, client_order_products.unit AS 
+    unit, client_order_products.package_price AS package_price, client_order_products.id AS product_id, client_order_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
+    @pc                     = PaymentCondition.find_by_id(@client_order.payment_condition)
+    
+    #PDF
+    html_string             = render_to_string(:layout => 'pdf_document')
+    kit                     = PDFKit.new(html_string)
+    file_unique_name        = @id.to_s+".pdf"
+  
+    if Rails.env.production?
+      file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
+    else
+      file_path = "#{Rails.root}/app/assets/uploads/pdf/" + file_unique_name
+    end
+
+    #File object
+    file = kit.to_file(file_path)         
+      
+    #Create file object, dtb record and upload in folder structure
+    PdfFileUpload.upload_pdf_file(file, @client_order.id, @admin_id, "client_order", "document")
+
+    #Remove the tmp file
+    FileUtils.rm(file_path)
+
+    render :layout => "pdf_document" 
+  end  
   
   def update
     @id                     = params[:id]          
     @client_order           = ClientOrder.find_by_id(@id)
+    @commit                 = params[:commit]
 
     @client_order.update(client_order_params)
     
@@ -83,12 +117,18 @@ class ClientOrdersController < ApplicationController
       @client_order.update(:status => 3)
     end
     
-    redirect_to action: "index"       
+    #Load Index but aftercall PDF document in new TAB
+    if @commit.include? "PDF"
+      redirect_to "/client_orders/?pdf_id=#{@client_order.id}"
+    else      
+      redirect_to action: "index"  
+    end      
   end
 
   def create
     @client_order           = ClientOrder.create(client_order_params)    
     @client_order_products  = params[:client_order][:clientorderproducts][:clientorderproduct]
+    @commit                 = params[:commit]
 
     @client_order_products.each do |cop|
       unless cop[1]["packages_quantity"] == ""
@@ -96,7 +136,11 @@ class ClientOrdersController < ApplicationController
       end
     end
     
-    redirect_to action: "index"  
+    if @commit.include? "PDF"
+      redirect_to "/client_orders/?pdf_id=#{@client_order.id}"
+    else      
+      redirect_to action: "index"  
+    end     
   end
   
   def destroy

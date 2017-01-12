@@ -6,6 +6,22 @@ module ApplicationHelper
     return dateVar
   end
   
+  def display_date_time(dateVar)
+    dateVar = dateVar.strftime("%B %d, %Y - %H:%M")
+    return dateVar
+  end
+
+  def id_format(value)
+    value = value.to_i
+    if value == 1
+      return "XX/YEAR/NUMBER1"
+    elsif value == 2  
+      return "XX/YEAR/NUMBER2"    
+    elsif value == 3
+      return "XX/YEAR/NUMBER3"
+    end
+  end
+
   def status(value)
     value = value.to_i
     if value == 1
@@ -59,6 +75,34 @@ module ApplicationHelper
     end    
   end
   
+  def payment_type(value)
+    value = value.to_i
+    if value == 1
+      return "#{t'payment_type.cash'}"
+    elsif value == 2  
+      return "#{t'payment_type.card'}"      
+    elsif value == 3
+      return "#{t'payment_type.transfer'}"            
+    end
+  end
+
+  def delivery_type(value)
+    value = value.to_i
+    if value == 1
+      return "#{t'delivery_type.service'}"
+    elsif value == 2  
+      return "#{t'delivery_type.collection'}"      
+    end
+  end
+
+  def payment_type_select(f, preselected=nil)
+    return f.select(:payment_type, options_for_select([[payment_type(1),1], [payment_type(2),2], [payment_type(3),3]], preselected  ),)
+  end
+
+  def delivery_type_select(f, preselected=nil)
+    return f.select(:delivery_type, options_for_select([[delivery_type(1),1], [delivery_type(2),2]], preselected  ),)
+  end
+
   def client_status_select(f, preselected=nil)
     return f.select(:status, options_for_select([[status(4),4], [status(5),5]], preselected  ),)
   end
@@ -78,6 +122,10 @@ module ApplicationHelper
   def stuff_category_select(f, preselected=nil)
     return f.select(:category, options_for_select([[category(1),1], [category(2),2], [category(3),3], [category(4),4], [category(5),5]], preselected  ),)
   end  
+
+  def id_format_select(f, preselected=nil)
+    return f.select(:id_format, options_for_select([[id_format(1),1], [id_format(2),2], [id_format(3),3]], preselected  ),)
+  end    
   
   def sale_reps_select(f, reps)    
     return f.collection_select(:sales_id, reps, :id, :full_name)  

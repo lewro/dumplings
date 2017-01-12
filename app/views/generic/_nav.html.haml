@@ -1,7 +1,9 @@
 %nav
   %ul{:class => current_view}
-    %li.dashboard
-      = t'dashboard'
+    %li.dashboard      
+      = link_to "#{t'dashboard'}", :controller => :dashboards, :action => :index
+    %li.events
+      = link_to "#{t'meetings'}", :controller => :events, :action => :index    
     %li.offers    
       = link_to "#{t'offers'}", :controller => :offers, :action => :index
     %li.client-orders    

@@ -121,3 +121,11 @@
   float: left;  
   box-sizing: border-box;        
 }
+
+
+@media only screen and (max-width: 1200px){
+  .half-page {
+    width: 100% !important;
+    height: auto !important;
+  }
+}

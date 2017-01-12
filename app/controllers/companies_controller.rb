@@ -22,7 +22,7 @@ class CompaniesController < ApplicationController
   def index
     @category = params[:category] 
 
-    if @category == "clients"
+    if @category == "clients" || @category == "ownership"
       @companies = Company.joins('LEFT JOIN client_orders ON client_orders.client_id = companies.id JOIN users ON users.id = companies.sales_id').where(:category => "client").select("users.first_name AS first_name, users.last_name AS last_name, companies.id AS id, companies.name AS name, companies.street AS street, companies.street_number AS street_number, companies.city AS city, companies.zip_code AS zip_code,  companies.status AS status, companies.contact_person AS contact_person, count(client_orders.id) AS orders").group("id")           
     else
       @companies = Company.joins('LEFT JOIN supplier_orders ON supplier_orders.supplier_id = companies.id').where(:category => "supplier").select("companies.id AS id, companies.name AS name, companies.street AS street, companies.street_number AS street_number, companies.city AS city, companies.zip_code AS zip_code,  companies.status AS status, companies.contact_person AS contact_person, count(supplier_orders.id) AS orders").group("id")      
@@ -39,6 +39,10 @@ class CompaniesController < ApplicationController
     @delivery_notes     = DeliveryNote.where(:client_id => @id).size
     @invoices           = Invoice.where(:client_id => @id).size
     @offers             = Offer.where(:client_id => @id).size
+  end
+
+  def edit_ownership
+    @company = Company.where(:category => "ownership", :user_id => current_user.admin_id).last    
   end
 
   def update
@@ -58,7 +62,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-     params.require(:company).permit(:name, :status, :user_id, :street, :street_number, :city, :zip_code, :note, :registration_number, :vat_number, :category, :sales_id, :contact_person)
+     params.require(:company).permit(:name, :status, :user_id, :street, :street_number, :city, :zip_code, :note, :registration_number, :vat_number, :category, :sales_id, :contact_person, :bank, :account_number, :swift_code, :iban_code, :legal)
   end
   
 end
