@@ -62,6 +62,20 @@ class OffersController < ApplicationController
     render :layout => "pdf_document" 
   end
 
+  def send_pdf_by_email
+    
+    @email      = ""
+    @subject    = ""
+    @body       = ""
+    @from       = ""
+    @file_name  = ""
+    @file       = ""
+
+    #Defined the vars
+
+    UserMailer.delay.pdf_email(@email, @subject, @body, @from, @file_name, @file)
+  end
+
   def create
     @offer                  = Offer.create(offer_params) 
     @offer_products         = params[:offer][:offerproducts][:offerproduct]

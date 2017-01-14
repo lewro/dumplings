@@ -25,9 +25,9 @@
 							.event-name
 								= event.name
 						.clearfix
-							.event-note
+							.event-note.clearfix
 								= simple_format(event.note)
-							.event-actions	
+							.event-actions.clearfix	
 								= link_to "#{t'actions.edit'}", 	[:edit, event], :class => "button remove"
 								= link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "	button remove"          							
 								

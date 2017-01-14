@@ -23,7 +23,7 @@
       = f.text_field :sum, :value => 0
 
 
-- if @proforma  
+- if @proforma
   - unless @invoice == @proforma
     .row.clearfix    
       .half                                
@@ -31,4 +31,12 @@
           = t'invoice.proforma'
           = " (#{@currency})"
         .input-holder.big
-          = number_to_currency(@proforma.sum, :unit => "")
+          = number_to_currency(@proforma.sum, :unit => "")    
+      = render :partial => '/invoices/invoice_payments_sum'
+  - else
+    .row.clearfix 
+      = render :partial => '/invoices/invoice_payments_sum'
+- else
+  - if @payments_sum
+    .row.clearfix 
+      = render :partial => '/invoices/invoice_payments_sum'

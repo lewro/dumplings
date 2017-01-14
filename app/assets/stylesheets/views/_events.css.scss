@@ -42,6 +42,21 @@
 	border: 10px solid $accent-color;
 }
 
+.event-note:after {
+    clear: both;
+    display: block;
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    margin-left: -80px;
+    margin-top: 55px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    background: #fff;
+    border: 2px solid #ee6693;
+}
+
 .event-item:hover .event-actions {
 	visibility: visible;
 }

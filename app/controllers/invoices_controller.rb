@@ -165,6 +165,43 @@ class InvoicesController < ApplicationController
       @delivery_note        = DeliveryNote.where(:order_id => @order.id).first
     end
 
+    define_balance
+  end
+
+  def pdf
+    @id                     = params[:id]
+    @invoice                = Invoice.find_by_id(@id)
+    @client                 = Company.find_by_id(@invoice.client_id)     
+    @ownership              = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
+    @invoice_products       = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code ")
+    @pc                     = PaymentCondition.find_by_id(@invoice.payment_condition)
+    
+    define_balance
+
+    #PDF
+    html_string             = render_to_string(:layout => 'pdf_document')
+    kit                     = PDFKit.new(html_string)
+    file_unique_name        = @id.to_s+".pdf"
+  
+    if Rails.env.production?
+      file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
+    else
+      file_path = "#{Rails.root}/app/assets/uploads/pdf/" + file_unique_name
+    end
+
+    #File object
+    file = kit.to_file(file_path)         
+      
+    #Create file object, dtb record and upload in folder structure
+    PdfFileUpload.upload_pdf_file(file, @invoice.id, @admin_id, "invoice", "document")
+
+    #Remove the tmp file
+    FileUtils.rm(file_path)
+
+    render :layout => "pdf_document" 
+  end  
+
+  def define_balance
     #Are we editing proforma invoice?
     if @invoice.proforma == true
 
@@ -200,7 +237,11 @@ class InvoicesController < ApplicationController
 
     #Merge both payments 
     if @payments_proforma
-      @payments  = @payments_standard.merge(@payments_proforma)
+      unless @payments_standard.nil?
+        @payments  = @payments_standard.merge(@payments_proforma)
+      else
+        @payments = @payments_proforma
+      end
     else
       @payments  = @payments_standard
     end
@@ -211,41 +252,9 @@ class InvoicesController < ApplicationController
     if @invoice_link && (@invoice != @invoice_link)
       @disabled           = true
       @payment_condition  = PaymentCondition.find_by_id(@invoice.payment_condition)
-    end
+    end    
   end
 
-  def pdf
-    @id                     = params[:id]
-    @invoice                = Invoice.find_by_id(@id)
-    @client                 = Company.find_by_id(@invoice.client_id)     
-    @ownership              = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
-    @invoice_products       = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code ")
-    @pc                     = PaymentCondition.find_by_id(@invoice.payment_condition)
-    
-    #PDF
-    html_string             = render_to_string(:layout => 'pdf_document')
-    kit                     = PDFKit.new(html_string)
-    file_unique_name        = @id.to_s+".pdf"
-  
-    if Rails.env.production?
-      file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
-    else
-      file_path = "#{Rails.root}/app/assets/uploads/pdf/" + file_unique_name
-    end
-
-    #File object
-    file = kit.to_file(file_path)         
-      
-    #Create file object, dtb record and upload in folder structure
-    PdfFileUpload.upload_pdf_file(file, @invoice.id, @admin_id, "invoice", "document")
-
-    #Remove the tmp file
-    FileUtils.rm(file_path)
-
-    render :layout => "pdf_document" 
-  end  
-
-  
   def destroy
     @id       = params[:id]    
     @invoice  = Invoice.find_by_id(@id)

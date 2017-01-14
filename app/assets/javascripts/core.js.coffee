@@ -187,6 +187,16 @@
       
   textAreaAutoGrow : () ->
     $('textarea').autogrow()
+
+
+  #Refresh current view when creating new PDF document so the list of files is actual
+  refreshOnNewTarget : () ->  
+    $('body').delegate '.link-button', 'click', ->  
+      if $(this).attr('target') == '_blank'        
+        setTimeout (->
+          location.reload();
+          return
+        ), 2000
       
   min_size : (element, size) ->
     if $(element).val().length > size
@@ -225,6 +235,7 @@
     core.messages() 
     core.switchButtons()
     core.autosubmitLink()
+    core.refreshOnNewTarget()
     
   windowResize : () ->
     $(window).resize ->

@@ -73,8 +73,21 @@
             - else
               .input-holder
                 = @supplier_order.note
+
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
+
+              .spacer-large.clearfix
+                = link_to "#{t'actions.create_pdf_document'}", "/supplier_orders/pdf/#{@supplier_order.id}.pdf", :class => "link-button float-right", :target => "_blank"     
+
+
+
       .action-cover.clearfix
+      
         = f.submit action, :class => "button"
+        = f.submit "#{t'save_pdf'}", :class => "link-button"
+
         - if remove == true      
           = link_to "#{t'actions.remove'}",  @supplier_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"          
         - else

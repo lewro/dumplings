@@ -119,11 +119,14 @@
 					%th
 						= t"expiration_date" 
 					%th
-						= t"orders.price"           
+						= t"orders.price"   
+						= "-"
+						= @currency        
 
 			%tbody
 
-				- total = 0							
+
+				- total = 0	
 
 				- @invoice_products.each do |op|
 				
@@ -143,18 +146,35 @@
 						%td
 							= op.expiration_date
 						%td
-							= op.packages_quantity * op.package_price
-							- total = total + (op.packages_quantity * op.package_price)
+							= number_to_currency(op.packages_quantity * op.package_price, :unit => "")
+							- total = total + (op.packages_quantity * op.package_price)							
 		
 
 		.totals
 			- tax_total = 0
 			- if @use_tax == true
+
 				.clearfix
+					.total-header
+						= t"payments"
+						= "("
+						= t"proforma_invoice.id"
+						= ":"
+						= @proforma.id						
+						= ")"
+
+					.total-sum						
+						= @currency
+						= number_to_currency(@payments_sum, :unit => "")
+
+				.devider
+
+				.clearfix.m-t
 					.total-header
 						= t"orders.sum"
 					.total-sum
-						= total			
+						= @currency
+						= number_to_currency(@invoice.sum, :unit => "")
 				.clearfix
 					.total-header
 						- tax = @tax
@@ -162,14 +182,16 @@
 						= tax
 						= "%"
 					.total-sum					
-						- tax_total = (total / 100 ) * tax
-						= tax_total
+						- tax_total = (@invoice.sum / 100 ) * tax
+						= @currency					
+						= number_to_currency(tax_total, :unit => "")
 
 			.clearfix.final
 				.total-header
 					= t"orders.total_price"
-				.total-sum
-					= total + tax_total
+				.total-sum				
+					= @currency
+					= number_to_currency(@invoice.sum + tax_total, :unit => "")
 
 	.devider
 	.clearfix.content.pdf-footer

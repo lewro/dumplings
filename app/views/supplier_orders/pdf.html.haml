@@ -4,37 +4,12 @@
 			-# %img.logo{ :src => @path_logo }
 		.half.a-r.last.content
 			%h1
-				= t"orders.client_order"
+				= t"orders.supplier_order"
 			.pdf-numbers.clearfix	
 				%label.a-r			
 					= t"orders.id"			
 				.pdf-primary-number			
-					= @client_order.id
-				%label.a-r			
-					= t"offer.reference_id"
-					= ":"
-					= @client_order.reference_id
-									
-				.pdf-row
-					%label.a-r
-						= t"bank.title"
-						= ":"
-						= @ownership.bank
-				.pdf-row
-					%label.a-r
-						= t"bank.account_number"
-						= ":"
-						= @ownership.account_number
-				.pdf-row
-					%label.a-r
-						= t"bank.swift_code"
-						= ":"
-						= @ownership.swift_code
-				.pdf-row
-					%label.a-r
-						= t"bank.iban_code"
-						= ":"
-						= @ownership.iban_code
+					= @supplier_order.id				
 
 				.pdf-row.m-t
 					.a-r
@@ -115,19 +90,10 @@
 						= "/"
 						= t"unit.title"
 					%th
-						= t"orders.package_price"
-					%th
-						= t"expiration_date" 
-					%th
-						= t"orders.price" 
-						= ": "
-						= @currency          						
+						= t"orders.package_price"				
 
 			%tbody
-
-				- total = 0							
-
-				- @client_order_products.each do |op|
+				- @supplier_order_products.each do |op|
 				
 					%tr
 						%td.name
@@ -141,53 +107,7 @@
 							= " " 
 							= unit(op.unit)  
 						%td
-							= op.package_price
-						%td
-							= op.expiration_date
-						%td
-							= number_to_currency(op.packages_quantity * op.package_price, :unit => "")
-							- total = total + (op.packages_quantity * op.package_price)
-		
-
-		.totals
-			- tax_total = 0
-			- if @use_tax == true
-				.clearfix
-					.total-header
-						= t"orders.sum"
-					.total-sum
-						= @currency
-						= number_to_currency(total, :unit => "")
-			
-				.clearfix
-					.total-header
-						- tax = @tax
-						= "Tax"
-						= tax
-						= "%"
-					.total-sum					
-						- tax_total = (total / 100 ) * tax
-						= @currency
-						= number_to_currency(tax_total, :unit => "")
-
-			.clearfix.final
-				.total-header
-					= t"orders.total_price"
-				.total-sum
-					= @currency
-					= number_to_currency(total + tax_total, :unit => "")
-
-	.devider
-	.clearfix.content.pdf-footer
-		.pdf-row.clearfix
-			%label
-				= t"payment_conditions"
-			= @pc.text		
-		
-		.pdf-row.m-t.clearfix
-			%label
-				= t"delivery_terms"
-			= @client_order.delivery_terms
+							= op.package_price	
 		
 		.devider			
 		.pdf-row.m-t.clearfix

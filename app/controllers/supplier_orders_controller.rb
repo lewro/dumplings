@@ -2,7 +2,8 @@ class SupplierOrdersController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @supplier_orders = SupplierOrder.joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ")
+    @supplier_orders  = SupplierOrder.joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ")
+    @pdf_id           = params[:pdf_id]
   end
 
   def new
@@ -13,6 +14,7 @@ class SupplierOrdersController < ApplicationController
   def create
     @supplier_order           = SupplierOrder.create(supplier_order_params)    
     @supplier_order_products  = params[:supplier_order][:supplierorderproducts][:supplierorderproduct]
+    @commit                   = params[:commit]
 
     @supplier_order_products.each do |sop|
       unless sop[1]["packages_quantity"] == ""
@@ -20,7 +22,11 @@ class SupplierOrdersController < ApplicationController
       end
     end
     
-    redirect_to action: "index"  
+    if @commit.include? "PDF"
+      redirect_to "/supplier_orders/?pdf_id=#{@supplier_order.id}"
+    else      
+      redirect_to action: "index"  
+    end   
   end  
   
   def mark_order_as_sent
@@ -49,6 +55,7 @@ class SupplierOrdersController < ApplicationController
     @supplier_order_products  = SupplierOrderProduct.joins("JOIN supplies ON supplies.id = supplier_order_products.supply_id").where(:order_id => @id).select("supplier_order_products.id AS id, supplier_order_products.supply_id AS supply_id, supplier_order_products.packages_quantity AS packages_quantity, supplier_order_products.packages_size AS packages_size, supplier_order_products.unit AS packages_unit, supplier_order_products.package_price AS package_price, supplier_order_products.id AS product_id, supplier_order_products.expiration_date AS expiration_date, supplies.name AS name, supplies.product_code AS product_code")
     @supplier_order_product   = SupplierOrderProduct.new
     @order_disabled           = false
+    @pdfs                     = FileUpload.where(:model => "supplier_order", :model_id => @id, :user_id => current_user.admin_id)
     
     if  @supplier_order.status == 6 || @supplier_order.status == 7 || @supplier_order.status == 8
       @order_disabled = true
@@ -56,8 +63,9 @@ class SupplierOrdersController < ApplicationController
   end
   
   def update
-    @id                     = params[:id]          
-    @supplier_order         = SupplierOrder.find_by_id(@id)
+    @id                       = params[:id]          
+    @supplier_order           = SupplierOrder.find_by_id(@id)
+    @commit                   = params[:commit]
 
     @supplier_order.update(supplier_order_params)
     
@@ -70,8 +78,43 @@ class SupplierOrdersController < ApplicationController
       updateStock(@id)
     end
     
-    redirect_to action: "index"       
+    if @commit.include? "PDF"
+      redirect_to "/supplier_orders/?pdf_id=#{@supplier_order.id}"
+    else      
+      redirect_to action: "index"  
+    end      
   end  
+
+  def pdf
+    @id                       = params[:id]
+    @supplier_order           = SupplierOrder.find_by_id(@id)  
+    @client                   = Company.find_by_id(@supplier_order.supplier_id)     
+    @ownership                = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
+    @supplier_order_products  = SupplierOrderProduct.joins("JOIN supplies ON supplies.id = supplier_order_products.supply_id").where(:order_id => @id).select("supplier_order_products.id AS id, supplier_order_products.supply_id AS supply_id, supplier_order_products.packages_quantity AS packages_quantity, supplier_order_products.packages_size AS packages_size, supplier_order_products.unit AS unit, supplier_order_products.package_price AS package_price, supplier_order_products.id AS product_id, supplier_order_products.expiration_date AS expiration_date, supplies.name AS name, supplies.product_code AS product_code")
+    
+    #PDF
+    html_string             = render_to_string(:layout => 'pdf_document')
+    kit                     = PDFKit.new(html_string)
+    file_unique_name        = @id.to_s+".pdf"
+  
+    if Rails.env.production?
+      file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
+    else
+      file_path = "#{Rails.root}/app/assets/uploads/pdf/" + file_unique_name
+    end
+
+    #File object
+    file = kit.to_file(file_path)         
+      
+    #Create file object, dtb record and upload in folder structure
+    PdfFileUpload.upload_pdf_file(file, @supplier_order.id, @admin_id, "supplier_order", "document")
+
+    #Remove the tmp file
+    FileUtils.rm(file_path)
+
+    render :layout => "pdf_document" 
+  end  
+
   
   def destroy
     @id                       = params[:id]    

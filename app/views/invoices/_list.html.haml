@@ -3,7 +3,7 @@
     %table
       = render :partial => "invoices/list_headers"
       - @invoices.each do |invoice|
-        %tr.data{"data-invoice-id" => invoice.id, "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "invoices/#{invoice.id}/edit"}
+        %tr.data{"data-invoice-id" => invoice.id, "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/invoices/#{invoice.id}/edit"}
           %td
             = invoice.id
           %td

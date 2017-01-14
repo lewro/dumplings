@@ -40,5 +40,11 @@ gem "font-awesome-rails"
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
 gem 'pdfkit'
 
+#Cron 
+gem 'delayed_job_active_record'
+gem 'delayed_job'
+gem 'whenever'
+
+
 # Ruby multiversion
 gem 'rvm'

@@ -117,12 +117,13 @@
                 = @invoice.note
 
           - unless @pdfs.nil?
-            .row.clearfix.last
+            .row.clearfix
               = render :partial => '/generic/pdf'
 
               .spacer-large.clearfix
-                = link_to "#{t'actions.create_pdf_document'}", "/invoices/pdf/#{@invoice.id}.pdf", :class => "button", :target => "_blank"     
+                = link_to "#{t'actions.create_pdf_document'}", "/invoices/pdf/#{@invoice.id}.pdf", :class => "link-button float-right", :target => "_blank"     
 
+              .m-t
                 
           = render :partial => "invoices/payments", :locals => { :remove => remove }
                   
