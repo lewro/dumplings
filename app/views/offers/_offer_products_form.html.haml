@@ -1,49 +1,37 @@
-= f.fields_for :offerproducts do |offerproduct|        
+= f.fields_for :offerproducts do |offerproduct|
 
-  #offer-products                
-    %label.spacer-large            
+  #offer-products
+    %label.spacer-large
       = t"products"
-      
-    .clearfix.list-headers
-      .fifth
-        %label
-          = t"product.name"            
-      .sixth.packages-quantity
-        %label        
-          = t"orders.packages_count"
-      .sixth
-        %label      
-          = t"orders.package_size"
-      .sixth
-        %label      
-          = t"unit.title"
-      .sixth.package-price
-        %label      
-          = t"orders.package_price"
-      .sixth
-        %label      
-          = t"expiration_date"          
 
-    
+    = render :partial => '/generic/products/list_headers_without_product_code'
+
     .product
       = offerproduct.fields_for "offerproduct[#{0}]" do |offerproduct|
+
         .row.clearfix
+
           .fifth
             = products_select(offerproduct, @products, @products.first)
+
           .sixth.packages-quantity
-            = offerproduct.text_field :packages_quantity, "data-required" => "true"               
+            = offerproduct.text_field :packages_quantity, "data-required" => "true"
+
           .sixth
             = offerproduct.text_field :packages_size
+
           .sixth
             = units_select(offerproduct)
-          .sixth.package-price
-            = offerproduct.text_field :package_price, "data-required" => "true"                                              
+
+          .sixth.package-price.a-r
+            = offerproduct.text_field :package_price, "data-required" => "true"
+
           .sixth
             .ui-selectmenu-button
               = offerproduct.text_field :expiration_date , :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
               %span.ui-icon.ui-icon-triangle-1-s
- 
+
 
   .row.clearfix.last
     #add-new-offer-product.circle-button.large
-      = "+"
+      %i.fa.fa-plus

@@ -4,15 +4,15 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines helper classes
  **/
- 
+
  @import "globals/colours";
  @import "globals/mixins";
  @import "globals/sizes";
- 
+
 .content {
   padding: 30px;
 }
- 
+
 .row {
   margin-bottom: 20px;
   border-bottom: 1px dotted #ddd;
@@ -23,16 +23,16 @@
 
 .half-page {
   border-bottom: 1px solid $grey-light1;
-  
+
   &.left {
-    border-right: 1px solid $grey-light1;  
+    border-right: 1px solid $grey-light1;
   }
 }
 
 .half-page, .two-thirds-page, .third-page {
   border-bottom: 1px solid $grey-light1;
-  
+
   &.left {
-    border-right: 1px solid $grey-light1;  
+    border-right: 1px solid $grey-light1;
   }
 }

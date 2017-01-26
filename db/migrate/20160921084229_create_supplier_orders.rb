@@ -6,15 +6,15 @@ class CreateSupplierOrders < ActiveRecord::Migration
       t.integer :user_id, :null => false
 
       t.string :contact_person
-      
+
       t.datetime :expected_delivery
       t.datetime :delivery
-                  
-      t.decimal :sum 
+
+      t.decimal :sum
 
       t.text :note
-      t.integer :status      
-                        
+      t.integer :status
+
       t.timestamps
     end
   end

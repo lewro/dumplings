@@ -1,0 +1,19 @@
+.clearfix.delivery-address.list-element{ "data-delivery-address-id" => da.id, "data-ajax-list" => "true", "data-ajax-url" => "/delivery_addresses/update/"+da.id.to_s, "data-ajax-object" => "client_order_product" }
+
+  .third
+    .input-holder{ "title" => da.street }
+      = da.street
+  .seventh
+    .input-holder
+      = da.street_number
+  .third
+    .input-holder
+      = da.city
+  .eight
+    .input-holder
+      = da.zip_code
+
+  - unless @disabled
+    .small-button-column{:title => "#{t'actions.remove'}"}
+      .circle-button.small.remove-delivery-address.float-right{"remove-message" => "#{t'actions.confirm'}" }
+        %i.fa.fa-close

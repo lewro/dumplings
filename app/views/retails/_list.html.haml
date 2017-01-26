@@ -1,21 +1,25 @@
 .page-content.clearfix
+
   .content
+
     %table
-      = render :partial => "retails/list_headers"
+
+      = render :partial => '/retails/list_headers'
 
       - @retails.each do |retail|
+
         %tr.data{"data-retail-id" => retail.id, "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "retails/#{retail.id}/edit"}
           %td
-            = retail.id   
+            = retail.id
           %td
-            = display_date(retail.created_at)                   
+            = display_date(retail.created_at)
           %td
             = retail.payment_type
           %td
-            = retail.delivery_type          	
+            = retail.delivery_type
           %td.currency
-            = number_to_currency(retail.sum, :unit => "")      
+            = number_to_currency(retail.sum, :unit => "")
           %td.currency
-            = number_to_currency(retail.transport_cost, :unit => "")                  
-          %td.currency            
-            = number_to_currency(retail.transport_cost + retail.sum, :unit => "")                  
+            = number_to_currency(retail.transport_cost, :unit => "")
+          %td.currency
+            = number_to_currency(retail.transport_cost + retail.sum, :unit => "")

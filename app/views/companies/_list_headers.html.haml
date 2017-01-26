@@ -1,22 +1,22 @@
 %tr
   %th
-    = t'id'          
+    = t'id'
   %th
     = t'company.title'
   %th
-    = t'address.street'    
+    = t'address.street'
     %th
       = t'address.street_number'
   %th
-    = t'address.zipcode'    
+    = t'address.zipcode'
   %th
-    = t'address.city'    
-  - if @category == "clients"       
+    = t'address.city'
+  - if @category == "clients"
     %th
       = t'sales_representative.title'
   - else
     %th
-      = t'contact_person'  
+      = t'contact_person'
   %th
     = t'orders.title'
   %th

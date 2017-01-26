@@ -1,0 +1,26 @@
+.page-content.clearfix
+  #tax-group
+    = form_for(@tax_group) do  |f|
+
+      = f.hidden_field :user_id, :value => current_user.id
+
+      .half-page.left.scroll
+        .content
+          .row.clearfix
+            %label
+              = t'tax.title'
+              = "%"
+            = f.text_field :tax, "data-required" => "true"
+          .row.clearfix
+            %label
+              = t"notes"
+            = f.text_area :note
+
+      .action-cover.clearfix
+        = f.submit action, :class => "button"
+
+        - if remove == true
+          = link_to "#{t'actions.remove'}",  @tax_group,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+
+        - else
+          = link_to "#{t'actions.cancel'}",  @tax_group, :class => "button remove"

@@ -4,17 +4,20 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines message classes
  **/
- 
+
 @import "colours";
 @import "mixins";
 @import "sizes";
 @import "fonts";
 
 .notice {
-  background: $accent-color;
+  background: $accent-color-secondary;
   color: $primary-color;
   padding: 10px;
   font-size: $font-medium;
   text-align: center;
   display: none;
+  position: fixed;
+  width: 100%;
+  z-index: 99;
 }

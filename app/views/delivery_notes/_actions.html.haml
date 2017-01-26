@@ -1,7 +1,7 @@
 .button-cover.clearfix
   - if @order_id
     = link_to "#{t'order'} →", {:controller => :client_orders, :action => :edit, :id => @order_id}, :class => "link-button float-right"
-  
+
   - unless @invoice.nil?
     = link_to "#{t'invoice.title'} →", {:controller => :invoices, :action => :edit, :id => @invoice.id}, :class => "link-button float-right"
 

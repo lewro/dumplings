@@ -1,5 +1,5 @@
 Dumplings::Application.routes.draw do
-    
+
   devise_for :users
   root :to => "events#index"
 
@@ -8,11 +8,11 @@ Dumplings::Application.routes.draw do
 
   #Users
   get "users/settings"
-    
+
   #Invoices
   post "invoices/mark_invoice_as_paid"
   get "invoices/mark_invoice_as_paid"
-    
+
   #Client Orders
   post "client_orders/mark_order_as_distributed"
   post "client_orders/mark_order_as_in_progress"
@@ -30,22 +30,27 @@ Dumplings::Application.routes.draw do
   #File uploads
   post "file_uploads/remove_pdf"
   get "file_uploads/remove_pdf"
+  post "file_uploads/remove_af"
+  get "file_uploads/remove_af"
+
+  #Delivery Notes
+  get "delivery_notes/delivery_addresses"
 
   #Resources
   resources :companies
   resources :client_orders
-  resources :client_order_products  
+  resources :client_order_products
   resources :supplier_orders
-  resources :supplier_order_products    
+  resources :supplier_order_products
   resources :products
   resources :product_supplies
   resources :supplies
   resources :payments
   resources :invoices
   resources :invoice_products
-  resources :users 
-  resources :offers     
-  resources :offer_products  
+  resources :users
+  resources :offers
+  resources :offer_products
   resources :stocks
   resources :payment_conditions
   resources :delivery_notes
@@ -56,6 +61,8 @@ Dumplings::Application.routes.draw do
   resources :settings
   resources :dashboards
   resources :events
+  resources :delivery_addresses
+  resources :tax_groups
 
-  get ":controller(/:action(/:id(.:format)))"    
+  get ":controller(/:action(/:id(.:format)))"
 end

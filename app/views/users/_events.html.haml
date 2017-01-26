@@ -2,14 +2,14 @@
 	%label
 		= t"meetings"
 
-	.events		
+	.events
 		- unless @events.nil?
 			- if @events.size < 1
 				.note
 					= t"no_data"
 
 			- @events.all.group_by(&:date).each do |date, events|
-				
+
 				.event-date
 					= display_date(date)
 
@@ -27,7 +27,6 @@
 						.clearfix
 							.event-note
 								= simple_format(event.note)
-							.event-actions	
+							.event-actions
 								= link_to "#{t'actions.edit'}", 	[:edit, event], :class => "button remove"
-								= link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "	button remove"          							
-								
+								= link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "	button remove"

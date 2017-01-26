@@ -3,7 +3,7 @@ class CreateOfferProducts < ActiveRecord::Migration
     create_table :offer_products do |t|
 
       t.integer :product_id, :null => false
-      t.integer :offer_id, :null => false      
+      t.integer :offer_id, :null => false
       t.integer :user_id, :null => false
 
       t.integer :packages_quantity

@@ -1,0 +1,15 @@
+.page-content.clearfix
+  .content
+    %table
+
+      = render :partial => '/tax_groups/list_headers'
+
+      - @tax_groups.each do |tg|
+
+        %tr.data{"data-tax-group-id" => "#{tg.id}", "data-link" => "/tax_groups/#{tg.id}/edit"}
+          %td
+            = tg.id
+          %td
+            = tg.tax
+          %td
+            = tg.note

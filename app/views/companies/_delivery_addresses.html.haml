@@ -1,0 +1,16 @@
+= f.fields_for :companydeliveryaddress do |companydeliveryaddress|
+
+  #delivery-addresses
+    %label.spacer-large
+      = t"delivery_addresses"
+
+    - if @delivery_addresses
+      = render :partial => '/companies/delivery_addresses_list', :locals => { :companydeliveryaddress => companydeliveryaddress }
+    - else
+      = render :partial => '/companies/delivery_addresses_list_headers'
+      = render :partial => '/companies/delivery_address_form', :locals => { :companydeliveryaddress => companydeliveryaddress }
+
+- unless @disabled or remove == true
+  .clearfix.spacer-large
+    #add-new-delivery-address.circle-button.large
+      %i.fa.fa-plus

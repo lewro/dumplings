@@ -1,0 +1,14 @@
+.row
+  - if @delivery_addresses.size > 0
+    = render :partial => '/delivery_addresses/list_headers'
+    - @delivery_addresses.each do |da|
+      = render :partial => '/delivery_addresses/list', :locals => { :da => da }
+  - else
+    .no-data
+      = t"no_data"
+
+- unless @disabled
+  #hiden-form-cover
+  .row.clearfix.last
+    #add-new-delivery-address-edit.circle-button.large
+      %i.fa.fa-plus

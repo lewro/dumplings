@@ -11,12 +11,12 @@
           %td
             = company.street
           %td
-            = company.street_number          
+            = company.street_number
           %td
             = company.city
           %td
-            = company.zip_code               
-          - if @category == "clients"   
+            = company.zip_code
+          - if @category == "clients"
             %td
               = company.first_name
               = " "
@@ -25,6 +25,6 @@
             %td
               = company.contact_person
           %td
-            = company.orders     
+            = company.orders
           %td
             = status(company.status)

@@ -10,38 +10,38 @@
   #Remove Client Order Product via AJAX
   removeSupplierOrderProduct: () ->
     $('body').delegate '.remove-supplier-order-product', 'click', ->
-      
-      message = $(this).attr("remove-message")      
+
+      message = $(this).attr("remove-message")
       result  = confirm(message)
-      
+
       if result == true
-        
+
         id = $(this).parents('.product').data("product-id")
-      
+
         #Recalculate price
         price         = parseInt $(this).parents('.product').find('.package-price').find('.input-holder').html()
-        quantity      = parseInt $(this).parents('.product').find('.packages-quantity').find('.input-holder').html()
-        productPrice  = price * quantity    
-        oldTotal      = parseInt $('#supplier_order_sum').val()
-        newTotal      = oldTotal - productPrice   
+        quantity      = parseFloat $(this).parents('.product').find('.packages-quantity').find('.input-holder').html()
+        productPrice  = price * quantity
+        oldTotal      = parseFloat $('#supplier_order_sum').val()
+        newTotal      = oldTotal - productPrice
 
-        $('#supplier_order_sum').val(newTotal)
-        $('#supplier_order_sum').prev('.input-holder.big').html(newTotal)
-        
-        actions.ajax 'delete', "/supplier_order_products/#{id}", ""      
+        $('#supplier_order_sum').val(newTotal.toFixed(2))
+        $('#supplier_order_sum').prev('.input-holder.big').html(newTotal.toFixed(2))
+
+        actions.ajax 'delete', "/supplier_order_products/#{id}", ""
         $(this).parents('.product').remove()
 
   #Add New Client Order Product on NEW View
-  addNewSupplierOrderProduct : () ->  
+  addNewSupplierOrderProduct : () ->
     $('body').delegate '#add-new-supplier-order-product', 'click', ->
 
       newProduct = $('#supplier-order-products .product:last').clone()
       $(newProduct).appendTo('#supplier-order-products')
 
-      $(".product:last").find('select').each ->      
+      $(".product:last").find('select').each ->
 
         nameAttr    = $(this).attr('name')
-        digit       = parseInt(nameAttr.match(/\d+/))
+        digit       = parseFloat(nameAttr.match(/\d+/))
         newDigit    = digit + 1
 
         $(this).attr 'name', (i, old) ->
@@ -49,10 +49,10 @@
         $(this).attr 'id', (i, old) ->
           old.replace digit, newDigit
 
-      $(".product:last").find('input').each ->      
+      $(".product:last").find('input').each ->
 
         nameAttr      = $(this).attr('name')
-        digit         = parseInt(nameAttr.match(/\d+/))
+        digit         = parseFloat(nameAttr.match(/\d+/))
         newDigit      = digit + 1
 
         $(this).attr 'name', (i, old) ->
@@ -71,19 +71,19 @@
       $(".product:last").find('select, input').show()
 
       #Reinitiate the UI
-      core.init()       
-      
-      
+      core.init()
+
+
     #Add New Client Order Product on Edit View
     $('body').delegate '#add-new-supplier-order-product-edit', 'click', ->
       $(this).hide()
       hiddenForm = $(".hidden-form").show()
       $("#hiden-form-cover").append(hiddenForm)
-      core.init()             
-      
-  init : () ->            
+      core.init()
+
+  init : () ->
     supplierOrderProduct.removeSupplierOrderProduct()
-    supplierOrderProduct.addNewSupplierOrderProduct()    
+    supplierOrderProduct.addNewSupplierOrderProduct()
 
 jQuery ($) ->
   supplierOrderProduct.init()

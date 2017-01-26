@@ -1,16 +1,18 @@
 = f.fields_for :invoiceproducts do |invoiceproduct|
-  #invoice-products                
+
+  #invoice-products
+
     %label.spacer-large
       = t"products"
 
-    = render :partial => '/invoices/invoice_products_list_headers'
+    = render :partial => '/generic/products/list_headers_without_product_code'
 
     - if @existing_products
-      = render :partial => '/invoices/invoice_product_form_from_order', :locals => { :invoiceproduct => invoiceproduct }              
-    - else 
+      = render :partial => '/invoices/invoice_product_form_from_order', :locals => { :invoiceproduct => invoiceproduct }
+    - else
       = render :partial => '/invoices/invoice_product_form', :locals => { :invoiceproduct => invoiceproduct }
 
   - unless @disabled || @proforma
     .clearfix.spacer-large
       #add-new-invoice-product.circle-button.large
-        = "+"
+        %i.fa.fa-plus

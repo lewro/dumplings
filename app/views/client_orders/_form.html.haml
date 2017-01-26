@@ -1,13 +1,13 @@
-.page-content.clearfix  
+.page-content.clearfix
   #client-order
     = form_for(@client_order) do  |f|
       = f.hidden_field :user_id, :value => current_user.id
       = f.hidden_field :status, :value => 1
 
-      .half-page.left
-        .content       
+      .half-page.left.scroll
+        .content
           .row.clearfix
-            .half        
+            .half
               %label
                 = t"client.title"
 
@@ -15,7 +15,7 @@
                 = clients_select(f, @clients)
               - else
                 .input-holder
-                  = @client.name                  
+                  = @client.name
             .half.last
               %label
                 = t"orders.status"
@@ -32,24 +32,25 @@
             .half
               %label
                 = t"client.reference"
-                
-                - unless @disabled                                 
-                  = f.text_field :reference_id
-                - else
-                  .input-holder
-                    = @client_order.reference_id
 
-            .half.las    
-              %label
-                = t"orders.exp_delivery_date"
-              
-              - unless @disabled                  
-                = f.text_field :expected_delivery
+              - unless @disabled
+                = f.text_field :reference_id
               - else
                 .input-holder
-                  = @client_order.expected_delivery    
+                  = @client_order.reference_id
 
-          .row.clearfix  
+            .half.last.ui-selectmenu-button
+              %label
+                = t"orders.exp_delivery_date"
+
+              - unless @disabled
+                = f.text_field :expected_delivery, :class => "datepicker"
+                %span.ui-icon.ui-icon-triangle-1-s
+              - else
+                .input-holder
+                  = @client_order.expected_delivery
+
+          .row.clearfix
             .half.ui-selectmenu-button
               %label
                 = t"orders.distribution_date"
@@ -72,19 +73,35 @@
                 .input-holder
                   = @client_order.order_confirmation
 
-          - unless remove == true   
+
+          .row.clearfix
+            %label
+              = t"payment_conditions"
+
+            - unless @disabled
+              - unless @client_order.payment_condition.nil?
+                = payment_conditions_select(f, @payment_conditions, @client_order.payment_condition)
+              - else
+                = payment_conditions_select(f, @payment_conditions)
+            - else
+              .input-holder
+                = @payment_condition.name
+                = " - "
+                = @payment_condition.text
+
+          - unless remove == true
             = render :partial => '/client_orders/client_order_products_form', :locals => { :f => f }
           - else
             = render :partial => '/client_orders/client_order_products_list', :locals => { :f => f }
 
-        
+
       .half-page.scroll
         .content
 
           - if remove == true
-          
+
             .clearfix
-              = render :partial => '/client_orders/actions', :locals => { :f => f } 
+              = render :partial => '/client_orders/actions', :locals => { :f => f }
           .row.clearfix
             .half
               %label
@@ -98,72 +115,68 @@
                     = number_to_currency(@client_order.sum, :unit => "")
 
             .half
-                         
-                      
+
+
           - if @offer_id
-            = render :partial => '/client_orders/offer', :locals => { :f => f }              
+            = render :partial => '/client_orders/offer', :locals => { :f => f }
+
+
+          - unless @pdfs.nil?
+            .row.clearfix.p-b
+              = render :partial => '/generic/pdf'
 
           .row.clearfix
-            %label          
-              = t"payment_conditions"
+            = render :partial => '/generic/attachments'
 
-              - unless @disabled
-                - unless @client_order.payment_condition.nil?
-                  = payment_conditions_select(f, @payment_conditions, @client_order.payment_condition)   
-                - else
-                  = payment_conditions_select(f, @payment_conditions)
-              - else
-                .input-holder                  
-                  = @payment_condition.name
-                  = " - "
-                  = @payment_condition.text
-                                                   
           .row.clearfix
             %label
               = t"delivery_terms"
-              
-              - unless @disabled
-                = f.text_area :delivery_terms
-              - else
-                .input-holder
-                  = @client_order.delivery_terms
+
+            - unless @disabled
+              = f.text_area :delivery_terms
+            - else
+              .input-holder
+                = @client_order.delivery_terms
 
           .row.clearfix
             %label
-              = t"notes"  
-              
-              - unless @disabled            
-                = f.text_area :note
-              - else
-                .input-holder
-                  = @client_order.note     
+              = t"notes"
 
-          - unless @pdfs.nil?
-            .row.clearfix.last
-              = render :partial => '/generic/pdf'
+            - unless @disabled
+              = f.text_area :note
+            - else
+              .input-holder
+                = @client_order.note
 
-              .spacer-large.clearfix
-                = link_to "#{t'actions.create_pdf_document'}", "/client_orders/pdf/#{@client_order.id}.pdf", :class => "link-button float-right", :target => "_blank"     
-        
 
       .action-cover.clearfix
-      
         = f.submit action, :class => "button"
-        = f.submit "#{t'save_pdf'}", :class => "link-button"
+        = f.submit "#{t'save_pdf'}", :name => "commit-pdf", :class => "link-button"
 
-        - if remove == true    
+        - if remove == false
+          = f.submit "#{t'save_attach'}", :name => "commit-attach", :class => "link-button"
 
-          = link_to "#{t'actions.remove'}",  @client_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"          
+        - if remove == true
+          = link_to "#{t'actions.remove'}",  @client_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
 
         - else
-          = link_to "#{t'actions.cancel'}",  @client_order, :class => "button remove"      
+          = link_to "#{t'actions.cancel'}",  @client_order, :class => "button remove"
 
+        - if remove == true
 
+          = link_to "/client_orders/pdf/#{@client_order.id}.pdf", :target => "_blank", :class => "link-button float-right" do
+            %i.fa.fa-file-pdf-o
+            = "#{t'actions.create_pdf_document'}"
 
+          .link-button.attach-file.float-right
+            .fa.fa-cloud-upload
+            = "#{t'actions.attach'}"
 
     - if remove == true
+      .hide.hidden-form
+        = render :partial => '/generic/products/form', :locals => { :@product_object => @client_order_product , :@object_id => "order_id" }
 
-      .hide.hidden-form      
-        = render :partial => '/client_order_products/form'
-                  
-                              
+    = render :partial => 'generic/attachment', :locals => { :@file => @client_order_upload, :@file_type =>  "attachment", :@model => "client_order", :@model_id => @client_order.id }
+
+
+

@@ -1,17 +1,20 @@
-%label.spacer-large            
+%label.spacer-large
   = t"products"
 
 .row
   - if @supplier_order_products.size > 0
-    = render :partial => '/supplier_order_products/list_headers'
+
+    = render :partial => '/generic/products/list_headers'
+
     - @supplier_order_products.each do |sop|
-      = render :partial => '/supplier_order_products/list', :locals => { :sop => sop }
+      = render :partial => '/generic/products/list', :locals => { :product => sop, :update_url => "/supplier_order_products/update/", :model_name => "supplier_order_product" }
+
   - else
     .no-data
       = t"no_data"
-      
+
 - unless @supplier_order.status == 3 #Closed
   #hiden-form-cover
   .row.clearfix.last
     #add-new-supplier-order-product-edit.circle-button.large
-      = "+"                                                    
+      %i.fa.fa-plus

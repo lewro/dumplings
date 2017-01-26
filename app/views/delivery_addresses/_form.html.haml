@@ -1,0 +1,26 @@
+= form_for(@delivery_address) do  |f|
+
+  = f.hidden_field :user_id, :value => current_user.id
+  = f.hidden_field :company_id, :value => @client.id
+
+  .delivery-address
+    .clearfix.list-headers
+      .row.clearfix
+        .third
+          %label
+            = t"address.street"
+          = f.text_field :street, "data-required" => "true"
+        .eight
+          %label
+            = t"address.street_number"
+          = f.text_field :street_number, "data-required" => "true"
+        .third
+          %label
+            = t"address.city"
+          = f.text_field :city, "data-required" => "true"
+        .fifth
+          %label
+            = t"address.zipcode"
+          = f.text_field :zip_code, "data-required" => "true"
+      .row.clearfix.last
+        = f.submit "#{t'actions.create'}", :class => "button float-right spacer-medium"

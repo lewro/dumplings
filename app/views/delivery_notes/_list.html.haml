@@ -1,9 +1,12 @@
 .page-content.clearfix
   .content
     %table
-      = render :partial => 'delivery_notes/list_headers'      
+
+      = render :partial => '/delivery_notes/list_headers'
+
       - @delivery_notes.each do |delivery_note|
-        %tr.data{"data-order-id" => "#{delivery_note.id}", "data-link" => "/delivery_notes/#{delivery_note.id}/edit"}    
+
+        %tr.data{"data-order-id" => "#{delivery_note.id}", "data-link" => "/delivery_notes/#{delivery_note.id}/edit"}
           %td
             = delivery_note.id
           %td
@@ -11,4 +14,4 @@
           %td.currency
             = number_to_currency(delivery_note.sum, :unit => "")
           %td
-            = delivery_note.reference_id        
+            = delivery_note.reference_id

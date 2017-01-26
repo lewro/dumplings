@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :authenticate_user!
-  
+
   def index
     @proforma = params[:proforma]
     @pdf_id   = params[:pdf_id]
@@ -11,24 +11,24 @@ class InvoicesController < ApplicationController
       @invoices = Invoice.joins("JOIN companies ON companies.id = invoices.client_id").select("companies.name AS client_name, invoices.id AS id, invoices.sum AS sum, invoices.due_date AS due_date, invoices.paid_date AS paid_date, (SELECT SUM(sum) FROM payments WHERE invoices.id = payments.invoice_id) AS balance").where(:proforma => false)
     end
   end
-  
+
   def new
-    @invoice                  = Invoice.new 
-    @invoice_product          = InvoiceProduct.new 
-  
+    @invoice                            = Invoice.new
+    @invoice_product                    = InvoiceProduct.new
+
     #When Creating from ORDER
     if params[:id]
-      @order                   = ClientOrder.find_by_id(params[:id])      
-      @sum                     = 0
+      @order                           = ClientOrder.find_by_id(params[:id])
+      @sum                             = 0
 
       #Proforma already exists, creating invoice
       @proforma = Invoice.where(:order_id => @order.id, :proforma => 1).first
 
       #If proforma exist
       if @proforma
-        @payments           = Payment.where(:invoice_id => @proforma.id)
-        @payments_sum       = @payments.sum(:sum)              
-        @proforma_products  = InvoiceProduct.where(:invoice_id => @proforma.id)
+        @payments                     = Payment.where(:invoice_id => @proforma.id)
+        @payments_sum                 = @payments.sum(:sum)
+        @proforma_products            = InvoiceProduct.where(:invoice_id => @proforma.id)
 
         #Proforma exists, get the products from the proforma
         @proforma_products.each do |pp|
@@ -44,13 +44,13 @@ class InvoicesController < ApplicationController
         @invoice.reference_id         = @proforma.reference_id
         @invoice.payment_condition    = @proforma.payment_condition
         @invoice.delivery_terms       = @proforma.delivery_terms
-        @invoice.client_id            = @proforma.client_id 
+        @invoice.client_id            = @proforma.client_id
 
-        @invoice.due_date = Time.now + 30.days         
+        @invoice.due_date = Time.now + 30.days
 
       #If proforma does not exist
       else
-        
+
         @order_products  = ClientOrderProduct.where(:order_id => @order.id)
 
         #Proforma does not exist, get the products from the order
@@ -67,17 +67,17 @@ class InvoicesController < ApplicationController
         @invoice.reference_id         = @order.reference_id
         @invoice.payment_condition    = @order.payment_condition
         @invoice.delivery_terms       = @order.delivery_terms
-        @invoice.client_id            = @order.client_id 
+        @invoice.client_id            = @order.client_id
 
-      
+
         #GET THIS FROM USER SETTINGS!!
-        if @order.distribution        
+        if @order.distribution
           @invoice.due_date = @order.distribution + 30.days
         else
-          @invoice.due_date = Time.now + 30.days 
+          @invoice.due_date = Time.now + 30.days
         end
       end
-      
+
       if @invoice.sum.nil?
         @invoice.sum = 0
       end
@@ -85,17 +85,17 @@ class InvoicesController < ApplicationController
       #Delivery note exists
       @delivery_note = DeliveryNote.where(:order_id => @order.id).first
     end
-        
+
     #Creating proforma
     if params[:proforma]
-      @invoice.proforma = true      
+      @invoice.proforma = true
     end
   end
-  
+
   def create
-    @invoice            = Invoice.create(invoice_params)
-    @invoice_products   = params[:invoice][:invoiceproducts][:invoiceproduct]
-    @commit             = params[:commit]
+    @invoice                          = Invoice.create(invoice_params)
+    @invoice_products                 = params[:invoice][:invoiceproducts][:invoiceproduct]
+    @commit                           = params[:commit]
 
     @invoice_products.each do |ip|
       unless ip[1]["packages_quantity"] == ""
@@ -106,23 +106,23 @@ class InvoicesController < ApplicationController
     #Load Index but aftercall PDF document in new TAB
     if @commit.include? "PDF"
       redirect_to "/invoices/?pdf_id=#{@invoice.id}&proforma=#{@invoice.proforma}"
-    else      
+    else
       redirect_to action: "index", :proforma => @invoice.proforma
     end
-    
-  end
-  
-  def mark_invoice_as_paid
-    @id               = params[:id]
-    @invoice          = Invoice.find_by_id(@id)
-    @time_now         = Time.now()
 
-    @payments         = Payment.where(:invoice_id => @id)
-    @payments_sum     = @payments.sum(:sum)        
-    @current_payment  = @invoice.sum - @payments_sum    
-    @payment          = Payment.create(:invoice_id => @invoice.id, :user_id => current_user.id, :sum => @current_payment, :paid_date => @time_now)
-    
-    @invoice.update(:paid_date => @time_now)    
+  end
+
+  def mark_invoice_as_paid
+    @id                               = params[:id]
+    @invoice                          = Invoice.find_by_id(@id)
+    @time_now                         = Time.now()
+
+    @payments                         = Payment.where(:invoice_id => @id)
+    @payments_sum                     = @payments.sum(:sum)
+    @current_payment                  = @invoice.sum - @payments_sum
+    @payment                          = Payment.create(:invoice_id => @invoice.id, :user_id => current_user.id, :sum => @current_payment, :paid_date => @time_now)
+
+    @invoice.update(:paid_date => @time_now)
 
     if params[:invoice_edit]
       if @invoice.proforma
@@ -134,9 +134,9 @@ class InvoicesController < ApplicationController
       render :nothing => true
     end
   end
-  
+
   def update
-    @id       = params[:id]    
+    @id       = params[:id]
     @invoice  = Invoice.find_by_id(@id)
     @commit   = params[:commit]
 
@@ -145,44 +145,44 @@ class InvoicesController < ApplicationController
     #Load Index but aftercall PDF document in new TAB
     if @commit.include? "PDF"
       redirect_to "/invoices/?pdf_id=#{@invoice.id}&proforma=#{@invoice.proforma}"
-    else      
+    else
       redirect_to action: "index", :proforma => @invoice.proforma
     end
   end
 
-  def edit  
-    @id                   = params[:id]
-    @invoice              = Invoice.find_by_id(@id)
+  def edit
+    @id                               = params[:id]
+    @invoice                          = Invoice.find_by_id(@id)
 
-    @invoice_products     = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code ")
-    @invoice_product      = InvoiceProduct.new
-  
-    @order                = ClientOrder.find_by_id(@invoice.order_id)
-    @client               = Company.find_by_id(@invoice.client_id)
-    @pdfs                 = FileUpload.where(:model => "invoice", :model_id => @id, :user_id => current_user.admin_id)
+    @invoice_products                 = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS packages_unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code ")
+    @invoice_product                  = InvoiceProduct.new
+
+    @order                            = ClientOrder.find_by_id(@invoice.order_id)
+    @client                           = Company.find_by_id(@invoice.client_id)
+    @pdfs                             = FileUpload.where(:model => "invoice", :model_id => @id, :user_id => current_user.admin_id)
 
     unless @order.nil?
-      @delivery_note        = DeliveryNote.where(:order_id => @order.id).first
+      @delivery_note  = DeliveryNote.where(:order_id => @order.id).first
     end
 
     define_balance
   end
 
   def pdf
-    @id                     = params[:id]
-    @invoice                = Invoice.find_by_id(@id)
-    @client                 = Company.find_by_id(@invoice.client_id)     
-    @ownership              = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
-    @invoice_products       = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code ")
-    @pc                     = PaymentCondition.find_by_id(@invoice.payment_condition)
-    
+    @id                               = params[:id]
+    @invoice                          = Invoice.find_by_id(@id)
+    @client                           = Company.find_by_id(@invoice.client_id)
+    @ownership                        = Company.where(:category => "ownership", :user_id => current_user.admin_id).last
+    @invoice_products                 = InvoiceProduct.joins("JOIN products ON  invoice_products.product_id = products.id").where(:invoice_id => @id).select("invoice_products.packages_quantity AS packages_quantity, invoice_products.packages_size AS packages_size, invoice_products.unit AS unit, invoice_products.package_price AS package_price, invoice_products.id AS product_id, invoice_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code, products.tax_group_id AS tax_group_id ")
+    @pc                               = PaymentCondition.find_by_id(@invoice.payment_condition)
+
     define_balance
 
     #PDF
-    html_string             = render_to_string(:layout => 'pdf_document')
-    kit                     = PDFKit.new(html_string)
-    file_unique_name        = @id.to_s+".pdf"
-  
+    html_string                       = render_to_string(:layout => 'pdf_document')
+    kit                               = PDFKit.new(html_string)
+    file_unique_name                  = @id.to_s+".pdf"
+
     if Rails.env.production?
       file_path = "/var/www/sites/dumplings/app/assets/uploads/pdf/" + file_unique_name
     else
@@ -190,52 +190,55 @@ class InvoicesController < ApplicationController
     end
 
     #File object
-    file = kit.to_file(file_path)         
-      
+    file = kit.to_file(file_path)
+
     #Create file object, dtb record and upload in folder structure
     PdfFileUpload.upload_pdf_file(file, @invoice.id, @admin_id, "invoice", "document")
 
     #Remove the tmp file
     FileUtils.rm(file_path)
 
-    render :layout => "pdf_document" 
-  end  
+    render :layout => "pdf_document"
+  end
 
   def define_balance
+
+    @payments = 0
+
     #Are we editing proforma invoice?
     if @invoice.proforma == true
 
       @proforma           = @invoice
       @invoice_sum        = @proforma.sum
 
-      #Is the standard invoice linked to this proforma invoice 
-      @invoice_link = Invoice.where(:order_id => @invoice.order_id, :proforma => false).first         
+      #Is the standard invoice linked to this proforma invoice
+      @invoice_link = Invoice.where(:order_id => @invoice.order_id, :proforma => false).first
 
-  
+
       # Are there payments linked to standard or proforma invoice?
       @payments_proforma = Payment.where(:invoice_id => @proforma.id)
 
       if @invoice_link
-        @payments_standard = Payment.where(:invoice_id => @invoice_link.id)         
-      end  
+        @payments_standard = Payment.where(:invoice_id => @invoice_link.id)
+      end
     else
       #We are editing standard invoice
       @invoice_link = @invoice
 
       #Is there proforma invoice linked to this standard invoice
-      @proforma = Invoice.where(:order_id => @invoice.order_id, :proforma => true).first    
-      
+      @proforma = Invoice.where(:order_id => @invoice.order_id, :proforma => true).first
+
       if @proforma
         @payments_proforma  = Payment.where(:invoice_id => @proforma.id)
-        @invoice_sum        = @proforma.sum 
+        @invoice_sum        = @proforma.sum
       else
         @invoice_sum        = @invoice_link.sum
       end
 
-      @payments_standard  = Payment.where(:invoice_id => @invoice_link.id)       
+      @payments_standard  = Payment.where(:invoice_id => @invoice_link.id)
     end
 
-    #Merge both payments 
+    #Merge both payments
     if @payments_proforma
       unless @payments_standard.nil?
         @payments  = @payments_standard.merge(@payments_proforma)
@@ -246,21 +249,21 @@ class InvoicesController < ApplicationController
       @payments  = @payments_standard
     end
 
-    @payments_sum  = @payments.sum(:sum) 
+    @payments_sum  = @payments.sum(:sum)
     @balance       = @payments_sum - @invoice_sum
-    
+
     if @invoice_link && (@invoice != @invoice_link)
       @disabled           = true
       @payment_condition  = PaymentCondition.find_by_id(@invoice.payment_condition)
-    end    
+    end
   end
 
   def destroy
-    @id       = params[:id]    
+    @id       = params[:id]
     @invoice  = Invoice.find_by_id(@id)
     @invoice.destroy
-    
-    redirect_to action: "index"         
+
+    redirect_to action: "index"
   end
 
   def invoice_params

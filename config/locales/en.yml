@@ -10,11 +10,11 @@ en:
   invoices: "Invoices"
   proforma_invoices: "Proforma invoices"
   payments: "Payments"
-  products: "Products"  
+  products: "Products"
   stuff: "Stuff"
   sales: "Sales"
   invoiced: "Invoiced"
-  supplies: "Supplies"  
+  supplies: "Supplies"
   id: "Id"
   notes: "Notes"
   order: "Order"
@@ -38,11 +38,19 @@ en:
   to: "To"
   meetings: "Agenda"
   pdfs: "PDF Documents"
-  tax: "Tax"
+  taxes: "Taxes"
+  tax_groups: "Tax Groups"
   id_format: "ID Format"
   save_pdf: "Save and Create PDF"
+  save_attach: "Save and Attach File"
+  attachments: "attachments"
+  delivery_addresses: "Delivery Addresses"
+  phone: "Phone"
 
-  meeting: 
+  delivery_address:
+    title: "Delivery Address"
+
+  meeting:
     title: "Meeting"
     new: "Add new meeting"
 
@@ -52,25 +60,25 @@ en:
     search: "Search for a client"
     new: "New client"
     registration_number: "Registration #"
-    vat_number: "VAT #" 
+    vat_number: "VAT #"
     reference: "Client reference"
-    
+
   supplier:
     title: "Supplier"
     add: "Add new supplier"
     search: "Search for a supplier"
     new: "New supplier"
-        
-  company: 
+
+  company:
     title: "Company"
     ownership_new: "Specify your company details"
-    
+
   address:
     street: "Street"
     street_number: "Street number"
     zipcode: "Zipcode"
     city: "City"
-    
+
   sales_representative:
     title: "Sales representative"
 
@@ -84,7 +92,7 @@ en:
     title: "Orders"
     client_orders: "Client orders"
     client_order: "Client order"
-    supplier_orders: "Supplier orders"    
+    supplier_orders: "Supplier orders"
     new: "Create new order"
     search: "Search for an order"
     sum: "Sum"
@@ -103,7 +111,7 @@ en:
     total_price: "Total price"
     order_confirmation_date: "Order Confirmation Date"
     id: "Order ID"
-    
+
   product:
     title: "Product"
     name: "Name"
@@ -111,20 +119,20 @@ en:
     search: "Search products"
     code: "Product code"
     stock_note: "These supplies will be deducted from stock on product sale."
-    
+
   supply:
     title: "Supply"
     add: "Add new supply"
     search: "Search supplies"
-    
+
   invoice:
     number: "Invoice number"
     title: "Invoice"
     add: "Add new invoice"
     search: "Search invoices"
     due_date: "Due date"
-    paid_date: "Paid date" 
-    mark_as_paid: "Paid Fully Today"   
+    paid_date: "Paid date"
+    mark_as_paid: "Paid Fully Today"
     just_now: "Just now"
     invoice_amount: "Invoice amount"
     balance: "Balance"
@@ -133,10 +141,19 @@ en:
     issue_date: "Issue date"
     id: "Invoice ID"
 
-  proforma_invoice: 
+  tax_group:
+    title: "Tax Group"
+    add: "Add Tax Group"
+
+  tax:
+    title: "Tax"
+    invoice_tax: "Invoice Tax"
+    default_tax_setting: "New Clients - Invoice Tax?"
+
+  proforma_invoice:
     title: "Proforma Invoice"
     id: "Proforma ID"
-  
+
   delivery_note:
     title: "Delivery note"
 
@@ -157,23 +174,26 @@ en:
 
   retail:
     title: "Retail sale"
-    add: "Add new retail sale"    
+    add: "Add new retail sale"
     search: "Search retail sales"
     payment_type: "Payment type"
     delivery_type: "Delivery type"
     transport: "Transport cost"
 
   actions:
-    title: "Actions" 
+    title: "Actions"
     save: "Save"
     remove: "Remove"
     create: "Create"
     edit: "Edit"
+    update: "Update"
     download: "Download"
     confirm: "Are you sure?"
     cancel: "Cancel"
     create_pdf_document: "Create PDF document"
-  
+    attach: "Attach File"
+    saved: "Saved"
+
   status:
     title: "Status"
     open: "Open"
@@ -189,12 +209,12 @@ en:
   user:
     title: "User"
     add: "Add new user"
-    search: "Search for an user"    
+    search: "Search for an user"
     first_name: "First name"
-    last_name: "Last nam"
+    last_name: "Last name"
     email: "Email"
-    category: "Category"    
-    
+    category: "Category"
+
   category:
     sales_representant: "Sales representant"
     factory_worker: "Factory worker"
@@ -214,17 +234,17 @@ en:
     add: "Create new delivery note"
     search: "Search for a note"
     id: "Delivery note ID"
-    
+
   stock:
     title: "Stock"
-    search: "Search stock"    
+    search: "Search stock"
     percent_in_stock: "Percent in stock"
-    zero_stock: "Setting stock to 0% will remove the stock item. Are you sure?"    
+    zero_stock: "Setting stock to 0% will remove the stock item. Are you sure?"
 
   payment_condition:
     title: "Payment condition"
     text: "Text"
-    add: "Add payment condition"  
+    add: "Add payment condition"
 
   errors:
     email_exists : "Email has been already registered with another account"
@@ -234,9 +254,9 @@ en:
   unit:
     title: "units"
     pieces: "pieces"
-    kg: "kilos"    
+    kg: "kilos"
     m: "meters"
     cm: "centimeters"
     mm: "milimeters"
     l: "liters"
-    
+

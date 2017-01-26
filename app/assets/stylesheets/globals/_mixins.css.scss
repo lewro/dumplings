@@ -4,7 +4,7 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines application methods
  **/
- 
+
 @mixin circle() {
   @include rounded_corner(999px);
 }
@@ -18,7 +18,7 @@
 @mixin drop_shadow($left, $top, $blur) {
   -moz-box-shadow: $left $top $blur rgba(50, 50, 50, 0.3) !important;
   -webkit-box-shadow: $left $top $blur rgba(50, 50, 50, 0.3) !important;
-  box-shadow: $left $top $blur rgba(50, 50, 50, 0.3) !important; 
+  box-shadow: $left $top $blur rgba(50, 50, 50, 0.3) !important;
 }
 
 @mixin box_sizing() {
@@ -48,5 +48,5 @@
 @mixin opacity_transition() {
   transition: opacity .50s ease-in-out;
   -moz-transition: opacity .50s ease-in-out;
-  -webkit-transition: opacity .50s ease-in-out  
+  -webkit-transition: opacity .50s ease-in-out
 }

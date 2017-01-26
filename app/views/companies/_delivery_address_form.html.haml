@@ -1,0 +1,12 @@
+.delivery-address
+  = companydeliveryaddress.fields_for "companydeliveryaddress[#{0}]" do |companydeliveryaddress|
+
+    .row.clearfix
+      .third
+        = companydeliveryaddress.text_field :street
+      .fifth
+        = companydeliveryaddress.text_field :street_number
+      .third
+        = companydeliveryaddress.text_field :city
+      .eight
+        = companydeliveryaddress.text_field :zip_code

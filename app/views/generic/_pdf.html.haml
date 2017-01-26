@@ -1,20 +1,20 @@
 %label
   = t"pdfs"
-  
-- unless @pdfs.size < 1 
+
+- unless @pdfs.size < 1
   %table
     - @pdfs.each do |pdf|
       %tr.pdf-file{"data-pdf-id" => pdf.id}
         %td
           = "#"
-          = pdf.id        
+          = pdf.id
         %td
           = display_date_time(pdf.created_at)
         %td
-          = link_to "#{t'actions.download'}",  { :controller => "file_uploads", :action => "download_pdf", :id => pdf.id }, :target => "_blank", :class => "link-button float-right"
-        %td
-          .circle-button.small.remove-pdf.float-right{"remove-message" => "#{t'actions.confirm'}" }
-            = "x"          
+          .circle-button.small.remove-pdf.float-right.m-l{"remove-message" => "#{t'actions.confirm'}" }
+            %i.fa.fa-close{:title => "#{t'actions.remove'}"}
+          = link_to "/file_uploads/download_pdf/#{pdf.id}", :target => "_blank", :class => "circle-button small float-right" do
+            %i.fa.fa-cloud-download{:title => "#{t'actions.download'}"}
 
 - else
   .no-data

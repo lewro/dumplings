@@ -1,17 +1,25 @@
 .product
+
   = supplierorderproduct.fields_for "supplierorderproduct[#{0}]" do |supplierorderproduct|
+
     .row.clearfix
+
       .fifth
         = supplies_select(supplierorderproduct, @supplies)
-      .sixth.packages-quantity      
-        = supplierorderproduct.text_field :packages_quantity, "data-required" => "true"           
-      .sixth      
-        = supplierorderproduct.text_field :packages_size
-      .sixth      
-        = units_select(supplierorderproduct)          
-      .sixth.package-price
-        = supplierorderproduct.text_field :package_price, "data-required" => "true"
+
+      .sixth.packages-quantity
+        = supplierorderproduct.text_field :packages_quantity, "data-required" => "true"
+
       .sixth
-        .ui-selectmenu-button  
+        = supplierorderproduct.text_field :packages_size
+
+      .sixth
+        = units_select(supplierorderproduct)
+
+      .sixth.package-price.a-r
+        = supplierorderproduct.text_field :package_price, "data-required" => "true"
+
+      .sixth
+        .ui-selectmenu-button
           = supplierorderproduct.text_field :expiration_date, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
           %span.ui-icon.ui-icon-triangle-1-s

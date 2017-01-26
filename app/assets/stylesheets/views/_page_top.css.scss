@@ -4,16 +4,16 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines helper classes
  **/
- 
- @import "globals/colours";
- @import "globals/mixins";
- @import "globals/sizes";
+
+@import "globals/colours";
+@import "globals/mixins";
+@import "globals/sizes";
 
 .page-top {
   height: 120px;
   padding: 30px;
   background: $theme-2;
-  
+
   h1 {
     display: inline-block;
     margin: 0 0 0 0;
@@ -32,34 +32,34 @@
     float: left;
     margin-top: 50px;
     width: 100%;
-    
+
     ::-webkit-input-placeholder {
        color: $theme-3;
     }
     :-moz-placeholder { /* Firefox 18- */
-       color: $theme-3;  
+       color: $theme-3;
     }
     ::-moz-placeholder {  /* Firefox 19+ */
-       color: $theme-3;  
+       color: $theme-3;
     }
-    :-ms-input-placeholder {  
-       color: $theme-3;  
-    }    
-    
+    :-ms-input-placeholder {
+       color: $theme-3;
+    }
+
     .icon {
       width: 25px;
       height: 25px;
-      line-height: 25px;  
+      line-height: 25px;
       font-size: 25px;
-      color: $accent-color;      
-      float: left;      
+      color: $accent-color;
+      float: left;
     }
-            
+
     .input {
       @include calc("width", "100% - 30px");
       font-weight: 100;
       font-size: $font-large;
-      background: $theme-2;      
+      background: $theme-2;
       border: none;
       &:focus {
         color: $primary-color;

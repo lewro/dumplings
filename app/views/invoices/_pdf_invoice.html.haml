@@ -1,209 +1,40 @@
 .pdf
-	.clearfix
-		.half.content.last
-			-# %img.logo{ :src => @path_logo }
-		.half.a-r.last.content
-			%h1
-				= t"invoice.title"		
-			.pdf-numbers.clearfix	
-				%label.a-r			
-					= t"invoice.id"			
-				.pdf-primary-number			
-					= @invoice.id
-				%label.a-r			
-					= t"offer.reference_id"
-					= ":"
-					= @invoice.reference_id
-									
-				.pdf-row
-					%label.a-r
-						= t"bank.title"
-						= ":"
-						= @ownership.bank
-				.pdf-row
-					%label.a-r
-						= t"bank.account_number"
-						= ":"
-						= @ownership.account_number
-				.pdf-row
-					%label.a-r
-						= t"bank.swift_code"
-						= ":"
-						= @ownership.swift_code
-				.pdf-row
-					%label.a-r
-						= t"bank.iban_code"
-						= ":"
-						= @ownership.iban_code
+    .clearfix
+        .half.content.last
+            = render :partial => 'generic/pdf/pdf_logo'
+        .half.a-r.last.content
+            %h1
+                = t"invoice.title"
+            .pdf-numbers.clearfix
+                %label.a-r
+                    = t"invoice.id"
+                .pdf-primary-number
+                    = @invoice.id
+                %label.a-r
+                    = t"offer.reference_id"
+                    = ":"
+                    = @invoice.reference_id
 
-				.pdf-row.m-t
-					.a-r
-						= display_date(@invoice.issue_date)	
+                = render :partial => 'generic/pdf/pdf_ownership_bank'
 
+                .pdf-row.m-t
+                    .a-r
+                        = display_date(@invoice.issue_date)
 
-	.clearfix
-		.half.last
-			.devider
-			.content
-				.pdf-row
-					%label
-						= t"to"			
-				.pdf-row
-					%strong
-						= @client.name
-				.pdf-row
-					= @client.street
-					= @client.street_number
-				.pdf-row				
-					= @client.city
-				.pdf-row				
-					= @client.zip_code		
+    = render :partial => 'generic/pdf/pdf_client_ownership'
 
-				.pdf-values.clearfix
-					.half	
-						%label
-							= t"client.registration_number"				
-						= @client.registration_number
-					.half.last
-						%label
-							= t"client.vat_number"			
-						= @client.vat_number
+    - if @client.use_tax
+        = render :partial => 'generic/pdf/pdf_products_use_tax', :locals => {:@products => @invoice_products, :@payments => @payments}
+    - else
+        = render :partial => 'generic/pdf/pdf_products_dont_use_tax', :locals => {:@products => @invoice_products, :@payments => @payments}
 
-		.half.last
-			.devider
-			.content
-				.pdf-row
-					%label
-						= t"from"
-					%strong
-						= @ownership.name
-				.pdf-row
-					= @ownership.street
-					= @ownership.street_number
-				.pdf-row				
-					= @ownership.city
-				.pdf-row				
-					= @ownership.zip_code	
+    .devider
 
-				.pdf-values.clearfix
-					.half	
-						%label
-							= t"client.registration_number"			
-						= @client.registration_number
-					.half.last
-						%label
-							= t"client.vat_number"
-						= @client.vat_number
-				.pdf-fow
-					%small
-						= @ownership.legal
+    = render :partial => 'generic/pdf/pdf_payment_conditions'
 
+    .devider
 
-
-	.clearfix.pdf-table
-		%table
-			%thead
-				%tr
-					%th.name
-						= t"product.name"
-					%th				 	
-						= t"product.code" 
-					%th						
-						= t"orders.packages_count"
-					%th
-						= t"orders.package_size"
-						= "/"
-						= t"unit.title"
-					%th
-						= t"orders.package_price"
-					%th
-						= t"expiration_date" 
-					%th
-						= t"orders.price"   
-						= "-"
-						= @currency        
-
-			%tbody
-
-
-				- total = 0	
-
-				- @invoice_products.each do |op|
-				
-					%tr
-						%td.name
-							= op.name
-						%td
-							= op.product_code
-						%td
-							= op.packages_quantity
-						%td
-							= op.packages_size
-							= " " 
-							= unit(op.unit)  
-						%td
-							= op.package_price
-						%td
-							= op.expiration_date
-						%td
-							= number_to_currency(op.packages_quantity * op.package_price, :unit => "")
-							- total = total + (op.packages_quantity * op.package_price)							
-		
-
-		.totals
-			- tax_total = 0
-			- if @use_tax == true
-
-				.clearfix
-					.total-header
-						= t"payments"
-						= "("
-						= t"proforma_invoice.id"
-						= ":"
-						= @proforma.id						
-						= ")"
-
-					.total-sum						
-						= @currency
-						= number_to_currency(@payments_sum, :unit => "")
-
-				.devider
-
-				.clearfix.m-t
-					.total-header
-						= t"orders.sum"
-					.total-sum
-						= @currency
-						= number_to_currency(@invoice.sum, :unit => "")
-				.clearfix
-					.total-header
-						- tax = @tax
-						= "Tax"
-						= tax
-						= "%"
-					.total-sum					
-						- tax_total = (@invoice.sum / 100 ) * tax
-						= @currency					
-						= number_to_currency(tax_total, :unit => "")
-
-			.clearfix.final
-				.total-header
-					= t"orders.total_price"
-				.total-sum				
-					= @currency
-					= number_to_currency(@invoice.sum + tax_total, :unit => "")
-
-	.devider
-	.clearfix.content.pdf-footer
-		.pdf-row.clearfix
-			%label
-				= t"payment_conditions"
-			= @pc.text		
-				
-		.devider			
-		.pdf-row.m-t.clearfix
-			-#%img.signature.m-t{ :src => @path_signature }
-	
+    = render :partial => 'generic/pdf/pdf_signature'
 
 
 

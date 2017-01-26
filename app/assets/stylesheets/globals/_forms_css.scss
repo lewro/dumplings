@@ -17,13 +17,13 @@
 .action-cover {
   float: left;
   width: 100%;
-  padding: 30px;
+  padding: 15px 30px;
   box-sizing: border-box;
   background: $grey-light3;
   border-bottom: 1px solid $grey-light1;
 }
 
-.input-holder {  
+.input-holder {
   border: none;
   float: left;
   width: 100%;
@@ -33,10 +33,11 @@
   color: $grey-dark3;
   font-size: $font-medium;
   border-bottom: 1px solid $primary-color;
-  font-family: $font-family2; 
+  font-family: $font-family2;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;  
+  text-overflow: ellipsis;
+  line-height: 1em;
 }
 
 .button-cover {
@@ -47,7 +48,7 @@
   padding: 30px 0 10px 0;
   label {
     color: $theme-5;
-    font-size: 9px;          
+    font-size: 9px;
   }
 }
 
@@ -55,5 +56,5 @@
   border: 1px dashed #46ccbb;
   padding: 0 20px 20px 20px;
   @include rounded_corner(3px);
-  @include drop-shadow(0px, 5px, 20px); 
+  @include drop-shadow(0px, 5px, 20px);
 }

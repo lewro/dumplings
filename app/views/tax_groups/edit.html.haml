@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'tax-groups'}
+= render :partial => 'tax_groups/top', :locals => { :header => "#{t'tax_group.title'} #{@tax_group.id}" }
+= render :partial => 'tax_groups/form', :locals => { :action =>  "#{t'actions.save'}", :remove => true }

@@ -17,7 +17,7 @@
     return
 
   #Top messages
-  messages: () ->    
+  messages: () ->
     if $.trim($('.notice, .alert').html()).length > 0
       $('.notice, .alert').slideDown('slow').delay(5000).slideUp('slow')
 
@@ -26,50 +26,68 @@
     $('.page-content').each ->
 
       first_page    = $('.half-page:first')
-      last_page     = $('.half-page:last')            
-      first_height  = $(first_page).find('.content').height() + 100      
-      last_height   = $(last_page).find('.content').height() + 100        
+      last_page     = $('.half-page:last')
+      first_height  = $(first_page).find('.content').height() + 100
+      last_height   = $(last_page).find('.content').height() + 100
 
       if first_height > last_height
-        $(first_page).height(first_height)        
+        $(first_page).height(first_height)
         $(last_page).height(first_height)
       else
         $(first_page).height(last_height)
-        $(last_page).height(last_height)        
-      
-  
+        $(last_page).height(last_height)
+
+
   # Switch Buttons - uses Switchable plugin
-  switchButtons: () ->  
+  switchButtons: () ->
     $("input[type='checkbox']").switchable()
 
 
-  uiElements : () ->  
+  uiElements : () ->
     $(".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
     $("select:visible").selectmenu()
-  
+
     #Tooltip
     $( document ).tooltip();
-  
-    
+
+
   fixUiElements : () ->
-    $(".ui-selectmenu-button").each -> 
+    $(".ui-selectmenu-button").each ->
       widthSize = $(this).parents("div").css("width")
       $(this).css("width", widthSize)
-    
+
   formSubmit : () ->
     $("form").on 'submit', (e) ->
       core.validateForm(this)
 
-  autosubmitLink : () ->    
-    if $(".autosubmit").length > 0      
+  ajaxList : () ->
+    $('body').delegate '[data-ajax-list-button="true"]', 'click', ->
+
+      form        = $(this).parents('[data-ajax-list="true"]')
+      url         = $(form).attr("data-ajax-url")
+      object      = $(form).attr("data-ajax-object")
+
+      url     = url + "/?"
+
+      $(form).find('[data-ajax-list-element="true"]').each ->
+        model   = $(this).attr("data-ajax-element")
+        val     = $(this).find("input").val()
+
+        url = url + object+"["+model+"="+val+"]&"
+
+      actions.ajax("get", url, $('.notice'))
+
+
+  autosubmitLink : () ->
+    if $(".autosubmit").length > 0
       url  = $(".autosubmit").data("url")
       win = window.open url, '_blank'
 
-      if (win)          
+      if (win)
           win.focus();
-      else    
+      else
         alert('Please allow popups for this website');
-    
+
   validateForm : (form) ->
     #Empty Input?
     if $(form).find('input[type="text"]').length > 0
@@ -184,20 +202,20 @@
       @validate element
     else
       @invalidate element
-      
+
   textAreaAutoGrow : () ->
     $('textarea').autogrow()
 
 
   #Refresh current view when creating new PDF document so the list of files is actual
-  refreshOnNewTarget : () ->  
-    $('body').delegate '.link-button', 'click', ->  
-      if $(this).attr('target') == '_blank'        
+  refreshOnNewTarget : () ->
+    $('body').delegate '.link-button', 'click', ->
+      if $(this).attr('target') == '_blank'
         setTimeout (->
           location.reload();
           return
         ), 2000
-      
+
   min_size : (element, size) ->
     if $(element).val().length > size
       @validate element
@@ -212,7 +230,7 @@
       else
         $(this).focus()
         false
-      
+
   scroll : () ->
     if $('.scroll').length > 0
       $('.scroll').jScrollPane({
@@ -223,28 +241,29 @@
         horizontalGutter: 0,
         arrowButtonSpeed: 300,
         mouseWheelSpeed: 5
-      })      
+      })
 
   uiRepaint : () ->
     core.uiElements()
-    core.halfBoxes()      
+    core.halfBoxes()
     core.textAreaAutoGrow()
-    core.scroll() 
+    core.scroll()
     core.tableRows()
     core.formSubmit()
-    core.messages() 
+    core.messages()
     core.switchButtons()
     core.autosubmitLink()
     core.refreshOnNewTarget()
-    
+    core.ajaxList()
+
   windowResize : () ->
     $(window).resize ->
       core.uiRepaint()
       core.fixUiElements()
 
   init : () ->
-    core.uiRepaint()    
-    core.windowResize()    
+    core.uiRepaint()
+    core.windowResize()
 
 jQuery ($) ->
-  core.init()  
+  core.init()

@@ -1,0 +1,56 @@
+.clearfix
+    .half.last
+        .devider
+        .content
+            .pdf-row
+                %label
+                    = t"to"
+            .pdf-row
+                %strong
+                    = @client.name
+            .pdf-row
+                = @client.street
+                = @client.street_number
+            .pdf-row
+                = @client.city
+            .pdf-row
+                = @client.zip_code
+
+            .pdf-values.clearfix
+                .half
+                    %label
+                        = t"client.registration_number"
+                    = @client.registration_number
+                .half.last
+                    %label
+                        = t"client.vat_number"
+                    = @client.vat_number
+
+    .half.last
+        .devider
+        .content
+            .pdf-row
+                %label
+                    = t"from"
+                %strong
+                    = @ownership.name
+            .pdf-row
+                = @ownership.street
+                = @ownership.street_number
+            .pdf-row
+                = @ownership.city
+            .pdf-row
+                = @ownership.zip_code
+
+            .pdf-values.clearfix
+                .half
+                    %label
+                        = t"client.registration_number"
+                    = @client.registration_number
+                .half.last
+                    %label
+                        = t"client.vat_number"
+                    = @client.vat_number
+            .pdf-fow
+                %small
+                    = @ownership.legal

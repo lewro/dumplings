@@ -6,14 +6,14 @@
 ###
 
 @nav =
-	topNav : () -> 
+	topNav : () ->
 		$('body').delegate '.top-nav', 'click', ->
 			$('#top-nav').show()
 
-		$('body').delegate '.top-nav-close', 'click', ->	
+		$('body').delegate '.top-nav-close', 'click', ->
 			$('#top-nav').hide()
 
-	init : () ->         
+	init : () ->
 		nav.topNav()
 
 jQuery ($) ->

@@ -1,12 +1,12 @@
 = render :partial => 'generic/top', :locals => {:current_view => 'events'}
 = render :partial => "events/top", :locals => { :header => "#{t'meetings'}"}
 
-.page-content.clearfix  
+.page-content.clearfix
   #event
     .half-page.left.scroll
       .content
         = render :partial => 'events/events'
-    
-    .half-page
+
+    .half-page.scroll
       .content
         = render :partial => 'events/event_form'

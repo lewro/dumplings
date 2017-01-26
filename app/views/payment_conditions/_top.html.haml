@@ -1,5 +1,12 @@
 .page-top.clearfix
   .h-line
   %h1
-    = header  
-  = link_to "#{t'payment_condition.add'}", {:controller => :payment_conditions, :action => :new}, :class => "button"      
+    = header
+
+  = link_to "/payment_conditions/new", :class => "button"  do
+    %i.fa.fa-plus-circle
+    = "#{t'payment_condition.add'}"
+
+  = link_to "/payment_conditions", :class => "link-button float-right"  do
+    %i.fa.fa-list
+    = "#{t'payment_conditions'}"

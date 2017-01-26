@@ -2,7 +2,7 @@
   * File          Tooltip
   * Application   Little Factory
   * Copyright     All rights reserved by Roman Leinwather - Lewro
-  * Description   Tooltip 
+  * Description   Tooltip
  **/
 
 @import "colours";
@@ -17,5 +17,5 @@
 	line-height: 11px !important;
 	text-transform: uppercase !important;
 	background: $accent-color-secondary !important;
-	@include drop-shadow(0px, 5px, 50px); 	
+	@include drop-shadow(0px, 5px, 50px);
 }

@@ -2,8 +2,10 @@
   .h-line
   %h1
     = header
-  
-  = link_to "#{t'delivery_note.add'}", {:controller => :delivery_notes, :action => :new}, :class => "button"    
+
+  = link_to "/delivery_notes/new", :class => "button" do
+    %i.fa.fa-plus-circle
+    = "#{t'delivery_note.add'}"
 
   - if search ==  true
     .search.clearfix

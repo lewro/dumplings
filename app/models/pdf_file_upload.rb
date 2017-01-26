@@ -14,5 +14,5 @@ class PdfFileUpload < FileUpload
     @file_upload = PdfFileUpload.new(:upload => file)
     @file_upload.update(:model_id => model_id, :model => model, :user_id => user_id, :file_type => file_type )
     @file_upload.save!
-  end	
+  end
 end

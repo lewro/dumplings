@@ -1,1 +1,13 @@
-%img{:src => @path}
+%tr.af-file{"data-af-id" => af.id}
+  %td
+    = "#"
+    = af.id
+  %td
+    = af.upload_file_name
+  %td
+    = display_date_time(af.created_at)
+  %td
+    = link_to "#{t'actions.download'}",  { :controller => "file_uploads", :action => "download_af", :id => af.id }, :target => "_blank", :class => "link-button float-right"
+  %td
+    .circle-button.small.remove-af.float-right{"remove-message" => "#{t'actions.confirm'}" }
+      %i.fa.fa-close

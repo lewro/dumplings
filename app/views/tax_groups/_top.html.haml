@@ -1,0 +1,12 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header
+
+  = link_to "/tax_groups/new", :class => "button"  do
+    %i.fa.fa-plus-circle
+    = "#{t'tax_group.add'}"
+
+  = link_to "/tax_groups", :class => "link-button float-right"  do
+    %i.fa.fa-list
+    = "#{t'tax_groups'}"

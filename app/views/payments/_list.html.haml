@@ -2,7 +2,7 @@
   .content
     %table
       = render :partial => "payments/list_headers"
-          
+
       - @payments.each do |payment|
         %tr.data{"data-link" => "/payments/#{payment.id}/edit"}
           %td

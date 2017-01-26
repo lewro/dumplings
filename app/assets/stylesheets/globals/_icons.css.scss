@@ -4,7 +4,7 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines icon classes
  **/
- 
+
 @import "colours";
 @import "mixins";
 @import "sizes";
@@ -21,8 +21,8 @@
   background: $theme-2;
 }
 
-.search .icon {  
-  -webkit-transform: rotate(45deg); 
-  -moz-transform: rotate(45deg); 
-  -o-transform: rotate(45deg);  
+.search .icon {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
 }

@@ -1,119 +1,58 @@
 .pdf
-	.clearfix
-		.half.content.last
-			-# %img.logo{ :src => @path_logo }
-		.half.a-r.last.content
-			%h1
-				= t"orders.supplier_order"
-			.pdf-numbers.clearfix	
-				%label.a-r			
-					= t"orders.id"			
-				.pdf-primary-number			
-					= @supplier_order.id				
+    .clearfix
+        .half.content.last
+            = render :partial => 'generic/pdf/pdf_logo'
+        .half.a-r.last.content
+            %h1
+                = t"orders.supplier_order"
+            .pdf-numbers.clearfix
+                %label.a-r
+                    = t"orders.id"
+                .pdf-primary-number
+                    = @supplier_order.id
 
-				.pdf-row.m-t
-					.a-r
-						=# display_date(@client_order.issue_date)	
+                .pdf-row.m-t
+                    .a-r
+                        = display_date(Date.today)
 
+    = render :partial => 'generic/pdf/pdf_client_ownership'
 
-	.clearfix
-		.half.last
-			.devider
-			.content
-				.pdf-row
-					%label
-						= t"to"			
-				.pdf-row
-					%strong
-						= @client.name
-				.pdf-row
-					= @client.street
-					= @client.street_number
-				.pdf-row				
-					= @client.city
-				.pdf-row				
-					= @client.zip_code		
+    .clearfix.pdf-table
+        %table
+            %thead
+                %tr
+                    %th.name
+                        = t"product.name"
+                    %th
+                        = t"product.code"
+                    %th
+                        = t"orders.packages_count"
+                    %th
+                        = t"orders.package_size"
+                        = "/"
+                        = t"unit.title"
+                    %th
+                        = t"orders.package_price"
 
-				.pdf-values.clearfix
-					.half	
-						%label
-							= t"client.registration_number"				
-						= @client.registration_number
-					.half.last
-						%label
-							= t"client.vat_number"			
-						= @client.vat_number
+            %tbody
+                - @supplier_order_products.each do |op|
+                    %tr
+                        %td.name
+                            = op.name
+                        %td
+                            = op.product_code
+                        %td
+                            = op.packages_quantity
+                        %td
+                            = op.packages_size
+                            = " "
+                            = unit(op.unit)
+                        %td
+                            = op.package_price
 
-		.half.last
-			.devider
-			.content
-				.pdf-row
-					%label
-						= t"from"
-					%strong
-						= @ownership.name
-				.pdf-row
-					= @ownership.street
-					= @ownership.street_number
-				.pdf-row				
-					= @ownership.city
-				.pdf-row				
-					= @ownership.zip_code	
+    .devider
 
-				.pdf-values.clearfix
-					.half	
-						%label
-							= t"client.registration_number"			
-						= @client.registration_number
-					.half.last
-						%label
-							= t"client.vat_number"
-						= @client.vat_number
-				.pdf-fow
-					%small
-						= @ownership.legal
-
-
-
-	.clearfix.pdf-table
-		%table
-			%thead
-				%tr
-					%th.name
-						= t"product.name"
-					%th				 	
-						= t"product.code" 
-					%th						
-						= t"orders.packages_count"
-					%th
-						= t"orders.package_size"
-						= "/"
-						= t"unit.title"
-					%th
-						= t"orders.package_price"				
-
-			%tbody
-				- @supplier_order_products.each do |op|
-				
-					%tr
-						%td.name
-							= op.name
-						%td
-							= op.product_code
-						%td
-							= op.packages_quantity
-						%td
-							= op.packages_size
-							= " " 
-							= unit(op.unit)  
-						%td
-							= op.package_price	
-		
-		.devider			
-		.pdf-row.m-t.clearfix
-			-#%img.signature.m-t{ :src => @path_signature }
-	
-
+    = render :partial => 'generic/pdf/pdf_signature'
 
 
 

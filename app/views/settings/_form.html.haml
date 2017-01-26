@@ -1,48 +1,45 @@
 .page-content.clearfix
   .half-page.left
-    .content.clearfix     
+    .content.clearfix
       .half
         %label
-          = t"logo"  
-        .image-cover      
+          = t"logo"
+        .image-cover
           = render :partial => 'generic/file_upload', :locals => { :@file => @logo_new, :@file_type =>  "company-logo", :@model => "user", :@model_id => current_user.admin_id }
           .old-file
-            %img{ :src => @path_logo }        
+            %img{ :src => @path_logo }
 
       .half.last
         %label
-          = t"signature"   
-        .image-cover            
+          = t"signature"
+        .image-cover
           = render :partial => 'generic/file_upload', :locals => { :@file => @signature_new, :@file_type =>  "signature", :@model => "user", :@model_id => current_user.admin_id }
           .old-file
             %img{ :src => @path_signature }
-      
+
 
   .half-page
     = form_for(@setting) do  |f|
       = f.hidden_field :user_id, :value => current_user.admin_id
-      
-      .content 
+
+      .content
         .row.clearfix
-          .half  
+          .half
             %label
               = t"currency"
-            = f.text_field :currency 
+            = f.text_field :currency
           .half.last
             %label
               = t"id_format"
-              = id_format_select(f, @setting.id_format)
+            = id_format_select(f, @setting.id_format)
 
         .row.clearfix
           .half
             %label
-              = t"tax"
-            = f.check_box :use_tax
-          .half.last            
-            %label
-              = t"tax"
-              = "%"
-            = f.text_field :tax                    
+              = t"tax.default_tax_setting"
+            .input-holder
+              = f.check_box :use_tax
+
 
       .clearfix.action-cover
-        = f.submit action, :class => "button"        
+        = f.submit action, :class => "button"

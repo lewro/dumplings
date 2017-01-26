@@ -1,22 +1,22 @@
-.clearfix.product{ "data-product-supply-id" => ps.product_supply_id }
+.clearfix.product.list-element{ "data-product-supply-id" => ps.product_supply_id }
   .fifth
     .input-holder
       = ps.name
   .fifth
     .input-holder
-      = ps.product_code      
+      = ps.product_code
   .sixth.packages-quantity
-    .input-holder      
-      = ps.packages_quantity      
+    .input-holder
+      = ps.packages_quantity
   .fifth
-    .input-holder      
+    .input-holder
       = ps.packages_size
-      = " " 
+      = " "
       = unit(ps.unit)
   .sixth.package-price
-    .input-holder      
+    .input-holder
       = number_to_currency(ps.package_price, :unit => "")
-  
+
   .small-button-column
     .circle-button.small.remove-product-supply.float-right{"remove-message" => "#{t'actions.confirm'}" }
-      = "x"
+      %i.fa.fa-close

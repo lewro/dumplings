@@ -1,13 +1,14 @@
-.page-content.clearfix  
+.page-content.clearfix
   #supplier-order
     = form_for(@supplier_order) do  |f|
+
       = f.hidden_field :user_id, :value => current_user.id
       = f.hidden_field :status, :value => 1
-    
-      .half-page.left
-        .content       
+
+      .half-page.left.scroll
+        .content
           .row.clearfix
-            .half        
+            .half
               %label
                 = t"supplier.title"
               - unless @order_disabled
@@ -30,13 +31,13 @@
             - else
               .input-holder
                 = @supplier_order.contact_person
-              
+
           .row.clearfix
             .half
               %label
                 = t"orders.exp_delivery_date"
               .ui-selectmenu-button
-                = f.text_field :expected_delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }                           
+                = f.text_field :expected_delivery, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }
                 %span.ui-icon.ui-icon-triangle-1-s
             .half.last
               %label
@@ -46,14 +47,14 @@
                 %span.ui-icon.ui-icon-triangle-1-s
 
 
-          - unless remove == true   
+          - unless remove == true
             = render :partial => '/supplier_orders/supplier_order_products_form', :locals => { :f => f }
           - else
             = render :partial => '/supplier_orders/supplier_order_products_list', :locals => { :f => f }
 
-        
+
       .half-page.scroll
-        .content  
+        .content
           .row.clearfix
             .half
               %label
@@ -64,7 +65,12 @@
               - else
                 .input-holder.big
                   = number_to_currency(@supplier_order.sum, :unit => "")
-                       
+
+
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
+
           .row.clearfix.last
             %label
               = t"notes"
@@ -74,27 +80,25 @@
               .input-holder
                 = @supplier_order.note
 
-          - unless @pdfs.nil?
-            .row.clearfix.last
-              = render :partial => '/generic/pdf'
-
-              .spacer-large.clearfix
-                = link_to "#{t'actions.create_pdf_document'}", "/supplier_orders/pdf/#{@supplier_order.id}.pdf", :class => "link-button float-right", :target => "_blank"     
-
-
 
       .action-cover.clearfix
-      
+
         = f.submit action, :class => "button"
         = f.submit "#{t'save_pdf'}", :class => "link-button"
 
-        - if remove == true      
-          = link_to "#{t'actions.remove'}",  @supplier_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"          
+        - if remove == true
+          = link_to "#{t'actions.remove'}",  @supplier_order,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
         - else
-          = link_to "#{t'actions.cancel'}",  @supplier_order, :class => "button remove"      
+          = link_to "#{t'actions.cancel'}",  @supplier_order, :class => "button remove"
+
+
+        = link_to "/supplier_orders/pdf/#{@supplier_order.id}.pdf", :target => "_blank", :class => "link-button float-right" do
+          %i.fa.fa-file-pdf-o
+          = "#{t'actions.create_pdf_document'}"
 
 
     - if remove == true
-      .hide.hidden-form      
-        = render :partial => '/supplier_order_products/form'
-        
+      .hide.hidden-form
+        = render :partial => '/generic/products/form', :locals => { :@product_object => @supplier_order_product , :@object_id => "order_id" }
+
+

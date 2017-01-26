@@ -2,25 +2,27 @@
   #invoice
     = form_for(@invoice) do  |f|
       = f.hidden_field :user_id, :value => current_user.id
-      = f.hidden_field :proforma, :value => @invoice.proforma   
-      - unless @order.nil?      
-        = f.hidden_field :order_id, :value => @order.id  
-      
-      .half-page.left
+      = f.hidden_field :proforma, :value => @invoice.proforma
+      - unless @order.nil?
+        = f.hidden_field :order_id, :value => @order.id
+
+      .half-page.left.scroll
         .content
           .row.clearfix
             %label
               = t"client.title"
+
             - unless @disabled
               = clients_select(f, @clients)
             - else
               .input-holder
                 = @client.name
-          
+
           .row.clearfix
             %label
-              = t"client.reference" 
-            - unless @disabled     
+              = t"client.reference"
+
+            - unless @disabled
               = f.text_field :reference_id
             - else
               .input-holder
@@ -29,19 +31,20 @@
           .row.clearfix
             .half.ui-selectmenu-button
               %label
-                = t"invoice.due_date"  
-              - unless @disabled           
-                = f.text_field :due_date, :class => "datepicker", "data-required" => "true"   
-                %span.ui-icon.ui-icon-triangle-1-s 
+                = t"invoice.due_date"
+
+              - unless @disabled
+                = f.text_field :due_date, :class => "datepicker", "data-required" => "true"
+                %span.ui-icon.ui-icon-triangle-1-s
               - else
                 .input-holder
                   = @invoice.due_date
 
             .half.ui-selectmenu-button.last
               %label
-                = t"invoice.paid_date" 
+                = t"invoice.paid_date"
 
-              - unless @disabled      
+              - unless @disabled
                 = f.text_field :paid_date, :class => "datepicker"
                 %span.ui-icon.ui-icon-triangle-1-s
               - else
@@ -51,10 +54,11 @@
           .row.clearfix
             .half.ui-selectmenu-button
               %label
-                = t"invoice.issue_date" 
-              - unless @disabled     
-                = f.text_field :issue_date, :class => "datepicker", "data-required" => "true"   
-                %span.ui-icon.ui-icon-triangle-1-s 
+                = t"invoice.issue_date"
+
+              - unless @disabled
+                = f.text_field :issue_date, :class => "datepicker", "data-required" => "true"
+                %span.ui-icon.ui-icon-triangle-1-s
               - else
                 .input-holder
                   = @invoice.issue_date
@@ -62,49 +66,56 @@
             .half.ui-selectmenu-button.last
               %label
                 = t"invoice.taxable_date"
-              - unless @disabled     
-                = f.text_field :taxable_supply_date, :class => "datepicker", "data-required" => "true"   
-                %span.ui-icon.ui-icon-triangle-1-s        
+
+              - unless @disabled
+                = f.text_field :taxable_supply_date, :class => "datepicker", "data-required" => "true"
+                %span.ui-icon.ui-icon-triangle-1-s
               - else
                 .input-holder
                   = @invoice.taxable_supply_date
 
-          - unless remove == true   
-            = render :partial => '/invoices/invoice_products_form', :locals => { :f => f } 
-          - else
-            = render :partial => '/invoices/invoice_products_list', :locals => { :f => f }                      
-                             
-                      
-      .half-page.scroll
-        .content           
-          = render :partial => "invoices/actions"
-                  
-          = render :partial => "invoices/sum", :locals => { :current_view => current_view, :f => f }
-          
           .row.clearfix
-            %label          
+            %label
               = t"payment_conditions"
-              
-              - unless @disabled
-                - unless @invoice.payment_condition.nil?
-                  = payment_conditions_select(f, @payment_conditions, @invoice.payment_condition)   
-                - else
-                  = payment_conditions_select(f, @payment_conditions)
+
+            - unless @disabled
+              - unless @invoice.payment_condition.nil?
+                = payment_conditions_select(f, @payment_conditions, @invoice.payment_condition)
               - else
-                .input-holder
-                  = @payment_condition.name
-                  = " - "
-                  = @payment_condition.text                  
-                                                   
+                = payment_conditions_select(f, @payment_conditions)
+            - else
+              .input-holder
+                = @payment_condition.name
+                = " - "
+                = @payment_condition.text
+
+
+          - unless remove == true
+            = render :partial => '/invoices/invoice_products_form', :locals => { :f => f }
+          - else
+            = render :partial => '/invoices/invoice_products_list', :locals => { :f => f }
+
+
+      .half-page.scroll
+        .content
+          = render :partial => "invoices/actions"
+
+          = render :partial => "invoices/sum", :locals => { :current_view => current_view, :f => f }
+
+          - unless @pdfs.nil?
+            .row.clearfix
+              = render :partial => '/generic/pdf'
+
+
           .row.clearfix
             %label
               = t"delivery_terms"
-              
-              - unless @disabled
-                = f.text_area :delivery_terms
-              - else
-                .input-holder
-                  = @invoice.delivery_terms
+
+            - unless @disabled
+              = f.text_area :delivery_terms
+            - else
+              .input-holder
+                = @invoice.delivery_terms
 
           .row.clearfix
             %label
@@ -116,28 +127,25 @@
               .input-holder
                 = @invoice.note
 
-          - unless @pdfs.nil?
-            .row.clearfix
-              = render :partial => '/generic/pdf'
 
-              .spacer-large.clearfix
-                = link_to "#{t'actions.create_pdf_document'}", "/invoices/pdf/#{@invoice.id}.pdf", :class => "link-button float-right", :target => "_blank"     
-
-              .m-t
-                
           = render :partial => "invoices/payments", :locals => { :remove => remove }
-                  
+
       .clearfix.action-cover
 
         = f.submit action, :class => "button"
         = f.submit "#{t'save_pdf'}", :class => "link-button"
-        
-        - if remove == true      
+
+        - if remove == true
           = link_to "#{t'actions.remove'}",  @invoice,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
 
         - else
-          = link_to "#{t'actions.cancel'}",  @invoice, :class => "button remove"      
+          = link_to "#{t'actions.cancel'}",  @invoice, :class => "button remove"
+
+        = link_to "/invoices/pdf/#{@invoice.id}.pdf", :target => "_blank", :class => "link-button float-right" do
+          %i.fa.fa-file-pdf-o
+          = "#{t'actions.create_pdf_document'}"
+
 
     - if remove == true
-      .hide.hidden-form      
-        = render :partial => '/invoice_products/form'                
+      .hide.hidden-form
+        = render :partial => '/generic/products/form', :locals => { :@product_object => @invoice_product , :@object_id => "invoice_id" }

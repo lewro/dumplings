@@ -1,0 +1,12 @@
+.row.clearfix
+  %label
+    = t"delivery_address.title"
+
+  %select{:name => "delivery_note[delivery_address_id]", :id => "delivery_note_delivery_address_id"}
+    - @delivery_addresses.each do |da|
+      %option{:value => da.id}
+        = da.street
+        = da.street_number
+        = ", "
+        = da.zip_code
+        = da.city

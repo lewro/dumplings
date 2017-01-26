@@ -5,7 +5,7 @@
     = f.text_field :invoice_id, "data-required" => "true"
   .half
 
-    - if @invoice.proforma 
+    - if @invoice.proforma
       - link_text = "#{t'invoice.proforma'} →"
     - else
       - link_text = "#{t'invoice.title'} →"

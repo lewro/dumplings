@@ -22,25 +22,27 @@
         actions.cursorAuto()
       success : (data) ->
         if typeof returnDataPlaceholder == 'string'
-              
-          #If return placeholdr contains append keyword, append the results 
+
+          #If return placeholdr contains append keyword, append the results
           if returnDataPlaceholder.indexOf("&&append") >= 0
             returnDataPlaceholder = returnDataPlaceholder.replace('&&append','')
             $(returnDataPlaceholder).append data
           else
-            $(returnDataPlaceholder).html data          
+            $(returnDataPlaceholder).html data
         else
           $(returnDataPlaceholder).html data
-                  
+
         actions.cursorAuto()
-        core.init()        
-        
+        core.init()
+
       error : (xhr) ->
-        actions.cursorAuto()      
-          
+        actions.cursorAuto()
+
   cursorWait : ->
     $('html, body').css("cursor", "wait");
 
   cursorAuto : ->
     $('html, body').css("cursor", "auto");
-              
+
+
+

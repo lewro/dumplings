@@ -11,8 +11,8 @@
 	= f.hidden_field :file_type, { :value => @file_type }
 	= f.hidden_field :model_id, { :value => @model_id }
 	= f.hidden_field :model, { :value => @model }
-	= f.hidden_field :user_id, { :value => current_user.id }
-	
+	= f.hidden_field :user_id, { :value => current_user.admin_id }
+
 	.hide
 		= f.file_field :upload, :multiple => false
 
@@ -20,6 +20,6 @@
 		= f.submit
 
 	.circle-button.large.select-file
-		= "+"
+		%i.fa.fa-plus
 
 .new-file

@@ -10,17 +10,17 @@
   #Remove PDF via AJAX
   removePDF: () ->
     $('body').delegate '.remove-pdf', 'click', ->
-      
-      message = $(this).attr("remove-message")      
+
+      message = $(this).attr("remove-message")
       result  = confirm(message)
-      
+
       if result == true
         id = $(this).parents('.pdf-file').data("pdf-id")
-            
-        actions.ajax 'post', "/file_uploads/remove_pdf?id=#{id}", ""      
+
+        actions.ajax 'post', "/file_uploads/remove_pdf?id=#{id}", ""
         $(this).parents('.pdf-file').remove()
-    
-  init : () ->            
+
+  init : () ->
     pdf.removePDF()
 
 jQuery ($) ->

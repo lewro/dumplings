@@ -1,18 +1,17 @@
-%label.spacer-large            
+%label.spacer-large
   = t"products"
 
 .row
   - if @retail_products.size > 0
-    = render :partial => '/retail_products/list_headers'
+    = render :partial => '/generic/products/list_headers'
     - @retail_products.each do |rp|
-      = render :partial => '/retail_products/list', :locals => { :rp => rp }      
+      = render :partial => '/generic/products/list', :locals => { :product => rp, :update_url => "/retail_products/update/", :model_name => "retail_product" }
   - else
     .no-data
       = t"no_data"
-            
+
 - unless @disabled
   #hiden-form-cover
   .clearfix.last
     #add-new-retail-product-edit.circle-button.large
-      = "+"                                                    
-        
+      %i.fa.fa-plus

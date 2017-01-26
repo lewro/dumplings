@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  
+
   has_many :client_order_products
 
   def product_code_and_name
@@ -8,5 +8,5 @@ class Product < ActiveRecord::Base
    	else
    		"#{name}"
    	end
-  end  
+  end
 end

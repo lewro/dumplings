@@ -4,15 +4,14 @@ class CreateClientOrders < ActiveRecord::Migration
 
       t.integer :client_id, :null => false
       t.integer :user_id, :null => false
-      
-      t.string :expected_delivery
+
       t.datetime :distribution
-                  
-      t.decimal :sum 
+
+      t.decimal :sum
 
       t.text :note
       t.integer :status
-            
+
       t.timestamps
     end
   end

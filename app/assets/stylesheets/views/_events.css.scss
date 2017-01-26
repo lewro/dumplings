@@ -4,11 +4,11 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines events classes
  **/
- 
- @import "globals/colours";
- @import "globals/mixins";
- @import "globals/sizes";
-  @import "globals/fonts";
+
+@import "globals/colours";
+@import "globals/mixins";
+@import "globals/sizes";
+@import "globals/fonts";
 
 .event-items {
 	font-size: $font-medium;
@@ -85,5 +85,5 @@
 	margin: 15px 0 0 40px;
 	.button {
 		padding: 5px 15px;
-	}	
+	}
 }

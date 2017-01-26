@@ -1,0 +1,90 @@
+.clearfix.pdf-table
+    .pdf-row.m-t.clearfix
+        %table
+            %thead
+                %tr
+                    %th.name
+                        = t"product.name"
+                    %th
+                        = t"product.code"
+                    %th
+                        = t"orders.packages_count"
+                    %th
+                        = t"orders.package_size"
+                        = "/"
+                        = t"unit.title"
+                    %th
+                        = t"orders.package_price"
+                    %th
+                        = t"expiration_date"
+                    %th
+                        = t"orders.price"
+                        = "-"
+                        = @currency
+
+                - total = 0
+
+                - @products.each do |op|
+                    %tbody
+                        %tr
+                            %td.name
+                                = op.name
+                                = op.tax_group_id
+                            %td
+                                = op.product_code
+                            %td
+                                = op.packages_quantity
+                            %td
+                                = op.packages_size
+                                = " "
+                                = unit(op.unit)
+                            %td
+                                = op.package_price
+                            %td
+                                = op.expiration_date
+                            %td.a-r
+                                = number_to_currency(op.packages_quantity * op.package_price, :unit => "")
+                                - total = total + (op.packages_quantity * op.package_price)
+
+
+        .totals.grand
+            - if @payments_sum > 0
+                .clearfix
+                    .total-header
+                        = t"payments"
+                        - if @proforma
+                            = "("
+                            = t"proforma"
+                            = ": "
+                            = @proforma.id
+                            = ")"
+                    .total-sum
+                        = @currency
+                        = number_to_currency(@payments_sum, :unit => "")
+                .devider
+                .clearfix.m-t
+                    .total-header
+                        = t"orders.sum"
+                    .total-sum
+                        = @currency
+                        = number_to_currency(total, :unit => "")
+                .clearfix
+                    .total-header
+                        %strong
+                            = t"orders.total_price"
+                    .total-sum
+                        %strong
+                            = @currency
+                            - total_price = total - @payments_sum
+                            = number_to_currency(total_price, :unit => "")
+
+
+            - else
+                .clearfix
+                    .total-header
+                        %strong
+                            = t"orders.sum"
+                    .total-sum
+                        %strong
+                            = @currency
+                            = number_to_currency(total, :unit => "")

@@ -9,11 +9,11 @@
 
   # Calculate Total Price of Order
   calculateOfferPrice : () ->
-  
+
     $('body').delegate '#retail input', 'keyup', ->
 
       totalPrice = 0
-    
+
       $('#retail .product').each ->
         if $(this).find('.packages-quantity input').length > 0
           packageQuantify   = $(this).find('.packages-quantity input').val()
@@ -23,10 +23,11 @@
           packagePrice      = $(this).find('.package-price .input-holder').html()
 
         if packageQuantify > 0 && packagePrice > 0
-          productPrice    = parseInt(packageQuantify) * parseInt(packagePrice)
+          productPrice    = parseFloat(packageQuantify) * parseFloat(packagePrice)
           totalPrice      = totalPrice + productPrice
-                                                                                 
+
           # Update total price
+          $(".retail-sum-holder").html totalPrice
           $("#retail_sum").val totalPrice
       return
 
@@ -35,7 +36,7 @@
     if $('form').attr('action') == "/retails"
       $(".datepicker" ).datepicker("setDate", new Date());
 
-  init : () ->         
+  init : () ->
     retail.calculateOfferPrice()
     retail.checkTodaysDate()
 

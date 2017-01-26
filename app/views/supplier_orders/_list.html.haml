@@ -1,10 +1,12 @@
 .page-content.clearfix
   .content
     %table
-      = render :partial => '/supplier_orders/list_headers'              
+
+      = render :partial => '/supplier_orders/list_headers'
 
       - @supplier_orders.each do |order|
-        %tr.data{"data-order-id" => "#{order.order_id}", "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/supplier_orders/#{order.order_id}/edit", "data-status-stock" => "#{t'status.in_stock'}",  "data-status-out-stock" => "#{t'status.out_of_stock'}", "data-status-sent" => "#{t'status.order_sent'}" }    
+
+        %tr.data{"data-order-id" => "#{order.order_id}", "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/supplier_orders/#{order.order_id}/edit", "data-status-stock" => "#{t'status.in_stock'}",  "data-status-out-stock" => "#{t'status.out_of_stock'}", "data-status-sent" => "#{t'status.order_sent'}" }
           %td
             = order.order_id
           %td
@@ -17,8 +19,8 @@
           -  if (order.order_expected_delivery != nil) && (order.order_delivery == nil) && (order.order_expected_delivery < Time.now)
             - @class = "pasive"
 
-          %td{:class => @class }                
-            - unless order.order_expected_delivery.nil?        
+          %td{:class => @class }
+            - unless order.order_expected_delivery.nil?
               = display_date(order.order_expected_delivery)
           %td.delivery
             - unless order.order_delivery.nil?
@@ -26,8 +28,8 @@
           %td
             %span.status
               = status(order.order_status)
-          %td          
-            - unless @order_disabled          
+          %td
+            - unless @order_disabled
               %span
                 - if  order.order_status == 6
                   .link-button.float-right.mark-supplier-order-as-in-stock

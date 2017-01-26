@@ -8,7 +8,7 @@
 @user =
 
 
-  init : () ->         
+  init : () ->
     "//"
 
 jQuery ($) ->

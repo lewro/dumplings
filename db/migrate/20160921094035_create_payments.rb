@@ -5,7 +5,7 @@ class CreatePayments < ActiveRecord::Migration
       t.integer :invoice_id, :null => false
       t.integer :user_id, :null => false
 
-      t.decimal :sum 
+      t.decimal :sum
       t.datetime :paid_date
 
       t.timestamps

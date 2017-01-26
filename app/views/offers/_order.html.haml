@@ -1,12 +1,15 @@
 .row.clearfix
+
   .half
+
     %label
       = t"orders.sum"
       = " (#{@currency})"
 
     - unless @order_number
       .big#total-offer-sum
-        = f.text_field :sum, :placeholder => 0        
+        = f.text_field :sum, :placeholder => 0
+
     - else
       .input-holder.big
         = number_to_currency(@offer.sum, :unit => "")

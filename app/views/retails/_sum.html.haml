@@ -1,22 +1,30 @@
-.row.clearfix    
-  .half    
+.row.clearfix
+
+  .half
+
     %label
-      = t"orders.sum" 
-    - if @retail.sum                
-      .input-holder.big        
-        = number_to_currency(@retail.sum, :unit => "")
-      = f.hidden_field :sum, :value => @retail.sum    
+      = t"orders.sum"
+
+    - if @retail.sum
+      .input-holder.big
+        .retail-sum-holder
+          = number_to_currency(@retail.sum, :unit => "")
+      = f.hidden_field :sum, :value => @retail.sum
+
     - else
-      .big 
+      .big
         = f.text_field :sum, :value => 0
 
-  .half        
+  .half
+
     %label
-      = t"retail.transport" 
-    - if @retail.transport_cost      
-      .input-holder.big        
+      = t"retail.transport"
+
+    - if @retail.transport_cost
+      .input-holder.big
         = number_to_currency(@retail.transport_cost, :unit => "")
-      = f.hidden_field :transport_cost, :value => @retail.transport_cost    
+      = f.hidden_field :transport_cost, :value => @retail.transport_cost
+
     - else
-      .big 
-        = f.text_field :transport_cost, :value => 0      
+      .big
+        = f.text_field :transport_cost, :value => 0

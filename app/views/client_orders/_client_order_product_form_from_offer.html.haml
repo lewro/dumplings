@@ -1,16 +1,24 @@
 - @offer_products.each_with_index do |op, index|
+
   .product.clearfix
+
     = clientorderproduct.fields_for "clientorderproduct[#{index}]" do |clientorderproduct|
+
       .fifth
         = products_select(clientorderproduct, @products, op.product_id)
+
       .sixth.packages-quantity
-        = clientorderproduct.text_field :packages_quantity,  "value" => op.packages_quantity, "data-required" => "true"   
+        = clientorderproduct.text_field :packages_quantity,  "value" => op.packages_quantity, "data-required" => "true"
+
       .sixth
         = clientorderproduct.text_field :packages_size , "value" => op.packages_size
+
       .sixth
-        = units_select(clientorderproduct, op.unit)        
-      .sixth.package-price
-        = clientorderproduct.text_field :package_price,  "value" => op.package_price, "data-required" => "true" 
+        = units_select(clientorderproduct, op.unit)
+
+      .sixth.package-price.a-r
+        = clientorderproduct.text_field :package_price,  "value" => op.package_price, "data-required" => "true"
+
       .sixth
         .ui-selectmenu-button
           = clientorderproduct.text_field :expiration_date , "value" => op.expiration_date, :class => "datepicker", data: { date_format: 'YYYY/MM/DD HH:MM:S' }

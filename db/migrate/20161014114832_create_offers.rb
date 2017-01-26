@@ -4,10 +4,10 @@ class CreateOffers < ActiveRecord::Migration
 
       t.integer :client_id, :null => false
       t.integer :user_id, :null => false
-      
-      t.decimal :sum 
+
+      t.decimal :sum
       t.text :note
-      
+
       t.timestamps
     end
   end

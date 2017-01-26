@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   before_action :authenticate_user!
 
-  #TODO 
+  #TODO
   #ADD EVENTS WHOLE TEAM
   #ADD STATS DATA - MOCKUP
   #ADD TASKS

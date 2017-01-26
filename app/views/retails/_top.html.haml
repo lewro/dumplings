@@ -1,8 +1,14 @@
 .page-top.clearfix
+
   .h-line
+
   %h1
-    = header  
-  = link_to "#{t'retail.add'}", {:controller => :retails, :action => :new}, :class => "button"  
+    = header
+
+  = link_to "/retails/new", :class => "button" do
+    %i.fa.fa-plus-circle
+    = "#{t'retail.add'}"
+
   .search.clearfix
     .icon
       = "⚲ "

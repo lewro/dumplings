@@ -1,24 +1,23 @@
 .page-content.clearfix
   .content
     %table
-      = render :partial => '/stocks/list_headers'              
+      = render :partial => '/stocks/list_headers'
 
       - @stock.each do |stock|
-        %tr.data{"data-stock-id" => "#{stock.stock_id}", "data-remove-message" => "#{t'stock.zero_stock'}"}     
+        %tr.data{"data-stock-id" => "#{stock.stock_id}", "data-remove-message" => "#{t'stock.zero_stock'}"}
           %td
             = stock.stock_id
-          %td            
+          %td
             = stock.product_name
-          %td            
+          %td
             = stock.packages_quantity
-          %td            
+          %td
             = stock.packages_size
             = " "
             = unit(stock.unit)
-          %td            
-            = stock.package_price            
-          %td                        
-            = stock.package_price *  stock.packages_quantity 
+          %td
+            = stock.package_price
+          %td
+            = stock.package_price *  stock.packages_quantity
           -#%td.slide
             -#.slider{ :value => stock.progress }
-              

@@ -10,29 +10,29 @@
   #Remove Product Supply via AJAX
   removeProdcutSupply: () ->
     $('body').delegate '.remove-product-supply', 'click', ->
-      
-      message = $(this).attr("remove-message")      
+
+      message = $(this).attr("remove-message")
       result  = confirm(message)
-      
+
       if result == true
-        
+
         id = $(this).parents('.product').data("product-supply-id")
-          
-        actions.ajax 'delete', "/product_supplies/#{id}", ""      
+
+        actions.ajax 'delete', "/product_supplies/#{id}", ""
         $(this).parents('.product').remove()
 
 
   #Add New Invoice Product on NEW View
-  addNewProductSupply : () ->  
+  addNewProductSupply : () ->
     $('body').delegate '#add-new-product-supply', 'click', ->
 
       newProduct = $('#product-supplies .product:last').clone()
       $(newProduct).appendTo('#product-supplies')
 
       #Selects
-      $(".product:last").find('select').each ->      
+      $(".product:last").find('select').each ->
         nameAttr    = $(this).attr('name')
-        digit       = parseInt(nameAttr.match(/\d+/))
+        digit       = parseFloat(nameAttr.match(/\d+/))
         newDigit    = digit + 1
 
         $(this).attr 'name', (i, old) ->
@@ -41,9 +41,9 @@
           old.replace digit, newDigit
 
       #Input
-      $(".product:last").find('input').each ->      
+      $(".product:last").find('input').each ->
         nameAttr      = $(this).attr('name')
-        digit         = parseInt(nameAttr.match(/\d+/))
+        digit         = parseFloat(nameAttr.match(/\d+/))
         newDigit      = digit + 1
 
         $(this).attr 'name', (i, old) ->
@@ -57,18 +57,18 @@
       $(".product:last").find('select, input').show()
 
       #Reinitiate the UI
-      core.init()             
-      
+      core.init()
+
     #Add New Product Supply on Edit View
     $('body').delegate '#add-new-product-supply-edit', 'click', ->
-      $(this).hide()      
+      $(this).hide()
       hiddenForm = $(".hidden-form").show()
       $("#hiden-form-cover").append(hiddenForm)
-      core.init()             
-      
-  init : () ->            
+      core.init()
+
+  init : () ->
     productSupply.removeProdcutSupply()
-    productSupply.addNewProductSupply()    
+    productSupply.addNewProductSupply()
 
 jQuery ($) ->
   productSupply.init()

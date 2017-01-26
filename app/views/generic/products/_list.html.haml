@@ -1,0 +1,35 @@
+.clearfix.product.list-element{ "data-product-id" => product.product_id, "data-ajax-list" => "true", "data-ajax-url" => update_url+product.product_id.to_s, "data-ajax-object" => model_name }
+
+  .eight
+    .input-holder{ "title" => product.name }
+      = product.name
+
+  .eight
+    .input-holder
+      = product.product_code
+
+  .eight.packages-quantity{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_quantity" }
+    %input{ :type => "text", :value => product.packages_quantity, :required => true }
+
+  .eight{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_size" }
+    %input{ :type => "text", :value => product.packages_size, :required => true }
+
+  .eight
+    .input-holder
+      = unit(product.packages_unit)
+
+  .sixth.package-price.a-r{ "data-ajax-list-element" => "true", "data-ajax-element" => "package_price" }
+    %input{:type => "text", :value => product.package_price, :required => true}
+
+  .eight.package-price
+    .input-holder
+      = product.expiration_date
+
+  .eight
+    .link-button.primary{ "data-ajax-list-button" => "true" }
+      = t"actions.update"
+
+  - unless @disabled
+    .small-button-column{ :title => "#{t'actions.remove'}" }
+      .circle-button.small.remove-client-order-product.float-right{ "remove-message" => "#{t'actions.confirm'}" }
+        %i.fa.fa-close

@@ -12,13 +12,15 @@
     %li.payments
       = link_to "#{t'payments'}", :controller => :payments, :action => :index
     %li.clients
-      = link_to "#{t'clients'}", :controller => :companies, :action => :index, :category => "clients"      
+      = link_to "#{t'clients'}", :controller => :companies, :action => :index, :category => "clients"
     %li.suppliers
       = link_to "#{t'suppliers'}", :controller => :companies, :action => :index, :category => "suppliers"
     %li.products
-      = link_to "#{t'products'}", :controller => :products, :action => :index            
+      = link_to "#{t'products'}", :controller => :products, :action => :index
     %li.supplies
-      = link_to "#{t'supplies'}", :controller => :supplies, :action => :index      
+      = link_to "#{t'supplies'}", :controller => :supplies, :action => :index
     %li.payment-conditions
-      = link_to "#{t'payment_conditions'}", :controller => :payment_conditions, :action => :index      
+      = link_to "#{t'payment_conditions'}", :controller => :payment_conditions, :action => :index
+    %li.tax-groups
+      = link_to "#{t'tax_groups'}", :controller => :tax_groups, :action => :index
 

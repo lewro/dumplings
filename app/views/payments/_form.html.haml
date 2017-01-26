@@ -1,12 +1,12 @@
-.page-content.clearfix  
-  = form_for(@payment) do  |f|  
-    = f.hidden_field :user_id, :value => current_user.id    
+.page-content.clearfix
+  = form_for(@payment) do  |f|
+    = f.hidden_field :user_id, :value => current_user.id
     .half-page.left
-      .content       
+      .content
         = render :partial => "payments/invoice", :locals => { :f => f }
-        
+
         - if remove == true
-          .row.clearfix        
+          .row.clearfix
             .half
               %label
                 = t"payment.title"
@@ -14,25 +14,25 @@
                 = f.text_field :sum, "data-required" => "true"
 
 
-              
+
         - else
-          .row.clearfix      
+          .row.clearfix
             %label
               = t"payment.title"
             .big
               = f.text_field :sum, "data-required" => "true"
-                            
+
 
     .half-page
-      .content            
+      .content
 
         .row.clearfix
           .half.ui-selectmenu-button
             %label
-              = t"invoice.paid_date"      
-              = f.text_field :paid_date, :class => "datepicker", "data-required" => "true"   
+              = t"invoice.paid_date"
+              = f.text_field :paid_date, :class => "datepicker", "data-required" => "true"
               %span.ui-icon.ui-icon-triangle-1-s
-          
+
         - if remove == true
           .row.clearfix
             %label
@@ -45,16 +45,16 @@
               = t"sales_representative.title"
             .input-holder
               = @payment.sales_representative
-          
-          
-          
+
+
+
     .clearfix.action-cover
       = f.submit action, :class => "button"
 
-      - if remove == true      
+      - if remove == true
         = link_to "#{t'actions.remove'}",  @payment,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
-        
+
       - else
-        = link_to "#{t'actions.cancel'}",  @payment, :class => "button remove"      
-        
+        = link_to "#{t'actions.cancel'}",  @payment, :class => "button remove"
+
 

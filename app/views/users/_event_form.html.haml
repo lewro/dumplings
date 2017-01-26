@@ -4,25 +4,25 @@
 
 	.clearfix.spacer-large
 		= form_for(@event) do  |f|
-			= f.hidden_field :user_id, :value => @user.id		
+			= f.hidden_field :user_id, :value => @user.id
 			.row.clearfix
 				.half
 					%label
 						= t"client.title"
 					= clients_select(f, @your_clients)
 				.half.last
-					.half						
+					.half
 						%label
 							= t"date"
-						.ui-selectmenu-button								
+						.ui-selectmenu-button
 							= f.text_field :date, :class => "datepicker"
-							%span.ui-icon.ui-icon-triangle-1-s 			
-					.half.last						
+							%span.ui-icon.ui-icon-triangle-1-s
+					.half.last
 						%label
 							= t"time"
 						= f.text_field :time
-			
-			.row.clearfix						
+
+			.row.clearfix
 				%label
 					= t"note"
 				= f.text_area :note

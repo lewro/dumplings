@@ -1,7 +1,8 @@
 .page-content.clearfix
   .content
     %table
-      = render :partial => "invoices/list_headers"
+      = render :partial => '/invoices/list_headers'
+
       - @invoices.each do |invoice|
         %tr.data{"data-invoice-id" => invoice.id, "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/invoices/#{invoice.id}/edit"}
           %td
@@ -11,15 +12,21 @@
           %td.currency
             = number_to_currency(invoice.sum, :unit => "")
 
-          - if invoice.balance.nil? 
+          - if invoice.balance.nil?
             - @balance  = 0 - invoice.sum
           - else
             - @balance  = invoice.balance - invoice.sum
 
-          - @class = balance_class(@balance)        
-    
-          %td.invoice_balance.currency{:class => @class}
-            = number_to_currency(@balance, :unit => "")
+          - @class = balance_class(@balance)
+
+          - if (@class == "pasive" and (invoice.sum != (0 - @balance)))
+            %td.invoice_balance.currency{:class => "partial-payment"}
+              %i.fa.fa-money
+              = number_to_currency(@balance, :unit => "")
+          - else
+            %td.invoice_balance.currency{:class => @class}
+              = number_to_currency(@balance, :unit => "")
+
           %td
             - unless invoice.due_date.nil?
               = display_date(invoice.due_date)
@@ -28,5 +35,5 @@
               = display_date(invoice.paid_date)
             - else
               .link-button.float-right.mark-invoice-as-paid
+                %i.fa.fa-credit-card
                 = t'invoice.mark_as_paid'
-        

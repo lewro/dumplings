@@ -1,4 +1,5 @@
 .button-cover.clearfix
+
   - if @invoice_number
     = link_to "#{t'invoice.title'} →", {:controller => :invoices, :action => :edit, :id => @invoice_number}, :class => "link-button float-right"
   - else

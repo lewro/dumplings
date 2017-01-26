@@ -1,19 +1,19 @@
 class ProductSuppliesController < ApplicationController
   before_action :authenticate_user!
-  
-  def destroy
-    @id                     = params[:id]        
-    @product_supply         = ProductSupply.find_by_id(@id)      
 
-    @product_supply.destroy  
-    
-    render :nothing => true 
+  def destroy
+    @id                     = params[:id]
+    @product_supply         = ProductSupply.find_by_id(@id)
+
+    @product_supply.destroy
+
+    render :nothing => true
   end
 
   def create
     @product_supply     = ProductSupply.create(product_supply_params)
     @product_id         = @product_supply.product_id
-    
+
     redirect_to "/products/#{@product_id}/edit"
   end
 

@@ -1,9 +1,13 @@
 .page-top.clearfix
+
   .h-line
+
   %h1
     = header
-  
-  = link_to "#{t'offer.add'}", {:controller => :offers, :action => :new}, :class => "button"    
+
+  = link_to "/offers/new", :class => "button" do
+    %i.fa.fa-plus-circle
+    = "#{t'offer.add'}"
 
   - if search ==  true
     .search.clearfix

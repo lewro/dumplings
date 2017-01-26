@@ -1,0 +1,24 @@
+%label
+  = t"attachments"
+
+%table.attachment-files
+  - unless @attachments.nil? or @attachments.size < 1
+    - @attachments.each do |af|
+      %tr.af-file{"data-af-id" => af.id}
+        %td
+          = "#"
+          = af.id
+        %td.cut-name
+          = af.upload_file_name
+        %td
+          = display_date_time(af.created_at)
+        %td
+          .circle-button.small.remove-af.float-right.m-l{"remove-message" => "#{t'actions.confirm'}" }
+            %i.fa.fa-close{:title => "#{t'actions.remove'}"}
+          = link_to "/file_uploads/download_af/#{af.id}", :target => "_blank", :class => "circle-button small float-right" do
+            %i.fa.fa-cloud-download{:title => "#{t'actions.download'}"}
+
+  - else
+    %tr
+      .no-data
+        = t "no_data"

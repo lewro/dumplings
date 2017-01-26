@@ -1,7 +1,11 @@
 .button-cover.clearfix
 
   - if remove == true
+
     - if @order_number
+
       = link_to "#{t'order'} →", {:controller => :client_orders, :action => :edit, :id => @order_number}, :class => "link-button float-right"
+
     - else
+
       = link_to "+ #{t'order'}", {:controller => :client_orders, :action => :new, :id => @offer.id}, :class => "link-button float-right"

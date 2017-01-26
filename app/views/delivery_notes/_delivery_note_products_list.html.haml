@@ -1,19 +1,20 @@
-%label.spacer-large            
+%label.spacer-large
   = t"products"
 
 .row
   - if @delivery_note_products.size > 0
-    = render :partial => '/delivery_note_products/list_headers'
+
+    = render :partial => '/generic/products/list_headers'
+
     - @delivery_note_products.each do |dnp|
-      = render :partial => '/delivery_note_products/list', :locals => { :dnp => dnp }
+      = render :partial => '/generic/products/list', :locals => { :product => dnp, :update_url => "/delivery_note_products/update/", :model_name => "delivery_note_product" }
+
   - else
     .no-data
       = t"no_data"
-      
 
 - unless @disabled
   #hiden-form-cover
   .row.clearfix.last
     #add-new-delivery-note-product-edit.circle-button.large
-      = "+"                                                    
-        
+      %i.fa.fa-plus

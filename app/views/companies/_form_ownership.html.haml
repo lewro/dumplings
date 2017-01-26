@@ -3,27 +3,27 @@
 
 .page-content.clearfix
   = form_for(@company) do  |f|
-      
+
     = f.hidden_field :category, :value => 'ownership'
     = f.hidden_field :user_id, :value => current_user.id
 
     .half-page.left
-      .content 
+      .content
         .row.clearfix
-          %label            
-            = t"your_company" 
+          %label
+            = t"your_company"
           = f.text_field :name, "data-required" => "true"
         .row.clearfix
-          .thwo-thirds  
+          .thwo-thirds
             %label
               = t"client.registration_number"
-            = f.text_field :registration_number, "data-required" => "true"     
+            = f.text_field :registration_number, "data-required" => "true"
           .third
             %label
               = t"client.vat_number"
-            = f.text_field :vat_number        
+            = f.text_field :vat_number
         .row.clearfix
-          .thwo-thirds        
+          .thwo-thirds
             %label
               = t"address.street"
             = f.text_field :street, "data-required" => "true"
@@ -31,7 +31,7 @@
             %label
               = t"address.street_number"
             = f.text_field :street_number, "data-required" => "true"
-        .row.clearfix.last
+        .row.clearfix
           .thwo-thirds
             %label
               = t"address.city"
@@ -40,9 +40,13 @@
             %label
               = t"address.zipcode"
             = f.text_field :zip_code, "data-required" => "true"
+        .row.clearfix.last
+          %label
+            = t"address.country"
+          = f.text_field :country, "data-required" => "true"
 
     .half-page
-      .content  
+      .content
 
         .row.clearfix
           .half
@@ -54,7 +58,7 @@
               = t"bank.account_number"
             = f.text_field :account_number
         .row.clearfix
-          .half        
+          .half
             %label
               = t"bank.swift_code"
             = f.text_field :swift_code
@@ -74,14 +78,13 @@
           = f.text_area :note
 
 
-    
+
     .clearfix.action-cover
       = f.submit action, :class => "button"
 
-      - if remove == true         
+      - if remove == true
         = link_to "#{t'actions.remove'}",  @client,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
 
-        
+
       - else
-        = link_to "#{t'actions.cancel'}",  @client, :class => "button remove"      
-        
+        = link_to "#{t'actions.cancel'}",  @client, :class => "button remove"

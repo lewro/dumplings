@@ -1,10 +1,10 @@
-.button-cover.clearfix  
+.button-cover.clearfix
 
   - unless @invoice.order_id.nil?
     = link_to "#{t'order'} →", {:controller => :client_orders, :action => :edit, :id => @invoice.order_id}, :class => "link-button float-right"
 
   - unless @delivery_note.nil?
-    = link_to "#{t'delivery_note.title'} →", {:controller => :delivery_notes, :action => :edit, :id => @delivery_note.id}, :class => "link-button float-right"  
+    = link_to "#{t'delivery_note.title'} →", {:controller => :delivery_notes, :action => :edit, :id => @delivery_note.id}, :class => "link-button float-right"
 
   - unless @proforma.nil?
     - unless @invoice == @proforma

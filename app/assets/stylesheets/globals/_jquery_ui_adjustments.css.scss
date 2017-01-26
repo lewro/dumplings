@@ -39,14 +39,14 @@
 
 .ui-widget {
   font-family: $font-family !important;
-  font-weight: normal !important;     
+  font-weight: normal !important;
 }
 
 .ui-state-default  {
   border: none !important;
-  background: none !important;  
-  color: $primary-color !important;  
-  font-size: $font-medium !important; 
+  background: none !important;
+  color: $primary-color !important;
+  font-size: $font-medium !important;
 }
 
 .ui-datepicker-calendar .ui-state-hover {
@@ -56,24 +56,24 @@
 
 .ui-widget-content .ui-state-highlight {
    background: $accent-color !important;
-   color: $primary-color !important ;  
+   color: $primary-color !important ;
 }
 
 .ui-widget-content .ui-state-focus {
   background: $accent-color !important;
-  color: $primary-color !important ;  
+  color: $primary-color !important ;
   border: none !important;
   margin: 0 !important;
 }
 
 .ui-widget-header {
   border: none !important;
-  background: $accent-color !important ; 
+  background: $accent-color !important ;
 }
 
-.ui-datepicker-title, 
+.ui-datepicker-title,
 .ui-datepicker th {
-  font-size: $font-small !important;    
+  font-size: $font-small !important;
   text-transform: uppercase !important;
   color: $primary-color !important;
 }
@@ -82,24 +82,24 @@
   background: $theme-2 !important;
   border: none !important;
   color: $primary-color !important;
-  @include drop-shadow(0px, 5px, 50px);  
+  @include drop-shadow(0px, 5px, 50px);
   border-radius: 0px !important;
   padding: 0 !important;
 
   tr:nth-child(even) {
-    background: $theme-2 !important;    
-  }  
+    background: $theme-2 !important;
+  }
 }
 
 
-.ui-corner-all, 
-.ui-corner-bottom, 
-.ui-corner-right, 
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
 .ui-corner-br {
   border-radius: 0px !important;
 }
 
-.ui-widget-header .ui-icon, 
+.ui-widget-header .ui-icon,
 .ui-widget-header .ui-state-hover .ui-icon {
   background: none !important;
   text-indent: 0 !important;
@@ -108,30 +108,30 @@
   opacity: .5 !important;
   color: $primary-color !important;
   cursor: pointer !important;
-} 
+}
 
 .ui-menu .ui-menu-item {
-  font-size: $font-medium !important; 
+  font-size: $font-medium !important;
 }
 
 .ui-selectmenu-button span.ui-selectmenu-text {
   color: $grey-dark1 !important;
-  font-size: $font-medium !important;   
+  font-size: $font-medium !important;
 }
 
 .ui-icon-triangle-1-s {
   right: 5px !important;
   background-image: none !important;
-  width: 0 !important; 
+  width: 0 !important;
   height: 0 !important;
-  margin-top: 1px !important; 
+  margin-top: 1px !important;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid $accent-color;
 }
 
 .ui-datepicker {
-  width: auto !important; 
+  width: auto !important;
 }
 
 .ui-widget-header {
@@ -155,19 +155,19 @@
 
 .ui-datepicker table {
   margin: 0 !important;
-  font-size: 1em !important; 
+  font-size: 1em !important;
 }
 
 .ui-datepicker td {
   padding: 0 !important;
 }
 
-.ui-datepicker td span, 
+.ui-datepicker td span,
 .ui-datepicker td a {
   padding: 15px !important;
 }
 
-.ui-datepicker .ui-datepicker-prev, 
+.ui-datepicker .ui-datepicker-prev,
 .ui-datepicker .ui-datepicker-next {
   width: 10px !important;
   height: 10px !important;
@@ -175,7 +175,7 @@
   cursor: pointer;
 }
 
-.ui-widget-header .ui-icon, 
+.ui-widget-header .ui-icon,
 .ui-widget-header .ui-state-hover .ui-icon {
   font-size: 0px !important;
 }
@@ -202,7 +202,7 @@
   right: 20px !important;
 }
 
-.ui-datepicker-prev-hover, 
+.ui-datepicker-prev-hover,
 .ui-datepicker-next-hover {
   border: 0px !important;
 }
@@ -212,19 +212,19 @@
   background: $accent-color !important;
   border: 0px !important;
   border-bottom: 2px solid $primary-color !important;
-  border-right: 2px solid $primary-color !important;  
+  border-right: 2px solid $primary-color !important;
 }
 
-.ui-datepicker-next.ui-state-hover { 
+.ui-datepicker-next.ui-state-hover {
   background: $accent-color !important;
   border: 0px !important;
   border-bottom: 2px solid $primary-color !important;
-  border-right: 2px solid $primary-color !important;  
+  border-right: 2px solid $primary-color !important;
 }
 
 
 .ui-selectmenu-menu .ui-menu {
-  padding: 0px !important;  
+  padding: 0px !important;
 }
 
 .ui-menu .ui-menu-item {

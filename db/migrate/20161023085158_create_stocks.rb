@@ -9,8 +9,8 @@ class CreateStocks < ActiveRecord::Migration
       t.integer :unit, :null => false
       t.integer :progress, :null => false, :default => 100
 
-      t.timestamps      
-      
+      t.timestamps
+
     end
   end
 end

@@ -1,11 +1,14 @@
 .page-content.clearfix
   .content
     %table
-      = render :partial => 'client_orders/list_header'
+
+      = render :partial => '/client_orders/list_headers'
 
       - unless @client_orders.nil? || @client_orders.size == 0
+
         - @client_orders.each do |order|
-          %tr.data{"data-order-id" => "#{order.order_id}", "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/client_orders/#{order.order_id}/edit", "data-status-progress" => "#{t'status.in_progress'}", "data-status-closed" => "#{t'status.closed'}" }    
+
+          %tr.data{"data-order-id" => "#{order.order_id}", "data-just-now" => "#{t'invoice.just_now'}", "data-link" => "/client_orders/#{order.order_id}/edit", "data-status-progress" => "#{t'status.in_progress'}", "data-status-closed" => "#{t'status.closed'}" }
             %td
               = order.order_id
             %td
@@ -23,17 +26,18 @@
             %td
               - unless order.reference_id.nil?
                 = order.reference_id
-            %td          
+            %td
               %span
                 - if order.order_status == 1
                   .link-button.float-right.mark-client-order-as-in-progress
+                    %i.fa.fa-hourglass-start
                     = t'status.in_progress'
-                    
-              - if order.order_distribution.nil?        
+
+              - if order.order_distribution.nil?
                 .link-button.float-right.mark-client-order-as-distributed
+                  %i.fa.fa-paper-plane-o
                   = t'orders.mark_as_distributed'
-          
+
       - else
-      .input-holder
-        =  t'no_data'
-          
+        .input-holder
+          =  t'no_data'

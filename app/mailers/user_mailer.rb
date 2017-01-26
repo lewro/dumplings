@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
 
-  #Send PDF Document 
+  #Send PDF Document
   def pdf_email(email, subject, body, from, file_name, file)
     @email    = email
     @subject  = subject

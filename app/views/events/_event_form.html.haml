@@ -6,25 +6,25 @@
 		= form_for(@event) do  |f|
 
 			= f.hidden_field :user_id, :value => @user.id
-			
+
 			.row.clearfix
 				.half
 					%label
 						= t"client.title"
 					= clients_select(f, @your_clients)
 				.half.last
-					.half						
+					.half
 						%label
 							= t"date"
-						.ui-selectmenu-button								
-							= f.text_field :date, :class => "datepicker", "data-required" => "true"   
-							%span.ui-icon.ui-icon-triangle-1-s 			
-					.half.last						
+						.ui-selectmenu-button
+							= f.text_field :date, :class => "datepicker", "data-required" => "true"
+							%span.ui-icon.ui-icon-triangle-1-s
+					.half.last
 						%label
 							= t"time"
-						= f.text_field :time, "data-required" => "true"   
-			
-			.row.clearfix						
+						= f.text_field :time, "data-required" => "true"
+
+			.row.clearfix
 				%label
 					= t"note"
 				= f.text_area :note

@@ -1,11 +1,16 @@
 .page-content.clearfix
+
   .content
+
     %table
-      = render :partial => 'offers/list_headers'
-      
+
+      = render :partial => '/offers/list_headers'
+
       - if @offers.size > 0
+
         - @offers.each do |offer|
-          %tr.data{"data-order-id" => "#{offer.offer_id}", "data-link" => "/offers/#{offer.offer_id}/edit"}    
+
+          %tr.data{"data-order-id" => "#{offer.offer_id}", "data-link" => "/offers/#{offer.offer_id}/edit"}
             %td
               = offer.offer_id
             %td
@@ -22,4 +27,4 @@
           %td{:colspan => 5}
             .note
               = t"no-data"
-          
+

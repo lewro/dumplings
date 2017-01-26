@@ -4,7 +4,7 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines generic styles applied across app
  **/
- 
+
 @import "colours";
 @import "mixins";
 @import "sizes";
@@ -13,12 +13,12 @@
 table {
 
   width: 100%;
-  
+
   th {
     font-weight: 100;
     font-size: $font-small;
     text-transform: uppercase;
-    color: $theme-5;    
+    color: $theme-5;
     text-align: left;
     padding: 10px 10px 20px 10px;
     &:first-child {
@@ -28,23 +28,28 @@ table {
 
   td {
     font-size: $font-medium;
-    font-weight: 100;  
-    padding: 10px; 
+    font-weight: 100;
+    padding: 10px;
 
   }
-    
+
   tr.data {
     &:hover {
-      background: $accent-color;
+      background: $theme-1;
       color: $primary-color;
       cursor: pointer;
       td {
-        color: $primary-color !important;        
+        color: $primary-color !important;
       }
     }
   }
   tr:nth-child(even) {
-      background: $grey-light3;    
+      background: $grey-light3;
+  }
+  td.cut-name{
+    @include ellipse();
+    max-width: 1px;
+    width: 35%;
   }
 }
 
@@ -53,13 +58,13 @@ label {
   font-size: $font-small;
   text-transform: uppercase;
   color: $grey-dark3;
-  text-align: left;  
+  text-align: left;
   display: block;
 }
 
 .content {
-  input[type="text"], 
-  textarea, 
+  input[type="text"],
+  textarea,
   select,
   .ui-selectmenu-text {
     border: none;
@@ -68,24 +73,24 @@ label {
     padding: 10px 20px 10px 0px !important;
     box-sizing: border-box;
     font-weight: 100;
-    color: $grey-dark1;  
+    color: $grey-dark1;
     font-size: $font-medium;
     border-bottom: 1px solid $primary-color;
     font-family: $font-family2;
-    
+    line-hieight: 1em;
+
     &:focus {
       border-bottom: 1px solid $accent-color-secondary;
-    }   
-    
+    }
+
     &:hover {
       border-bottom: 1px solid $accent-color-secondary !important;
     }
   }
   select {
     margin: 10px 0;
-  }  
+  }
   textarea {
      min-height: 50px;
-  } 
-
+  }
 }

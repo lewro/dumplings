@@ -1,6 +1,6 @@
 .half.last
-	%label
-		= t'payments'
-		= " (#{@currency})"
-	.input-holder.big
-		= number_to_currency(@payments_sum, :unit => "")
+    %label
+        = t'payments'
+        = " (#{@currency})"
+    .input-holder.big
+        = number_to_currency(@payments_sum, :unit => "")

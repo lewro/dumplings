@@ -4,52 +4,54 @@
   * Copyright     All rights reserved by Roman Leinwather - Lewro
   * Description   Defines helper classes
  **/
- 
+
 @import "globals/colours";
 @import "globals/mixins";
 @import "globals/sizes";
 
-nav, 
+nav,
 #top-nav {
 
   ul {
     margin: 80px 0 0 0;
     padding: 0;
   }
-  
+
   li {
     float: left;
     list-style: none;
     margin: 0 20px 0 0;
     font-weight: 100;
     cursor: pointer;
-    color: $primary-color;   
+    color: $primary-color;
     font-size: $font-small;
     text-transform: uppercase;
     a {
       color: $primary-color;
       &:hover {
         color: $accent-color;
-      }      
+      }
     }
-  } 
+  }
 }
 
 #top-nav {
   position: absolute;
   padding: 30px 30px 20px 30px;
   width: 200px;
+  height: 100%;
+  z-index: 99;
   top: 0px;
   right: 0px;
   display: none;
   background: $accent-color;
-  @include drop-shadow(0px, 5px, 50px);  
+  @include drop-shadow(0px, 5px, 50px);
   ul {
     margin: 0;
   }
 
   li {
-    width: 100%;  
+    width: 100%;
     margin-bottom: 7px;
     a:hover{
       color: $theme-1;
@@ -63,15 +65,15 @@ nav,
   }
 }
 
-.top-nav,   
-.top-nav-close {    
+.top-nav,
+.top-nav-close {
   position: absolute;
   right: 0px;
-  top: 0px; 
+  top: 0px;
   cursor: pointer;
 }
 
-// active state 
+// active state
 
 .client-orders .client-orders a,
 .supplier-orders .supplier-orders a,
@@ -81,7 +83,7 @@ nav,
 .invoices .invoices a,
 .retails .retails a,
 .events .events a,
-.stock .stock a {      
+.stock .stock a {
   color: $accent-color-secondary !important;
   opacity: 1 !important;
 }
@@ -93,6 +95,7 @@ nav,
 .payment-conditions .payment-conditions a,
 .suppliers .suppliers a,
 .ownership .ownership a,
+.tax-groups .tax-groups a,
 .stuff .stuff a {
   color: $theme-2 !important;
   opacity: 1 !important;

@@ -3,7 +3,7 @@
     %table
       = render :partial => 'payment_conditions/list_headers'
       - @payment_conditions.each do |pc|
-        %tr.data{"data-stock-id" => "#{pc.id}", "data-link" => "/payment_conditions/#{pc.id}/edit"}     
+        %tr.data{"data-stock-id" => "#{pc.id}", "data-link" => "/payment_conditions/#{pc.id}/edit"}
           %td
             = pc.id
           %td
