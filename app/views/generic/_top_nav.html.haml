@@ -1,26 +1,49 @@
 %i{:class => "fa fa-bars top-nav action"}
 
 #top-nav{:class => current_view}
+
   %i{:class => "fa fa-times top-nav-close action"}
+
   %ul
-    %li.settings
-      = link_to "#{t'settings'}", :controller => :settings, :action => :edit_settings
-    %li.ownership
-      = link_to "#{t'your_company'}", :controller => :companies, :action => :edit_ownership
-    %li.stuff
-      = link_to "#{t'stuff'}", :controller => :users, :action => :index
-    %li.payments
-      = link_to "#{t'payments'}", :controller => :payments, :action => :index
-    %li.clients
-      = link_to "#{t'clients'}", :controller => :companies, :action => :index, :category => "clients"
-    %li.suppliers
-      = link_to "#{t'suppliers'}", :controller => :companies, :action => :index, :category => "suppliers"
-    %li.products
-      = link_to "#{t'products'}", :controller => :products, :action => :index
-    %li.supplies
-      = link_to "#{t'supplies'}", :controller => :supplies, :action => :index
-    %li.payment-conditions
-      = link_to "#{t'payment_conditions'}", :controller => :payment_conditions, :action => :index
-    %li.tax-groups
-      = link_to "#{t'tax_groups'}", :controller => :tax_groups, :action => :index
+    - if user_has_access("settings")
+      %li.settings
+        = link_to "#{t'settings'}", :controller => :settings, :action => :edit_settings
+
+    - if user_has_access("your_company")
+      %li.ownership
+        = link_to "#{t'your_company'}", :controller => :companies, :action => :edit_ownership
+
+    - if user_has_access("users")
+      %li.stuff
+        = link_to "#{t'stuff'}", :controller => :users, :action => :index
+
+    - if user_has_access("payments")
+      %li.payments
+        = link_to "#{t'payments'}", :controller => :payments, :action => :index
+
+    - if user_has_access("clients")
+      %li.clients
+        = link_to "#{t'clients'}", :controller => :companies, :action => :index, :category => "clients"
+
+    - if user_has_access("suppliers")
+      %li.suppliers
+        = link_to "#{t'suppliers'}", :controller => :companies, :action => :index, :category => "suppliers"
+
+    - if user_has_access("products")
+      %li.products
+        = link_to "#{t'products'}", :controller => :products, :action => :index
+
+    - if user_has_access("supplies")
+      %li.supplies
+        = link_to "#{t'supplies'}", :controller => :supplies, :action => :index
+
+    - if user_has_access("payments")
+      %li.payment-conditions
+        = link_to "#{t'payment_conditions'}", :controller => :payment_conditions, :action => :index
+
+    - if user_has_access("tax_groups")
+      %li.tax-groups
+        = link_to "#{t'tax_groups'}", :controller => :tax_groups, :action => :index
+
+
 

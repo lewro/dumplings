@@ -14,3 +14,7 @@
             = user.email
           %td
             = category(user.category.to_i)
+
+    .clearfix
+      = will_paginate @users
+

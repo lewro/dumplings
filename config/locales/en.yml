@@ -46,6 +46,8 @@ en:
   attachments: "attachments"
   delivery_addresses: "Delivery Addresses"
   phone: "Phone"
+  one: "1"
+  contains: "contains"
 
   delivery_address:
     title: "Delivery Address"
@@ -101,11 +103,12 @@ en:
     distribution_date: "Distribution Date"
     delivery_date: "Delivery date"
     packages_count: "Packages"
-    package_size: "Package size"
+    package_size: "Size"
     package_price: "Package price"
     status: "Status"
-    mark_as_distributed: "Distributed Today"
-    mark_as_delivered: "Delivered Today"
+    mark_as_distributed: "Mark as Distributed Today"
+    mark_as_delivered: "Mark as Delivered Today"
+    mark_as_in_progress: "Mark as In Progress"
     progress: "Progress"
     price: "Price"
     total_price: "Total price"
@@ -118,7 +121,8 @@ en:
     add: "Add new product"
     search: "Search products"
     code: "Product code"
-    stock_note: "These supplies will be deducted from stock on product sale."
+    stock_note: "These supplies will be deducted from stock when one unit of this product is sold. Please specify the unit. "
+    unit_note: "Make sure to use the same unit as defined in product settings in order to auto-remove products from stock."
 
   supply:
     title: "Supply"
@@ -135,8 +139,10 @@ en:
     mark_as_paid: "Paid Fully Today"
     just_now: "Just now"
     invoice_amount: "Invoice amount"
+    invoice_amount_with_tax: "Invoice amount with tax"
+    proforma_invoice_amount_with_tax: "Proforma Invoice amount with tax"
     balance: "Balance"
-    proforma: "Pro forma invoice"
+    proforma: "Proforma invoice"
     taxable_date: "Date of Taxable Supply"
     issue_date: "Issue date"
     id: "Invoice ID"
@@ -240,6 +246,7 @@ en:
     search: "Search stock"
     percent_in_stock: "Percent in stock"
     zero_stock: "Setting stock to 0% will remove the stock item. Are you sure?"
+    note: "Please note: Stock values are updated automatically based on goods coming in and out (supplier orders/ client orders)."
 
   payment_condition:
     title: "Payment condition"
@@ -254,9 +261,23 @@ en:
   unit:
     title: "units"
     pieces: "pieces"
-    kg: "kilos"
-    m: "meters"
-    cm: "centimeters"
+
+    t: "tonne"                #1000000000 mg
+    kg: "kilogram"            #1000000 mg
+    g: "gram"                 #1000 mg
+    mg: "milligram"
+
+    km: "kilometer"           #1000000 mm
+    m: "meters"               #1000 mm
+    cm: "centimeters"         #10 mm
     mm: "milimeters"
-    l: "liters"
+
+    kl: "kiloliter"           #1000000 ml
+    hl: "hectoliter"          #100000 ml
+    dal: "dekaliter"          #10000 ml
+    l: "liters"               #1000 ml
+    dl: "deciliter"           #100 ml
+    cl: "centiliter"          #10 ml
+    ml: "milliliter"
+
 

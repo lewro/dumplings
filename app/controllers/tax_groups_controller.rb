@@ -1,5 +1,6 @@
 class TaxGroupsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def index
   end

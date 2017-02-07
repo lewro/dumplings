@@ -20,6 +20,9 @@ gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523b
 gem 'mini_magick', '~> 3.4'
 gem 'jquery-fileupload-rails'
 
+#Pagination
+gem 'will_paginate'
+
 #Server
 #gem 'puma'
 gem 'passenger'
@@ -40,11 +43,11 @@ gem "font-awesome-rails"
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
 gem 'pdfkit'
 
-#Cron 
+#Cron
 gem 'delayed_job_active_record'
 gem 'delayed_job'
 gem 'whenever'
-
+gem 'daemons'
 
 # Ruby multiversion
 gem 'rvm'

@@ -22,12 +22,14 @@
           %td.currency
             = number_to_currency(payment.sum, :unit => "")
 
-- unless @disabled || (remove == false)
+- unless remove == false
   .clearfix.spacer-large
-    = link_to "invoices/mark_invoice_as_paid/#{@invoice.id}?invoice_edit=true", :class => "link-button float-right" do
+    = link_to "/invoices/mark_invoice_as_paid/#{@invoice.id}?invoice_edit=true", :class => "link-button float-right" do
       %i.fa.fa-credit-card
       = "#{t'invoice.mark_as_paid'}"
 
-    = link_to "payments/new?id=#{@invoice.id}", :class => "link-button float-right" do
+    = link_to "/payments/new?id=#{@invoice.id}", :class => "link-button float-right" do
       %i.fa.fa-credit-card
       = "#{t'payment.add_partial_payment'}"
+
+.clearfix.spacer-large

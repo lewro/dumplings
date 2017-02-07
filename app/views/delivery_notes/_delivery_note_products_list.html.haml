@@ -4,7 +4,7 @@
 .row
   - if @delivery_note_products.size > 0
 
-    = render :partial => '/generic/products/list_headers'
+    = render :partial => '/generic/products/list_headers', :locals => { :model_name => "delivery_note_product" }
 
     - @delivery_note_products.each do |dnp|
       = render :partial => '/generic/products/list', :locals => { :product => dnp, :update_url => "/delivery_note_products/update/", :model_name => "delivery_note_product" }

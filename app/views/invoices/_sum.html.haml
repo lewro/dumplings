@@ -1,5 +1,5 @@
-.row.clearfix
-  - if @invoice.sum
+- if @invoice.sum
+  .row.clearfix
     .half
       %label
         = t"invoice.invoice_amount"
@@ -9,35 +9,59 @@
           = number_to_currency(@invoice.sum, :unit => "")
         = f.hidden_field :sum, :value => @invoice.sum
 
-    - if @balance
-      - @balance_class = balance_class(@balance)
-      .half
-        %label
-          = t"invoice.balance"
-          = " (#{@currency})"
-        .input-holder.big
-          %span{:class => @balance_class}
-            = number_to_currency(@balance, :unit => "")
+    .half.last
+      %label
+        = t"invoice.invoice_amount_with_tax"
+        = " (#{@currency})"
+      .input-holder.big
+        = number_to_currency(@invoice.sum_with_tax, :unit => "")
 
-  - else
-    .big
-      = f.text_field :sum, :value => 0
-
+- else
+  .big
+    = f.text_field :sum, :value => 0, disabled: true
 
 - if @proforma
   - unless @invoice == @proforma
-    .row.clearfix
+    .clearfix
+      %label
+        = t'invoice.proforma'
+        = ": "
+        .input-holder
+          %strong
+            = id_format(@invoice.linked_proforma_id, @client)
+    .row.clearfix.m-t
       .half
         %label
           = t'invoice.proforma'
           = " (#{@currency})"
         .input-holder.big
           = number_to_currency(@proforma.sum, :unit => "")
+      .half
+        %label
+          = t'invoice.proforma_invoice_amount_with_tax'
+          = " (#{@currency})"
+        .input-holder.big
+          = number_to_currency(@proforma.sum_with_tax, :unit => "")
+
+
+- if @balance || @payments_sum
+  .row.clearfix
+    - if @balance
+      .half
+        - if @balance
+          - @balance_class = balance_class(@balance)
+          %label
+            = t"invoice.balance"
+            = " (#{@currency})"
+          .input-holder.big
+            %span{:class => @balance_class}
+              = number_to_currency(@balance, :unit => "")
+
+
+    - if @payments_sum
       = render :partial => '/invoices/invoice_payments_sum'
-  - else
-    .row.clearfix
-      = render :partial => '/invoices/invoice_payments_sum'
-- else
-  - if @payments_sum
-    .row.clearfix
-      = render :partial => '/invoices/invoice_payments_sum'
+
+
+
+
+

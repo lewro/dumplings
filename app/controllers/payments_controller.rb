@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def new
     @payment = Payment.new
@@ -16,11 +17,15 @@ class PaymentsController < ApplicationController
 
     update_invoice
 
-    redirect_to action: "index"
+    if @invoice.id
+      redirect_to "/invoices/#{@invoice.id}/edit"
+    else
+      redirect_to action: "index"
+    end
   end
 
   def index
-    @payments = Payment.joins("JOIN invoices on payments.invoice_id = invoices.id JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id")
+    @payments = Payment.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN invoices on payments.invoice_id = invoices.id JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id").order("payments.id DESC")
   end
 
   def edit
@@ -47,9 +52,15 @@ class PaymentsController < ApplicationController
 
     @payment.destroy
 
-    update_invoice
+    if @invoice
+      update_invoice
+    end
 
-    redirect_to action: "index"
+    if @invoice
+      redirect_to "/invoices/#{@invoice.id}/edit"
+    else
+      redirect_to action: "index"
+    end
   end
 
   def update_invoice

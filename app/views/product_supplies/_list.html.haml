@@ -1,21 +1,15 @@
 .clearfix.product.list-element{ "data-product-supply-id" => ps.product_supply_id }
-  .fifth
+  .third
     .input-holder
       = ps.name
-  .fifth
+  .third
     .input-holder
       = ps.product_code
-  .sixth.packages-quantity
-    .input-holder
-      = ps.packages_quantity
-  .fifth
+  .quarter
     .input-holder
       = ps.packages_size
       = " "
       = unit(ps.unit)
-  .sixth.package-price
-    .input-holder
-      = number_to_currency(ps.package_price, :unit => "")
 
   .small-button-column
     .circle-button.small.remove-product-supply.float-right{"remove-message" => "#{t'actions.confirm'}" }

@@ -7,7 +7,9 @@
   %td
     = display_date_time(af.created_at)
   %td
-    = link_to "#{t'actions.download'}",  { :controller => "file_uploads", :action => "download_af", :id => af.id }, :target => "_blank", :class => "link-button float-right"
-  %td
-    .circle-button.small.remove-af.float-right{"remove-message" => "#{t'actions.confirm'}" }
+    .circle-button.small.remove-af.float-right.m-l{"remove-message" => "#{t'actions.confirm'}" }
       %i.fa.fa-close
+
+    = link_to "/file_uploads/download_af/#{af.id}", :target => "_blank", :class => "circle-button small float-right" do
+      %i.fa.fa-cloud-download{:title => "#{t'actions.download'}"}
+

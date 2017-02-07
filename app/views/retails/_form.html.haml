@@ -46,7 +46,8 @@
 
       .clearfix.action-cover
 
-        = f.submit action, :class => "button"
+        - unless @disabled
+          = f.submit action, :class => "button"
 
         - if remove == true
           = link_to "#{t'actions.remove'}",  @retail,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"

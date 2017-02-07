@@ -1,8 +1,13 @@
 .clearfix.list-headers
-  .eight
-    %label
-      = t"product.name"
-  .eight
+  - unless @disabled
+    .sixth
+      %label
+        = t"product.name"
+  - else
+    .quarter
+      %label
+        = t"product.name"
+  .sixth
     %label
       = t"product.code"
   .eight
@@ -14,13 +19,19 @@
   .eight
     %label
       = t"unit.title"
+      - unless model_name == "supplier_order_product"
+        %i{:title => "#{t'product.unit_note'}"}
+          .fa.fa-question-circle
   .sixth.a-r
-    %label
+    %label.a-r
       = t"orders.package_price"
       = " (#{@currency})"
-  .eight
+  .sixth
     %label
       = t"expiration_date"
+  .eight
+    %label
+      = ""
   .eight
     %label
       = ""

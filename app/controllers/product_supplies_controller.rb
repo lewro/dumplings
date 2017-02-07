@@ -1,5 +1,6 @@
 class ProductSuppliesController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def destroy
     @id                     = params[:id]
@@ -18,7 +19,7 @@ class ProductSuppliesController < ApplicationController
   end
 
   def product_supply_params
-     params.require(:product_supply).permit(:supply_id, :product_id, :packages_quantity, :packages_size, :package_price, :user_id, :unit)
+     params.require(:product_supply).permit(:supply_id, :product_id, :packages_size, :user_id, :unit)
   end
 
 end

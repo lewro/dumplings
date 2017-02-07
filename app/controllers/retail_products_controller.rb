@@ -1,5 +1,6 @@
 class RetailProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
 
   def destroy

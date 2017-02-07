@@ -1,3 +1,5 @@
+- printId = id_format(@delivery_note.id, @client)
+
 = render :partial => 'generic/top', :locals => {:current_view => 'delivery-notes'}
-= render :partial => "delivery_notes/top", :locals => { :header => "#{t'delivery_note.title'} #{@delivery_note.id}" , :search => false }
+= render :partial => "delivery_notes/top", :locals => { :header => "#{t'delivery_note.title'} #{printId}" , :search => false }
 = render :partial => "delivery_notes/form", :locals => { :action =>  "#{t'actions.save'}", :remove => true }

@@ -32,9 +32,13 @@
             - unless @order_disabled
               %span
                 - if  order.order_status == 6
-                  .link-button.float-right.mark-supplier-order-as-in-stock
-                    = t'status.in_stock'
+                  .circle-button.small.float-right.m-l.mark-supplier-order-as-in-stock{ :title => "#{t'status.in_stock'}" }
+                    %i.fa.fa-industry
 
                 - if order.order_status == 1
-                  .link-button.float-right.mark-supplier-order-as-sent
-                    = t'orders.order_sent'
+                  .circle-button.small.float-right.m-l.mark-supplier-order-as-sent{ :title => "#{t'status.order_sent'}" }
+                    %i.fa.fa-paper-plane-o
+
+
+    .clearfix
+      = will_paginate @supplier_orders

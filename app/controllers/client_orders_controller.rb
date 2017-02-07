@@ -1,5 +1,6 @@
 class ClientOrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def new
     @client_order                   = ClientOrder.new
@@ -30,7 +31,7 @@ class ClientOrdersController < ApplicationController
   end
 
   def index
-    @client_orders  = ClientOrder.joins("JOIN companies ON companies.id = client_orders.client_id").select('companies.name AS company_name, client_orders.id AS order_id, client_orders.sum AS order_sum, client_orders.expected_delivery AS order_expected_delivery, client_orders.distribution AS order_distribution, client_orders.status AS order_status, client_orders.reference_id AS reference_id')
+    @client_orders  = ClientOrder.paginate(:page => params[:page], :per_page => "#{@pagination}").joins("JOIN companies ON companies.id = client_orders.client_id").select('companies.name AS company_name, client_orders.id AS order_id, client_orders.sum AS order_sum, client_orders.expected_delivery AS order_expected_delivery, client_orders.distribution AS order_distribution, client_orders.status AS order_status, client_orders.reference_id AS reference_id').order("client_orders.id DESC")
     @pdf_id         = params[:pdf_id]
   end
 
@@ -40,7 +41,9 @@ class ClientOrdersController < ApplicationController
 
     @client_order.update(:distribution => Time.now, :status => 3)
 
-    render :nothing => true
+    check_stock_update(@client_order.id)
+
+    render :text => "#{t'actions.saved'}"
   end
 
   def mark_order_as_in_progress
@@ -49,14 +52,14 @@ class ClientOrdersController < ApplicationController
 
     @client_order.update(:status => 2)
 
-    render :nothing => true
+    render :text => "#{t'actions.saved'}"
   end
 
   def edit
     @id                       = params[:id]
     @client_order             = ClientOrder.find_by_id(@id)
     @client                   = Company.find_by_id(@client_order.client_id)
-    @client_order_products    = ClientOrderProduct.joins("JOIN products ON client_order_products.product_id = products.id").where(:order_id => @id).select("client_order_products.packages_quantity AS packages_quantity, client_order_products.packages_size AS packages_size, client_order_products.unit AS packages_unit, client_order_products.package_price AS package_price, client_order_products.id AS product_id, client_order_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
+    @client_order_products    = ClientOrderProduct.joins("JOIN products ON client_order_products.product_id = products.id").where(:order_id => @id).select("client_order_products.packages_quantity AS packages_quantity, client_order_products.packages_size AS packages_size, client_order_products.unit AS packages_unit, client_order_products.package_price AS package_price, client_order_products.id AS product_id, client_order_products.expiration_date AS expiration_date, products.name AS name,  products.unit AS unit, products.product_code AS product_code")
     @client_order_product     = ClientOrderProduct.new
     @invoice_number           = Invoice.where(:order_id => @id, :proforma => false).first
     @proforma_invoice_number  = Invoice.where(:order_id => @id, :proforma => true).first
@@ -71,7 +74,7 @@ class ClientOrdersController < ApplicationController
     end
 
     #Disable editing when these condtions
-    if @invoice_number || @proforma_invoice_number || @delivery_note_number
+    if @invoice_number || @proforma_invoice_number || @delivery_note_number || @client_order.stock_deducted
 
       @disabled = true
 
@@ -122,6 +125,10 @@ class ClientOrdersController < ApplicationController
       @client_order.update(:status => 3)
     end
 
+    if params[:client_order][:status].to_i == 3
+      check_stock_update(@id)
+    end
+
     #Load Index but aftercall PDF document in new TAB
     unless @commit.nil?
       if @commit.include? "PDF"
@@ -150,6 +157,11 @@ class ClientOrdersController < ApplicationController
       end
     end
 
+    #If created as closed order
+    if params[:client_order][:status].to_i == 3
+      check_stock_update(@client_order.id)
+    end
+
     if @commit
       if @commit.include? "PDF"
         redirect_to "/client_orders/?pdf_id=#{@client_order.id}"
@@ -162,13 +174,13 @@ class ClientOrdersController < ApplicationController
   end
 
   def destroy
-    @id                     = params[:id]
-    @client_order           = ClientOrder.find_by_id(@id)
+    @id                      = params[:id]
+    @client_order            = ClientOrder.find_by_id(@id)
+    @client_order_products   = ClientOrderProduct.where(:order_id => @id)
+
+    revert_stock(@client_order, @client_order_products)
 
     @client_order.destroy
-
-    #Destroy client order products as well
-    @client_order_products = ClientOrderProduct.where(:order_id => @id)
 
     @client_order_products.each do |product|
       product.destroy
@@ -177,7 +189,14 @@ class ClientOrdersController < ApplicationController
     redirect_to action: "index"
   end
 
+  def check_stock_update(client_order_id)
+    @products     = ClientOrderProduct.where(:order_id => client_order_id)
+    @time         = Time.now + 1.minutes
+
+    update_stock("client_order", @client_order, @products, @time) #Application Controller
+  end
+
   def client_order_params
-     params.require(:client_order).permit(:client_id, :user_id, :sum, :expected_delivery, :distribution, :status, :clientorderproducts, :note, :offer_id, :reference_id, :order_confirmation, :payment_condition, :delivery_terms)
+     params.require(:client_order).permit(:client_id, :user_id, :sum, :expected_delivery, :distribution, :status, :clientorderproducts, :note, :offer_id, :reference_id, :order_confirmation, :payment_condition, :delivery_terms, :stock_deducted)
   end
 end

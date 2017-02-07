@@ -74,7 +74,7 @@ nav,
 }
 
 // active state
-
+.clients .companies a,
 .client-orders .client-orders a,
 .supplier-orders .supplier-orders a,
 .delivery-notes .delivery-notes a,
@@ -83,7 +83,8 @@ nav,
 .invoices .invoices a,
 .retails .retails a,
 .events .events a,
-.stock .stock a {
+.stock .stock a,
+.dashboard .dashboard a {
   color: $accent-color-secondary !important;
   opacity: 1 !important;
 }

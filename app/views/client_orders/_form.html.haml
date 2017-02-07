@@ -26,7 +26,7 @@
                 = client_order_status_select(f, status)
               - else
                 .input-holder
-                  = @client_order.status
+                  = status(@client_order.status)
 
           .row.clearfix
             .half
@@ -120,11 +120,6 @@
           - if @offer_id
             = render :partial => '/client_orders/offer', :locals => { :f => f }
 
-
-          - unless @pdfs.nil?
-            .row.clearfix.p-b
-              = render :partial => '/generic/pdf'
-
           .row.clearfix
             = render :partial => '/generic/attachments'
 
@@ -148,10 +143,15 @@
               .input-holder
                 = @client_order.note
 
+          - unless @pdfs.nil?
+            .row.clearfix.p-b
+              = render :partial => '/generic/pdf'
 
       .action-cover.clearfix
-        = f.submit action, :class => "button"
-        = f.submit "#{t'save_pdf'}", :name => "commit-pdf", :class => "link-button"
+
+        - unless @disabled
+          = f.submit action, :class => "button"
+          = f.submit "#{t'save_pdf'}", :name => "commit-pdf", :class => "link-button"
 
         - if remove == false
           = f.submit "#{t'save_attach'}", :name => "commit-attach", :class => "link-button"

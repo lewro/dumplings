@@ -1,7 +1,7 @@
 Dumplings::Application.routes.draw do
 
   devise_for :users
-  root :to => "events#index"
+  root :to => "dashboards#index"
 
   #PDF
   get "offers/pdf"
@@ -38,6 +38,7 @@ Dumplings::Application.routes.draw do
 
   #Resources
   resources :companies
+  resources :dashboards
   resources :client_orders
   resources :client_order_products
   resources :supplier_orders

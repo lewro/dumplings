@@ -29,15 +29,17 @@
             %td
               %span
                 - if order.order_status == 1
-                  .link-button.float-right.mark-client-order-as-in-progress
+                  .circle-button.small.float-right.m-l.mark-client-order-as-in-progress{ :title => "#{t'orders.mark_as_in_progress'}" }
                     %i.fa.fa-hourglass-start
-                    = t'status.in_progress'
 
               - if order.order_distribution.nil?
-                .link-button.float-right.mark-client-order-as-distributed
+                .circle-button.small.float-right.m-l.mark-client-order-as-distributed{ :title => "#{t'orders.mark_as_distributed'}" }
                   %i.fa.fa-paper-plane-o
-                  = t'orders.mark_as_distributed'
 
       - else
         .input-holder
           =  t'no_data'
+
+    .clearfix
+      = will_paginate @client_orders
+

@@ -13,11 +13,11 @@
 
 .fa.action {
   color: $accent-color-secondary;
-	padding: 30px;
+  padding: 30px;
 }
 
 .fa.action:hover {
-	color: $accent-color-secondary;
+  color: $accent-color-secondary;
   background: $theme-2;
 }
 
@@ -25,4 +25,12 @@
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -o-transform: rotate(45deg);
+}
+
+.fa-question-circle {
+  font-size: $font-medium !important;
+}
+
+.fa-bell {
+  color: $accent-color;
 }

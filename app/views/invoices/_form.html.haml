@@ -102,11 +102,6 @@
 
           = render :partial => "invoices/sum", :locals => { :current_view => current_view, :f => f }
 
-          - unless @pdfs.nil?
-            .row.clearfix
-              = render :partial => '/generic/pdf'
-
-
           .row.clearfix
             %label
               = t"delivery_terms"
@@ -127,13 +122,19 @@
               .input-holder
                 = @invoice.note
 
+          .row.clearfix
+            = render :partial => "invoices/payments", :locals => { :remove => remove }
 
-          = render :partial => "invoices/payments", :locals => { :remove => remove }
+          - unless @pdfs.nil?
+            .row.clearfix.m-t
+              = render :partial => '/generic/pdf'
+
 
       .clearfix.action-cover
 
-        = f.submit action, :class => "button"
-        = f.submit "#{t'save_pdf'}", :class => "link-button"
+        - unless @disabled
+          = f.submit action, :class => "button"
+          = f.submit "#{t'save_pdf'}", :class => "link-button"
 
         - if remove == true
           = link_to "#{t'actions.remove'}",  @invoice,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"

@@ -1,5 +1,6 @@
 class SettingsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def edit_settings
     @setting = Setting.where(:user_id => current_user.admin_id).last

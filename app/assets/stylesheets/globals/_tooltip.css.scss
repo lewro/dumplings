@@ -11,11 +11,11 @@
 @import "fonts";
 
 .ui-tooltip {
-	padding: 7px 10px !important;
-	color: $primary-color !important;
-	font-size: $font-tiny !important;
-	line-height: 11px !important;
-	text-transform: uppercase !important;
-	background: $accent-color-secondary !important;
-	@include drop-shadow(0px, 5px, 50px);
+    padding: 7px 10px !important;
+    color: $primary-color !important;
+    font-size: $font-tiny !important;
+    line-height: 1.5em !important;
+    text-transform: uppercase !important;
+    background: $theme-2 !important;
+    @include drop-shadow(0px, 5px, 10px);
 }

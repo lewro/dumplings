@@ -1,4 +1,6 @@
 .logo
   = "Little factory"
 
-= render :partial => 'generic/top_nav', :locals => { :current_view => current_view }
+-#Only Admin and Manager see sidebar
+- if [3,5].include? current_user.category
+  = render :partial => 'generic/top_nav', :locals => { :current_view => current_view }

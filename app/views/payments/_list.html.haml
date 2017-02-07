@@ -16,3 +16,7 @@
           %td
             - unless payment.paid_date.nil?
               = display_date(payment.paid_date)
+
+    .clearfix
+      = will_paginate @payments
+

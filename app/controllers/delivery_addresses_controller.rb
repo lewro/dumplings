@@ -1,5 +1,6 @@
 class DeliveryAddressesController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def create
     @delivery_addresses     = DeliveryAddress.create(delivery_address_params)

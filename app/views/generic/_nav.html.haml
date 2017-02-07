@@ -2,21 +2,44 @@
   %ul{:class => current_view}
     %li.dashboard
       = link_to "#{t'dashboard'}", :controller => :dashboards, :action => :index
-    %li.events
-      = link_to "#{t'meetings'}", :controller => :events, :action => :index
-    %li.offers
-      = link_to "#{t'offers'}", :controller => :offers, :action => :index
-    %li.client-orders
-      = link_to "#{t'client_orders'}", :controller => :client_orders, :action => :index
-    %li.delivery-notes
-      = link_to "#{t'delivery_notes'}", :controller => :delivery_notes, :action => :index
-    %li.proforma-invoices
-      = link_to "#{t'proforma_invoices'}", :controller => :invoices, :action => :index, :proforma => true
-    %li.invoices
-      = link_to "#{t'invoices'}", :controller => :invoices, :action => :index
-    %li.retails
-      = link_to "#{t'retails'}", :controller => :retails, :action => :index
-    %li.supplier-orders
-      = link_to "#{t'supplier_orders'}", :controller => :supplier_orders, :action => :index
-    %li.stock
-      = link_to "#{t'stock.title'}", :controller => :stocks, :action => :index
+
+    - if user_has_access("events")
+      %li.events
+        = link_to "#{t'meetings'}", :controller => :events, :action => :index
+
+    - if user_has_access("offers")
+      %li.offers
+        = link_to "#{t'offers'}", :controller => :offers, :action => :index
+
+    - if user_has_access("client_orders")
+      %li.client-orders
+        = link_to "#{t'client_orders'}", :controller => :client_orders, :action => :index
+
+    - if user_has_access("delivery_notes")
+      %li.delivery-notes
+        = link_to "#{t'delivery_notes'}", :controller => :delivery_notes, :action => :index
+
+    - if user_has_access("invoices")
+      %li.proforma-invoices
+        = link_to "#{t'proforma_invoices'}", :controller => :invoices, :action => :index, :proforma => true
+
+    - if user_has_access("invoices")
+      %li.invoices
+        = link_to "#{t'invoices'}", :controller => :invoices, :action => :index
+
+    - if user_has_access("retails")
+      %li.retails
+        = link_to "#{t'retails'}", :controller => :retails, :action => :index
+
+    - if user_has_access("supplier_orders")
+      %li.supplier-orders
+        = link_to "#{t'supplier_orders'}", :controller => :supplier_orders, :action => :index
+
+    - if user_has_access("stocks")
+      %li.stock
+        = link_to "#{t'stock.title'}", :controller => :stocks, :action => :index
+
+    -  #Salesman see the link in main nav
+    - if [1].include? current_user.category
+      %li.companies
+        = link_to "#{t'clients'}", :controller => :companies, :action => :index, :category => "clients"

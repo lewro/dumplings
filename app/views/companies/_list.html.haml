@@ -2,7 +2,9 @@
   .content
     %table
       = render :partial => "companies/list_headers"
+
       - @companies.each do |company|
+
         %tr.data{"data-link" => "/companies/#{company.id}/edit?category=#{@category}"}
           %td
             = company.id
@@ -28,3 +30,7 @@
             = company.orders
           %td
             = status(company.status)
+
+    .clearfix
+      = will_paginate @companies
+

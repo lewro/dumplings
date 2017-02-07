@@ -66,11 +66,6 @@
                 .input-holder.big
                   = number_to_currency(@supplier_order.sum, :unit => "")
 
-
-          - unless @pdfs.nil?
-            .row.clearfix.last
-              = render :partial => '/generic/pdf'
-
           .row.clearfix.last
             %label
               = t"notes"
@@ -79,6 +74,11 @@
             - else
               .input-holder
                 = @supplier_order.note
+
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
+
 
 
       .action-cover.clearfix

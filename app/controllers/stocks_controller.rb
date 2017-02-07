@@ -1,8 +1,9 @@
 class StocksController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def index
-    @stock = Stock.joins("JOIN supplies ON supplies.id = stocks.product_id").select("stocks.id AS stock_id, stocks.packages_quantity AS packages_quantity, stocks.packages_size AS packages_size, stocks.package_price AS package_price, stocks.unit AS unit, stocks.progress AS progress, supplies.name as product_name")
+    @stock = Stock.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN supplies ON supplies.id = stocks.supply_id").select("stocks.id AS stock_id, stocks.packages_size AS packages_size,  stocks.unit AS unit, supplies.name as product_name").order("stocks.id DESC")
   end
 
   def update
@@ -11,7 +12,12 @@ class StocksController < ApplicationController
 
     @stock.update(stock_params)
 
-    render :nothing => true
+    redirect_to action: "edit"
+  end
+
+  def edit
+    @id       = params[:id]
+    @stock    = Stock.joins("JOIN supplies ON stocks.supply_id = supplies.id").where(:id => @id).select("supplies.name AS name, stocks.id AS id, stocks.supply_id AS supply_id, stocks.unit AS unit, stocks.packages_size AS packages_size").first
   end
 
   def destroy
@@ -24,7 +30,7 @@ class StocksController < ApplicationController
   end
 
   def stock_params
-     params.require(:stock).permit(:id, :progress)
+     params.require(:stock).permit(:supply_id, :packages_size, :unit )
   end
 
 end

@@ -1,32 +1,32 @@
 .row.clearfix
-	%label
-		= t"meetings"
+    %label
+        = t"meetings"
 
-	.event-items
-		- unless @events.nil?
-			- if @events.size < 1
-				.note
-					= t"no_data"
+    .event-items
+        - unless @events.nil?
+            - if @events.size < 1
+                .note
+                    = t"no_data"
 
-			- @events.all.group_by(&:date).each do |date, events|
+            - @events.all.group_by(&:date).each do |date, events|
 
-				.event-date
-					= display_date(date)
+                .event-date
+                    = display_date(date)
 
 
-				- events.sort_by{|e| e[:time]}.each do |event|
-					.event-item.clearfix
-						.clearfix
-							.event-time
-								- unless event.time.nil?
-									= event.time.strftime('%R')
-								- else
-									= ""
-							.event-name
-								= event.name
-						.clearfix
-							.event-note.clearfix
-								= simple_format(event.note)
-							.event-actions.clearfix
-								= link_to "#{t'actions.edit'}", 	[:edit, event], :class => "button remove"
-								= link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "	button remove"
+                - events.sort_by{|e| e[:time]}.each do |event|
+                    .event-item.clearfix
+                        .clearfix
+                            .event-time
+                                - unless event.time.nil?
+                                    = event.time.strftime('%R')
+                                - else
+                                    = ""
+                            .event-name
+                                = event.name
+                        .clearfix
+                            .event-note.clearfix
+                                = simple_format(event.note)
+                            .event-actions.clearfix
+                                = link_to "#{t'actions.edit'}",     [:edit, event], :class => "button remove"
+                                = link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => " button remove"

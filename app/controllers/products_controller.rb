@@ -1,20 +1,19 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def index
-    @products = Product.all
   end
 
   def new
     @product            = Product.new
     @product_supply     = ProductSupply.new
-
   end
 
   def edit
     @id                 = params[:id]
     @product            = Product.find_by_id(@id)
-    @product_supplies   = ProductSupply.joins("JOIN supplies ON supplies.id = product_supplies.supply_id").where(:product_id => @product.id).select("supplies.name AS name, supplies.product_code AS product_code, product_supplies.product_id AS product_id, product_supplies.id AS product_supply_id, product_supplies.supply_id AS supply_id, product_supplies.packages_quantity AS packages_quantity, product_supplies.packages_size as packages_size, product_supplies.package_price AS package_price, product_supplies.unit AS unit")
+    @product_supplies   = ProductSupply.joins("JOIN supplies ON supplies.id = product_supplies.supply_id").where(:product_id => @product.id).select("supplies.name AS name, supplies.product_code AS product_code, product_supplies.product_id AS product_id, product_supplies.id AS product_supply_id, product_supplies.supply_id AS supply_id, product_supplies.packages_size as packages_size,  product_supplies.unit AS unit")
     @product_supply     = ProductSupply.new
   end
 
@@ -51,7 +50,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-     params.require(:product).permit(:name, :user_id, :note, :product_code, :tax_group_id)
+     params.require(:product).permit(:name, :user_id, :note, :product_code, :tax_group_id, :unit)
   end
 end
 

@@ -22,19 +22,30 @@
             = t"notes"
           = f.text_area :note
 
-
     .half-page
       .content
-        %label
-          = t"supplies"
+        .row.clearfix
+          %label
+            = t"supplies"
+          .note
+            %i.fa.fa-bell
+            = t"product.stock_note"
 
-        .note
-          = t"product.stock_note"
+        .row.clearfix
+          .eight
+            .input-holder
+              = t"one"
+          .fifth
+            = units_select(f, @product.unit)
+          .half
+            .input-holder
+              = t"contains"
 
         - if @product_supplies
           = render :partial => 'products/product_supplies_list', :locals => { :f => f }
         - else
           = render :partial => 'products/product_supplies_form', :locals => { :f => f }
+
 
     .clearfix.action-cover
       = f.submit action, :class => "button"

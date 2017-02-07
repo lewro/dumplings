@@ -37,7 +37,7 @@
       justNow     = $(dataElement).attr("data-just-now")
       closed      = $(dataElement).attr("data-status-closed")
 
-      actions.ajax 'get', "/client_orders/mark_order_as_distributed/#{orderId}", ""
+      actions.ajax 'get', "/client_orders/mark_order_as_distributed/#{orderId}", $(".notice")
 
       $(dataElement).find('.distribution_date').html(justNow)
 
@@ -46,7 +46,8 @@
       $(dataElement).find('.status').html(closed)
 
       $(this).hide()
-      false
+
+      return false
 
   markOrderAsInProgress : () ->
     $('body').delegate '.mark-client-order-as-in-progress  ', 'click', ->
@@ -55,11 +56,12 @@
       orderId     = $(dataElement).attr("data-order-id")
       inProgress  = $(dataElement).attr("data-status-progress")
 
-      actions.ajax 'get', "/client_orders/mark_order_as_in_progress/#{orderId}", ""
+      actions.ajax 'get', "/client_orders/mark_order_as_in_progress/#{orderId}", $(".notice")
 
       $(dataElement).find('.status').html(inProgress)
 
       $(this).hide()
+
       false
 
   init : () ->

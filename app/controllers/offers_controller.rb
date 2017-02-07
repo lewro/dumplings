@@ -1,5 +1,6 @@
 class OffersController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def new
     @offer                          = Offer.new
@@ -7,7 +8,7 @@ class OffersController < ApplicationController
   end
 
   def index
-    @offers       = Offer.joins("JOIN companies ON companies.id = offers.client_id").select('companies.name AS company_name, offers.id AS offer_id, offers.sum AS offer_sum, offers.client_id AS client_id, offers.reference_id AS reference_id, offers.issue_date AS issue_date')
+    @offers       = Offer.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = offers.client_id").select('companies.name AS company_name, offers.id AS offer_id, offers.sum AS offer_sum, offers.client_id AS client_id, offers.reference_id AS reference_id, offers.issue_date AS issue_date').order("offers.id DESC")
     @pdf_id       = params[:pdf_id]
   end
 
@@ -15,7 +16,7 @@ class OffersController < ApplicationController
     @id                     = params[:id]
     @offer                  = Offer.find_by_id(@id)
     @client                 = Company.find_by_id(@offer.client_id)
-    @offer_products         = OfferProduct.joins("JOIN offers ON offers.id = offer_products.offer_id JOIN products ON offer_products.product_id = products.id").where("offers.id" => @id).select("offer_products.unit AS packages_unit, offer_products.packages_quantity AS packages_quantity, offer_products.packages_size AS packages_size, offer_products.package_price AS package_price, offer_products.id AS product_id, offer_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code")
+    @offer_products         = OfferProduct.joins("JOIN offers ON offers.id = offer_products.offer_id JOIN products ON offer_products.product_id = products.id").where("offers.id" => @id).select("offer_products.unit AS packages_unit, offer_products.packages_quantity AS packages_quantity, offer_products.packages_size AS packages_size, offer_products.package_price AS package_price, offer_products.id AS product_id, offer_products.expiration_date AS expiration_date, products.name AS name,  products.unit AS unit, products.product_code AS product_code")
     @offer_product          = OfferProduct.new
     @order_number           = ClientOrder.where(:offer_id => @offer.id).first
     @pc                     = PaymentCondition.find_by_id(@offer.payment_condition)

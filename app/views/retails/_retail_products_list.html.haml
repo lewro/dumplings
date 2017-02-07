@@ -3,7 +3,7 @@
 
 .row
   - if @retail_products.size > 0
-    = render :partial => '/generic/products/list_headers'
+    = render :partial => '/generic/products/list_headers', :locals => { :model_name => "retail_product" }
     - @retail_products.each do |rp|
       = render :partial => '/generic/products/list', :locals => { :product => rp, :update_url => "/retail_products/update/", :model_name => "retail_product" }
   - else

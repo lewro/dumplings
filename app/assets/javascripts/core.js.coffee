@@ -10,7 +10,7 @@
   #Make table rows clickable
   tableRows : () ->
     $('tr[data-link] td').click ->
-      if $(this).find('.link-button').length > 0
+      if $(this).find('.link-button').length > 0 or $(this).find('.circle-button').length > 0
         #Ignore clicks when button inside
       else
         window.location = $(this).parents('tr').attr("data-link")
@@ -40,7 +40,7 @@
 
   # Switch Buttons - uses Switchable plugin
   switchButtons: () ->
-    $("input[type='checkbox']").switchable()
+    $("input[type='checkbox']:visible").switchable()
 
 
   uiElements : () ->

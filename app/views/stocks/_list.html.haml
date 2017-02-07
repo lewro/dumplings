@@ -3,21 +3,28 @@
     %table
       = render :partial => '/stocks/list_headers'
 
-      - @stock.each do |stock|
-        %tr.data{"data-stock-id" => "#{stock.stock_id}", "data-remove-message" => "#{t'stock.zero_stock'}"}
-          %td
-            = stock.stock_id
-          %td
-            = stock.product_name
-          %td
-            = stock.packages_quantity
-          %td
-            = stock.packages_size
-            = " "
-            = unit(stock.unit)
-          %td
-            = stock.package_price
-          %td
-            = stock.package_price *  stock.packages_quantity
-          -#%td.slide
-            -#.slider{ :value => stock.progress }
+      - if @stock.size > 0
+        - @stock.each do |stock|
+          %tr.data{"data-stock-id" => "#{stock.stock_id}", "data-remove-message" => "#{t'stock.zero_stock'}", "data-link" => "/stocks/#{stock.stock_id}/edit"}
+            %td
+              = stock.stock_id
+            %td
+              = stock.product_name
+            %td.a-r.hide
+              = stock.packages_size
+              = " "
+              = unit(stock.unit)
+            %td.a-r
+              = convert_to_print_value(stock.unit, stock.packages_size)
+              = " "
+              = unit(print_unit(stock.unit))
+
+      - else
+        %tr
+          %td{:colspan => 4}
+            .note
+              = t"no-data"
+
+
+    .clearfix
+      = will_paginate @stock

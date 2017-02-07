@@ -23,3 +23,6 @@
             = number_to_currency(retail.transport_cost, :unit => "")
           %td.currency
             = number_to_currency(retail.transport_cost + retail.sum, :unit => "")
+
+    .clearfix
+      = will_paginate @retails

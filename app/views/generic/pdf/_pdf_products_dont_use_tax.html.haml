@@ -49,35 +49,39 @@
 
         .totals.grand
             - if @payments_sum > 0
-                .clearfix
-                    .total-header
-                        = t"payments"
-                        - if @proforma
-                            = "("
-                            = t"proforma"
-                            = ": "
-                            = @proforma.id
-                            = ")"
-                    .total-sum
-                        = @currency
-                        = number_to_currency(@payments_sum, :unit => "")
-                .devider
+
                 .clearfix.m-t
                     .total-header
                         = t"orders.sum"
                     .total-sum
                         = @currency
                         = number_to_currency(total, :unit => "")
-                .clearfix
-                    .total-header
-                        %strong
-                            = t"orders.total_price"
-                    .total-sum
-                        %strong
+                - unless is_proforma
+                    .clearfix
+                        .total-header
+                            = t"payments"
+                            - if @proforma
+                                = "("
+                                = t"invoice.proforma"
+                                = ": "
+                                = id_format(@proforma.id, @client)
+                                = ")"
+                        .total-sum
                             = @currency
-                            - total_price = total - @payments_sum
-                            = number_to_currency(total_price, :unit => "")
+                            = number_to_currency(@payments_sum, :unit => "")
 
+                    .devider
+
+                - unless is_proforma
+                    - total_price = total - @payments_sum
+                    .clearfix
+                        .total-header
+                            %strong
+                                = t"orders.total_price"
+                        .total-sum
+                            %strong
+                                = @currency
+                                = number_to_currency(total_price, :unit => "")
 
             - else
                 .clearfix

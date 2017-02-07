@@ -1,0 +1,15 @@
+/**
+  * File          Invoice
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines inovice view adjustments
+ **/
+
+@import "globals/sizes";
+
+#invoice {
+  .content .big,
+  .content .big input[type="text"] {
+    font-size: $font-large;
+  }
+}

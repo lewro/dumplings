@@ -58,11 +58,6 @@
           = render :partial => '/offers/action', :locals => { :f => f, :remove => remove }
           = render :partial => '/offers/order', :locals => { :f => f }
 
-
-          - unless @pdfs.nil?
-            .row.clearfix.last
-              = render :partial => '/generic/pdf'
-
           .row.clearfix
             %label
               = t"delivery_terms"
@@ -80,6 +75,11 @@
             - else
               .input-holder
                 = @offer.note
+
+
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
 
       .action-cover.clearfix
 

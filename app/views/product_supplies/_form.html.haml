@@ -3,34 +3,21 @@
   = f.hidden_field :user_id, :value => current_user.id
   = f.hidden_field :product_id, :value => @product.id
 
-
   .product.clearfix.list-headers
-
     .row.clearfix
       %label
         = t"supplies"
       = supplies_select(f, @supplies)
 
     .row.clearfix
-      .half.packages-quantity
-        %label
-          = t"orders.packages_count"
-        = f.text_field :packages_quantity, "data-required" => "true"
-
       .half
         %label
           = t"orders.package_size"
           = f.text_field :packages_size
-    .row.clearfix
-      .half
+      .half.last
         %label
           = t"unit.title"
         = units_select(f)
-
-      .half.package-price
-        %label
-          = t"orders.package_price"
-        = f.text_field :package_price, "data-required" => "true"
 
     .clearfix
       = f.submit "#{t'actions.create'}", :class => "button float-right spacer-medium"

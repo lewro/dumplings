@@ -1,0 +1,70 @@
+/**
+  * File          Pagination
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Pagination
+ **/
+
+@import "colours";
+@import "mixins";
+@import "sizes";
+@import "fonts";
+
+.pagination {
+    position: fixed;
+    margin-top: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    bottom: 0;
+    left: 0;
+    padding: 10px 30px;
+    background: $grey-light2;
+    border-top: 1px solid $grey-light1;
+    border-bottom: 1px solid $grey-light1;
+    z-index: 2;
+    text-align: center;
+
+    .previous_page {
+        float: left;
+        margin-right: 5px;
+        padding: 10px 20px;
+    }
+    .next_page {
+        float: right;
+        padding: 10px 20px;
+    }
+}
+
+.pagination span,
+.pagination a,
+.pagination em {
+    display: inline-block;
+    padding: 10px;
+    color: $primary-color;
+    font-size: $font-small;
+    line-height: 1em;
+    text-transform: uppercase ;
+    background: $accent-color;
+    font-style: normal;
+    border-radius: 100px;
+    min-width: 10px;
+    &:hover {
+        background: $accent-color-secondary;
+    }
+}
+
+.pagination em {
+    background: $accent-color-secondary;
+}
+
+.pagination .disabled{
+  border: 1px solid $theme-1;
+  background: $grey-light2;
+  color: $theme-1;
+  opacity: .2;
+  &:hover {
+    border: 1px solid $theme-1;
+    background: $grey-light2;
+    color: $theme-1;
+  }
+}

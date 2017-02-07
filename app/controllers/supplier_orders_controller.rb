@@ -1,8 +1,9 @@
 class SupplierOrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def index
-    @supplier_orders  = SupplierOrder.joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ")
+    @supplier_orders  = SupplierOrder.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ").order("supplier_orders.id DESC")
     @pdf_id           = params[:pdf_id]
   end
 
@@ -20,6 +21,10 @@ class SupplierOrdersController < ApplicationController
       unless sop[1]["packages_quantity"] == ""
         SupplierOrderProduct.create(:supply_id => sop[1]["supply_id"], :packages_quantity => sop[1]["packages_quantity"], :packages_size => sop[1]["packages_size"], :package_price => sop[1]["package_price"],  :unit => sop[1]["unit"], :expiration_date => sop[1]["expiration_date"],  :order_id => @supplier_order.id, :user_id => current_user.id)
       end
+    end
+
+    if params[:supplier_order][:status] == 7
+      update_stock(@@supplier_order.id)
     end
 
     if @commit.include? "PDF"
@@ -43,7 +48,7 @@ class SupplierOrdersController < ApplicationController
 
     @supplier_order.update(:status => 7, :delivery => Time.now)
 
-    updateStock(@id)
+    update_stock(@id)
 
     render :nothing => true
   end
@@ -71,11 +76,11 @@ class SupplierOrdersController < ApplicationController
 
     if params[:supplier_order][:delivery] != ""
       @supplier_order.update(:status => 7)
-      updateStock(@id)
+      update_stock(@id)
     end
 
     if params[:supplier_order][:status] == 7
-      updateStock(@id)
+      update_stock(@id)
     end
 
     if @commit.include? "PDF"
@@ -131,25 +136,37 @@ class SupplierOrdersController < ApplicationController
     redirect_to action: "index"
   end
 
-  def updateStock(id)
+  def update_stock(id)
+
     @supplier_order_products  = SupplierOrderProduct.where(:order_id => id)
 
     @supplier_order_products.each do |product|
 
-      @stock_products = Stock.where(:product_id => product.supply_id)
+      @standard_unit            = standardize_unit(product.unit)
+      @product_value            = product.packages_quantity * product.packages_size
+      @value_in_smallest_unit   = convert_unit(product.unit, @product_value)
+
+      @stock_products           = Stock.where(:supply_id => product.supply_id)
 
       if @stock_products.size > 0
 
-        @equal_products = Stock.where(:product_id => product.supply_id, :unit => product.unit, :package_price => product.package_price)
-        @equal_product = @equal_products.first
+        @equal_products = Stock.where(:supply_id => product.supply_id, :unit => @standard_unit)
 
         if @equal_products.size > 0
-          @equal_product.update(:packages_quantity => product.packages_quantity + @equal_product.packages_quantity, :progress => 100)
+
+          @equal_product = @equal_products.first
+
+          @new_size = @value_in_smallest_unit + @equal_product.packages_size
+
+          @equal_product.update(:packages_size => @new_size)
         else
-          Stock.create(:product_id => product.supply_id, :packages_quantity => product.packages_quantity, :packages_size => product.packages_size ,:package_price => product.package_price, :unit => product.unit)
+          #When supply product are in the stock but with different unit create "add" them to the stock
+          Stock.create(:supply_id => product.supply_id, :packages_size => @value_in_smallest_unit, :unit => @standard_unit)
         end
+
       else
-        Stock.create(:product_id => product.supply_id, :packages_quantity => product.packages_quantity, :packages_size => product.packages_size ,:package_price => product.package_price, :unit => product.unit)
+        #When the supply products not yet in th stock add them tot the stock
+        Stock.create(:supply_id => product.supply_id, :packages_size => @value_in_smallest_unit, :unit => @standard_unit)
       end
     end
   end

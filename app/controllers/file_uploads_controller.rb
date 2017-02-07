@@ -1,5 +1,6 @@
 class FileUploadsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def create
     if params[:file_upload][:file_type] == "attachment"

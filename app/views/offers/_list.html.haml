@@ -22,9 +22,15 @@
             %td
               = offer.issue_date
 
+
       - else
         %tr
           %td{:colspan => 5}
             .note
               = t"no-data"
+
+    .clearfix
+      = will_paginate @offers
+
+
 

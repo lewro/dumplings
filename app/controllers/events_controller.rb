@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def new
     @event = Event.new
@@ -15,7 +16,7 @@ class EventsController < ApplicationController
     @user           = current_user
     @events         = Event.joins("JOIN companies ON companies.id = events.client_id").where(:user_id => @user.id).select("companies.name AS name, events.date AS date, events.time AS time, events.note AS note, events.id AS id").where("date > ?", DateTime.now - 1.day).order("date")
     @event          = Event.new
-    @your_clients   = Company.where(:status => 4, :category => "client", :sales_id => @id)
+    @your_clients   = Company.where(:status => 4, :category => "client", :sales_id => current_user.id)
   end
 
   def edit
@@ -44,4 +45,5 @@ class EventsController < ApplicationController
   def event_params
      params.require(:event).permit(:user_id, :client_id, :date, :time, :note)
   end
+
 end

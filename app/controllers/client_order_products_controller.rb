@@ -1,5 +1,6 @@
 class ClientOrderProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def destroy
     @id                     = params[:id]

@@ -29,7 +29,11 @@
               .row.clearfix
                 %label
                   = t"delivery_address.title"
-                = delivery_address_select(f, @delivery_addresses, @delivery_note.delivery_address_id)
+                - if @disabled
+                  .input-holder
+                    = @delivery_address.full_address
+                - else
+                  = delivery_address_select(f, @delivery_addresses, @delivery_note.delivery_address_id)
 
 
           .row.clearfix
@@ -101,15 +105,11 @@
 
               - unless @disabled
                 .big#delivery-note-sum
-                  = f.text_field :sum, :placeholder => 0
+                  = number_to_currency(@delivery_note.sum, :unit => "")
+                  =# f.text_field :sum, :placeholder => 0
               - else
                 .input-holder.big#delivery_note_sum-holder
                   = number_to_currency(@delivery_note.sum, :unit => "")
-
-
-          - unless @pdfs.nil?
-            .row.clearfix.last
-              = render :partial => '/generic/pdf'
 
           .row.clearfix
             %label
@@ -121,11 +121,15 @@
               .input-holder
                 = @delivery_note.note
 
+          - unless @pdfs.nil?
+            .row.clearfix.last
+              = render :partial => '/generic/pdf'
 
       .action-cover.clearfix
 
-        = f.submit action, :class => "button"
-        = f.submit "#{t'save_pdf'}", :class => "link-button"
+        - unless @disabled
+          = f.submit action, :class => "button"
+          = f.submit "#{t'save_pdf'}", :class => "link-button"
 
         - if remove == true
           = link_to "#{t'actions.remove'}",  @delivery_note,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"

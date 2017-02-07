@@ -1,14 +1,16 @@
 class InvoiceProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :access_controll
 
   def destroy
     @id                     = params[:id]
     @invoice_product        = InvoiceProduct.find_by_id(@id)
     @invoice                = Invoice.find_by_id(@invoice_product.invoice_id)
-    @new_sum                = @invoice.sum - (@invoice_product.package_price * @invoice_product.packages_quantity)
+    @client                 = Company.find_by_id(@invoice.client_id)
 
-    @invoice.update(:sum => @new_sum)
     @invoice_product.destroy
+
+    update_invoice
 
     render :nothing => true
   end
@@ -16,9 +18,9 @@ class InvoiceProductsController < ApplicationController
   def create
     @invoice_product        = InvoiceProduct.create(invoice_product_params)
     @invoice                = Invoice.find_by_id(@invoice_product.invoice_id)
-    @new_sum                = @invoice_product.package_price * @invoice_product.packages_quantity + @invoice.sum
+    @client                 = Company.find_by_id(@invoice.client_id)
 
-    @invoice.update(:sum => @new_sum)
+    update_invoice
 
     redirect_to "/invoices/#{@invoice.id}/edit"
   end
@@ -28,17 +30,25 @@ class InvoiceProductsController < ApplicationController
     @invoice_product          = InvoiceProduct.find_by_id(@id)
     @invoice                  = Invoice.find_by_id(@invoice_product.invoice_id)
     @invoice_products         = InvoiceProduct.where(:invoice_id => @invoice.id)
-    @new_sum                  = 0
+    @client                   = Company.find_by_id(@invoice.client_id)
 
     @invoice_product.update(invoice_product_params)
 
-    @invoice_products.each do |op|
-      @new_sum =  @new_sum  + (op.package_price * op.packages_quantity)
-    end
-
-    @invoice.update(:sum => @new_sum)
+    update_invoice
 
     render :text => "#{t'actions.saved'}"
+  end
+
+  def update_invoice
+    @sum = calculate_total_invoice_sum_without_tax()
+
+    if @client.use_tax
+      @invoice_sum = calculate_total_invoice_sum_with_tax()
+    else
+      @invoice_sum = @sum
+    end
+
+    @invoice.update(:sum_with_tax => @invoice_sum, :sum => @sum)
   end
 
   def invoice_product_params

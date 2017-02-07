@@ -1,3 +1,5 @@
+- printId = id_format(@invoice.id, @client)
+
 .pdf
     .clearfix
         .half.content.last
@@ -9,7 +11,7 @@
                 %label.a-r
                     = t"proforma_invoice.id"
                 .pdf-primary-number
-                    = @invoice.id
+                    = printId
                 %label.a-r
                     = t"offer.reference_id"
                     = ":"
@@ -24,9 +26,9 @@
     = render :partial => 'generic/pdf/pdf_client_ownership'
 
     - if @client.use_tax
-        = render :partial => 'generic/pdf/pdf_products_use_tax', :locals => {:@products => @invoice_products}
+        = render :partial => 'generic/pdf/pdf_products_use_tax', :locals => {:@products => @invoice_products, :is_proforma => true}
     - else
-        = render :partial => 'generic/pdf/pdf_products_dont_use_tax', :locals => {:@products => @invoice_products}
+        = render :partial => 'generic/pdf/pdf_products_dont_use_tax', :locals => {:@products => @invoice_products, :is_proforma => true}
 
     .devider
 

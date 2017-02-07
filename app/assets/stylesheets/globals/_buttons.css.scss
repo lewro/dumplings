@@ -57,7 +57,7 @@
   padding: 10px 15px;
   line-height: 1em;
   background: $primary-color;
-  border: 1px solid $grey-light2;
+  border: 1px solid $grey-light1;
   margin-right: 10px;
   &:hover {
     color: $primary-color;
@@ -101,6 +101,7 @@ tr .link-button {
     height: 50px;
     font-size: 25px;
     line-height: 53px;
+    background: $accent-color;
   }
   &.small {
     width: 33px;

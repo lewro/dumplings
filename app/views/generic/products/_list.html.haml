@@ -1,33 +1,56 @@
 .clearfix.product.list-element{ "data-product-id" => product.product_id, "data-ajax-list" => "true", "data-ajax-url" => update_url+product.product_id.to_s, "data-ajax-object" => model_name }
 
-  .eight
-    .input-holder{ "title" => product.name }
-      = product.name
+  - unless model_name == "supplier_order_product"
+    - title = product.name  + " - " + "#{t'unit.title'}" + ": " + unit(product.unit)
+  - else
+    - title = product.name
 
-  .eight
+  - unless @disabled
+    .sixth
+      .input-holder{ "title" => title }
+        = product.name
+  - else
+    .quarter
+      .input-holder{ "title" => title }
+        = product.name
+
+  .sixth
     .input-holder
       = product.product_code
 
   .eight.packages-quantity{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_quantity" }
-    %input{ :type => "text", :value => product.packages_quantity, :required => true }
+    - unless @disabled
+      %input{ :type => "text", :value => product.packages_quantity, :required => true }
+    - else
+      .input-holder
+        = product.packages_quantity
 
   .eight{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_size" }
-    %input{ :type => "text", :value => product.packages_size, :required => true }
+    - unless @disabled
+      %input{ :type => "text", :value => product.packages_size, :required => true }
+    - else
+      .input-holder
+        = product.packages_size
 
   .eight
     .input-holder
       = unit(product.packages_unit)
 
   .sixth.package-price.a-r{ "data-ajax-list-element" => "true", "data-ajax-element" => "package_price" }
-    %input{:type => "text", :value => product.package_price, :required => true}
+    - unless @disabled
+      %input{:type => "text", :value => product.package_price, :required => true}
+    - else
+      .input-holder
+        = product.package_price
 
-  .eight.package-price
+  .sixth
     .input-holder
       = product.expiration_date
 
-  .eight
-    .link-button.primary{ "data-ajax-list-button" => "true" }
-      = t"actions.update"
+  - unless @disabled
+    .small-button-column{ :title => "#{t'actions.update'}" }
+      .circle-button.small.float-right{ "data-ajax-list-button" => "true" }
+        %i.fa.fa-floppy-o
 
   - unless @disabled
     .small-button-column{ :title => "#{t'actions.remove'}" }

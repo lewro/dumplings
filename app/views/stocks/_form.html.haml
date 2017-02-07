@@ -1,0 +1,38 @@
+.page-content.clearfix
+  = form_for(@stock) do  |f|
+
+    .half-page.left
+      .content
+        .row.clearfix
+          .half
+            .input-holder
+              = @stock.name
+
+          .half
+            .input-holder
+              = convert_to_print_value(@stock.unit, @stock.packages_size)
+              = " "
+              = unit(print_unit(@stock.unit))
+
+        .row.clearfix
+          %label
+            = unit(@stock.unit)
+          .big
+            = f.text_field :packages_size, "data-required" => "true"
+
+        .row.clearfix
+          .note
+            %i.fa.fa-bell
+            = t"stock.note"
+
+
+    .clearfix.action-cover
+      = f.submit action, :class => "button"
+
+      - if remove == true
+        = link_to "#{t'actions.remove'}",  @stock,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+
+      - else
+        = link_to "#{t'actions.cancel'}",  @stock, :class => "button remove"
+
+

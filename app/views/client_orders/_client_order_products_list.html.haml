@@ -4,7 +4,7 @@
 .row
   - if @client_order_products.size > 0
 
-    = render :partial => '/generic/products/list_headers'
+    = render :partial => '/generic/products/list_headers',  :locals => { :model_name => "client_order_product" }
 
     - @client_order_products.each do |cop|
       = render :partial => '/generic/products/list', :locals => { :product => cop, :update_url => "/client_order_products/update/", :model_name => "client_order_product" }
