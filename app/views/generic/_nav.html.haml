@@ -1,7 +1,8 @@
 %nav
   %ul{:class => current_view}
-    %li.dashboard
-      = link_to "#{t'dashboard'}", :controller => :dashboards, :action => :index
+    - if user_has_access("dashboards")
+      %li.dashboard
+        = link_to "#{t'dashboard'}", :controller => :dashboards, :action => :index
 
     - if user_has_access("events")
       %li.events

@@ -6,5 +6,5 @@
   - header = "#{t'invoice.title'} #{@invoice.id}"
 
 = render :partial => 'generic/top', :locals => {:current_view => current_view }
-= render :partial => "invoices/top", :locals => { :header => header , :search => false,  :current_view =>  current_view  }
+= render :partial => "invoices/top", :locals => { :header => header , :current_view =>  current_view  }
 = render :partial => "invoices/form", :locals => { :action =>  "#{t'actions.save'}", :remove => false, :current_view => current_view }

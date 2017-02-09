@@ -42,14 +42,12 @@
   switchButtons: () ->
     $("input[type='checkbox']:visible").switchable()
 
-
   uiElements : () ->
     $(".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
     $("select:visible").selectmenu()
 
     #Tooltip
     $( document ).tooltip();
-
 
   fixUiElements : () ->
     $(".ui-selectmenu-button").each ->
@@ -230,6 +228,10 @@
       else
         $(this).focus()
         false
+
+  getUrlVar : (key) ->
+    result = new RegExp(key + '=([^&]*)', 'i').exec(window.location.search)
+    result and unescape(result[1]) or ''
 
   scroll : () ->
     if $('.scroll').length > 0

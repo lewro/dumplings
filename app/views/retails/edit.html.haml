@@ -2,5 +2,5 @@
 - header = "#{t'retail.title'} #{@retail.id}"
 
 = render :partial => 'generic/top', :locals => {:current_view => current_view}
-= render :partial => "retails/top", :locals => { :header => header , :search => false,  :current_view =>  current_view }
+= render :partial => "retails/top", :locals => { :header => header , :current_view =>  current_view }
 = render :partial => "retails/form", :locals => { :action =>  "#{t'actions.save'}", :remove => true, :current_view => current_view}

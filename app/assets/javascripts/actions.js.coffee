@@ -21,6 +21,9 @@
       complete : (jqXHR) ->
         actions.cursorAuto()
       success : (data) ->
+
+        search.defaultIcons()
+
         if typeof returnDataPlaceholder == 'string'
 
           #If return placeholdr contains append keyword, append the results
@@ -43,6 +46,3 @@
 
   cursorAuto : ->
     $('html, body').css("cursor", "auto");
-
-
-

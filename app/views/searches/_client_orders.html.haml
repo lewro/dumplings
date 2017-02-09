@@ -1,0 +1,27 @@
+.content
+  %table
+
+    = render :partial => "/client_orders/list_headers"
+
+    - @results.each do |order|
+
+      %tr.data{"data-order-id" => "#{order.order_id}", "data-link" => "/client_orders/#{order.order_id}/edit"}
+        %td
+          = order.order_id
+        %td
+          = order.company_name
+        %td.currency
+          = number_to_currency(order.order_sum, :unit => "")
+        %td
+          = order.order_expected_delivery
+        %td.distribution_date
+          - unless order.order_distribution.nil?
+            = display_date(order.order_distribution)
+        %td
+          %span.status
+            = status(order.order_status)
+        %td
+          - unless order.reference_id.nil?
+            = order.reference_id
+        %td
+

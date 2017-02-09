@@ -1,0 +1,30 @@
+.content
+  %table
+
+    = render :partial => "/supplier_orders/list_headers"
+
+    - @results.each do |order|
+
+      %tr.data{"data-order-id" => "#{order.order_id}", "data-link" => "/supplier_orders/#{order.order_id}/edit" }
+        %td
+          = order.order_id
+        %td
+          = order.company_name
+        %td.currency
+          = number_to_currency(order.order_sum, :unit => "")
+
+        - @class = ""
+
+        -  if (order.order_expected_delivery != nil) && (order.order_delivery == nil) && (order.order_expected_delivery < Time.now)
+          - @class = "pasive"
+
+        %td{:class => @class }
+          - unless order.order_expected_delivery.nil?
+            = display_date(order.order_expected_delivery)
+        %td.delivery
+          - unless order.order_delivery.nil?
+            = display_date(order.order_delivery)
+        %td
+          %span.status
+            = status(order.order_status)
+        %td

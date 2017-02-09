@@ -7,8 +7,4 @@
     %i.fa.fa-plus-circle
     = "#{t'delivery_note.add'}"
 
-  - if search ==  true
-    .search.clearfix
-      .icon
-        = "⚲ "
-      %input.input{:placeholder => "#{t'delivery_note.search'}" }
+  = render :partial => "/generic/search", :locals => {:placeholder => "#{t'delivery_note.search'}", :category => "delivery_note" }

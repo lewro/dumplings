@@ -1,0 +1,24 @@
+/**
+  * File          Stats
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines stats boxes styles
+ **/
+
+@import "globals/colours";
+@import "globals/mixins";
+@import "globals/sizes";
+
+.stats-box {
+  color: $primary-color;
+  float: left;
+  .big {
+     padding-top: 40px;
+     font-size: $font-h1;
+  }
+  label {
+    color: $primary-color;
+    opacity: .4;
+  }
+}
+

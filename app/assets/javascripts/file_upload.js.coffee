@@ -53,6 +53,7 @@
       success : (data) ->
         $('.attachment-files').prepend(data)
         $('.attachment-files').prev('.no-data').remove()
+        $('.hidden-upload-form').hide()
       add: (e, data) ->
         #Validation
         types = /(\.|\/)(gif|jpe?g|png|json|csv|htm|xhtml|html|xml|css|tif|tiff|doc|pps|wav|avi|mpg|mpeg|wmv|mpeg3|psd|txt|rtf|mp3|mp4|docx|xls|flv|mov|xsl|rss|xslt|zip|x-png|xlsx|ai|eps|bmp|pptx|dwg|dlx|pdf|ods|)$/i

@@ -1,5 +1,6 @@
 .row.clearfix
     %label
+        %i.fa.fa-calendar
         = t"meetings"
 
     .event-items
@@ -23,10 +24,17 @@
                                 - else
                                     = ""
                             .event-name
+                                - if all_users
+                                    .clearfix
+                                        = event.first_name + " " + event.last_name
+                                %i.fa.fa-building-o
                                 = event.name
                         .clearfix
                             .event-note.clearfix
                                 = simple_format(event.note)
                             .event-actions.clearfix
-                                = link_to "#{t'actions.edit'}",     [:edit, event], :class => "button remove"
-                                = link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => " button remove"
+                                - unless all_users
+                                    = link_to "#{t'actions.edit'}",     [:edit, event], :class => "button remove"
+                                    = link_to "#{t'actions.remove'}",  event,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => " button remove"
+                                - else
+                                    = link_to "#{t'actions.edit'}",     [:edit, event], :class => "button remove"

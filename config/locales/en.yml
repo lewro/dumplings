@@ -48,6 +48,14 @@ en:
   phone: "Phone"
   one: "1"
   contains: "contains"
+  tasks: "Tasks"
+  total: "Total"
+  active: "Active"
+  new: "New"
+  today: "Today"
+  30_days: "30 days"
+
+
 
   delivery_address:
     title: "Delivery Address"
@@ -96,7 +104,7 @@ en:
     client_order: "Client order"
     supplier_orders: "Supplier orders"
     new: "Create new order"
-    search: "Search for an order"
+    search: "Search for an order - Client name, Order ID, Offer ID, Reference, Sum, Note"
     sum: "Sum"
     currency: "Currency"
     exp_delivery_date: "Expected Delivery"
@@ -114,6 +122,9 @@ en:
     total_price: "Total price"
     order_confirmation_date: "Order Confirmation Date"
     id: "Order ID"
+
+  supplier_order:
+     search: "Search for an order - Supplier name, Supplier Order ID, Contact Person, Sum, Note"
 
   product:
     title: "Product"
@@ -133,7 +144,7 @@ en:
     number: "Invoice number"
     title: "Invoice"
     add: "Add new invoice"
-    search: "Search invoices"
+    search: "Search invoices - Client name, Invoice ID, Note, Order ID, Reference, Sum"
     due_date: "Due date"
     paid_date: "Paid date"
     mark_as_paid: "Paid Fully Today"
@@ -181,7 +192,7 @@ en:
   retail:
     title: "Retail sale"
     add: "Add new retail sale"
-    search: "Search retail sales"
+    search: "Search retail sale - Retail ID, Sum, Transport Cost, Note"
     payment_type: "Payment type"
     delivery_type: "Delivery type"
     transport: "Transport cost"
@@ -231,19 +242,19 @@ en:
   offer:
     title: "Offer"
     add: "Create new offer"
-    search: "Search for an offer"
+    search: "Search for an offer - Client name, Offer ID, Sum, Note, Reference"
     issue_date: "Issue date"
     offer_id: "Offer Id"
 
   delivery_note:
     title: "Delivery note"
     add: "Create new delivery note"
-    search: "Search for a note"
+    search: "Search for a note - Client Name, Delivery Noite ID, Order ID, Reference, Sum, Note, Contact Person Name, Contact Person Phone"
     id: "Delivery note ID"
 
   stock:
     title: "Stock"
-    search: "Search stock"
+    search: "Search stock - Supply Name"
     percent_in_stock: "Percent in stock"
     zero_stock: "Setting stock to 0% will remove the stock item. Are you sure?"
     note: "Please note: Stock values are updated automatically based on goods coming in and out (supplier orders/ client orders)."

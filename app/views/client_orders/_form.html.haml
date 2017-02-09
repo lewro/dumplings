@@ -178,5 +178,13 @@
 
     = render :partial => 'generic/attachment', :locals => { :@file => @client_order_upload, :@file_type =>  "attachment", :@model => "client_order", :@model_id => @client_order.id }
 
+    .hide.hidden-upload-form
+      .link-button.attach-file.float-right
+        .fa.fa-cloud-upload
+        = "#{t'actions.attach'}"
+
+      = render :partial => 'generic/attachment', :locals => { :@file => @client_order_upload, :@file_type =>  "attachment", :@model => "client_order", :@model_id => @client_order.id }
+
+
 
 

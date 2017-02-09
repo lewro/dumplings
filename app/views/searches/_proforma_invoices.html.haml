@@ -1,0 +1,40 @@
+.content
+  %table
+
+    = render :partial => "/invoices/list_headers"
+
+    - @results.each do |invoice|
+
+      %tr.data{"data-invoice-id" => invoice.id, "data-link" => "/invoices/#{invoice.id}/edit"}
+        %td
+          = invoice.id
+        %td
+          = invoice.client_name
+        %td.currency
+          = number_to_currency(invoice.sum, :unit => "")
+
+        - @proforma_balance   = 0
+        - @invoice_balance    = 0
+
+        - unless invoice.proforma_balance.nil?
+          - @proforma_balance = invoice.proforma_balance
+
+        - unless invoice.balance.nil?
+          - @invoice_balance = invoice.balance
+
+        - @balance    = (@invoice_balance + @proforma_balance) - invoice.sum
+        - @class      = balance_class(@balance)
+
+        - if (@class == "pasive" and (invoice.sum != (0 - @balance)))
+          %td.invoice_balance.currency{:class => "partial-payment"}
+            %i.fa.fa-money
+            = number_to_currency(@balance, :unit => "")
+        - else
+          %td.invoice_balance.currency{:class => @class}
+            = number_to_currency(@balance, :unit => "")
+        %td
+          - unless invoice.due_date.nil?
+            = display_date(invoice.due_date)
+        %td.invoice_paid_date
+          - unless invoice.paid_date.nil?
+            = display_date(invoice.paid_date)

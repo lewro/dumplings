@@ -9,7 +9,6 @@
 
   # Calculate Total Price of Order
   calculateClientOrderPrice : () ->
-
     $('body').delegate '#client-order input', 'keyup', ->
 
       totalPrice = 0
@@ -64,7 +63,14 @@
 
       false
 
+  attachFile : () ->
+    if $('#client-order').length > 0
+      param =  core.getUrlVar "attach_file"
+      if param == "true"
+         $('.hidden-upload-form').show()
+
   init : () ->
+    clientOrder.attachFile()
     clientOrder.markOrderAsInProgress()
     clientOrder.markOrderAsDistributed()
     clientOrder.calculateClientOrderPrice()

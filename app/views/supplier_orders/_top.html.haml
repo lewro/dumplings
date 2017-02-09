@@ -1,7 +1,5 @@
 .page-top.clearfix
-
   .h-line
-
   %h1
     = header
 
@@ -9,7 +7,4 @@
     %i.fa.fa-plus-circle
     = "#{t'orders.new'}"
 
-  .search.clearfix
-    .icon
-      = "⚲ "
-    %input.input{:placeholder => "#{t'orders.search'}" }
+  = render :partial => "/generic/search", :locals => {:placeholder => "#{t'supplier_order.search'}", :category => "supplier_order"}

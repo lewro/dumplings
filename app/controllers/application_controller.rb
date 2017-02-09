@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
       puts case controller_name
 
-      when "events", "clients", "dashboards"
+      when "events", "clients"
         if [1, 3, 5].include? current_user.category
           return true
         end
@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
           return true
         end
 
-      when  "your_company", "suppliers", "offers", "offer_products", "client_orders", "delivery_addresses", "client_order_products", "delivery_notes", "delivery_note_products", "file_uploads", "invoices", "invoice_products", "retails", "retail_products", "supplier_orders", "supplier_order_products", "stocks", "settings", "users", "payments", "payment_conditions", "products", "product_supplies", "supplies", "payment_conditions", "tax_groups"
+      when  "dashboards", "your_company", "suppliers", "offers", "offer_products", "client_orders", "delivery_addresses", "client_order_products", "delivery_notes", "delivery_note_products", "file_uploads", "invoices", "invoice_products", "retails", "retail_products", "supplier_orders", "supplier_order_products", "stocks", "settings", "users", "payments", "payment_conditions", "products", "product_supplies", "supplies", "payment_conditions", "tax_groups"
         if [3, 5].include? current_user.category
           return true
         end

@@ -10,7 +10,9 @@
       %i.fa.fa-plus-circle
       = "#{t'invoice.add'}"
 
-  .search.clearfix
-    .icon
-      = "⚲ "
-    %input.input{:placeholder => "#{t'invoice.search'}" }
+  - unless current_view == 'proforma-invoices'
+    = render :partial => "/generic/search", :locals => {:placeholder => "#{t'invoice.search'}", :category => "invoice" }
+
+  - else
+    = render :partial => "/generic/search", :locals => {:placeholder => "#{t'invoice.search'}", :category => "proforma_invoice" }
+

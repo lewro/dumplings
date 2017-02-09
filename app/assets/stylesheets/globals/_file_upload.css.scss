@@ -11,22 +11,22 @@
 @import "fonts";
 
 .progress {
-	.bar {
-		background: $accent-color-secondary;
-		height: 2px;
-	}
+  .bar {
+    background: $accent-color-secondary;
+    height: 2px;
+  }
 }
 
 .image-cover {
-	padding: 15px;
-	min-height: 300px;
+  padding: 15px;
+  min-height: 300px;
 }
 
 .image-cover img {
-	width: 100%;
+  width: 100%;
 }
 
 .image-cover .circle-button {
-	position: absolute;
-	margin: 20px;
+  position: absolute;
+  margin: 20px;
 }

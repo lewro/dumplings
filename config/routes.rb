@@ -37,6 +37,7 @@ Dumplings::Application.routes.draw do
   get "delivery_notes/delivery_addresses"
 
   #Resources
+  resources :searches
   resources :companies
   resources :dashboards
   resources :client_orders
@@ -64,6 +65,7 @@ Dumplings::Application.routes.draw do
   resources :events
   resources :delivery_addresses
   resources :tax_groups
+
 
   get ":controller(/:action(/:id(.:format)))"
 end

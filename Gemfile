@@ -49,5 +49,8 @@ gem 'delayed_job'
 gem 'whenever'
 gem 'daemons'
 
+#Search
+gem 'acts_as_indexed'
+
 # Ruby multiversion
 gem 'rvm'

@@ -145,9 +145,11 @@ class ClientOrdersController < ApplicationController
     @client_order           = ClientOrder.create(client_order_params)
     @client_order_products  = params[:client_order][:clientorderproducts][:clientorderproduct]
 
-    @commit = params["commit-pdf"]
+    if params["commit-pdf"]
+      @commit = params["commit-pdf"]
+    end
 
-    if @commit.nil?
+    if params["commit-attach"]
       @commit = params["commit-attach"]
     end
 
@@ -165,7 +167,7 @@ class ClientOrdersController < ApplicationController
     if @commit
       if @commit.include? "PDF"
         redirect_to "/client_orders/?pdf_id=#{@client_order.id}"
-      elsif @commit.include? "attach"
+      elsif @commit.include? "Attach"
         redirect_to "/client_orders/#{@client_order.id}/edit/?attach_file=true"
       end
     else

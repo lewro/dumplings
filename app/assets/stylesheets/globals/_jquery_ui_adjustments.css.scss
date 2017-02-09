@@ -11,30 +11,30 @@
 @import "fonts";
 
 .ui-selectmenu-button {
-	float: left;
-	width: 100%;
+  float: left;
+  width: 100%;
 }
 
 .ui-widget-content.slider {
-	height: 1px;
-	padding: 0px !important;
-	background: $grey-light1 !important;
+  height: 1px;
+  padding: 0px !important;
+  background: $grey-light1 !important;
 }
 
 .ui-slider .ui-slider-handle {
-	width: 20px !important;
-	height: 20px !important;
-	background: $accent-color-secondary !important;
-	top: -15px !important;
-	border-radius: 50px !important;
-	font-size: $font-tiny !important;
-	color: $primary-color !important;
-	padding: 6px 3px 0 3px !important;
-	line-height: 14px;
-	z-index: 100;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
+  width: 20px !important;
+  height: 20px !important;
+  background: $accent-color-secondary !important;
+  top: -15px !important;
+  border-radius: 50px !important;
+  font-size: $font-tiny !important;
+  color: $primary-color !important;
+  padding: 6px 3px 0 3px !important;
+  line-height: 14px;
+  z-index: 100;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .ui-widget {

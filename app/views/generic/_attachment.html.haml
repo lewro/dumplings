@@ -1,18 +1,18 @@
 %script#template-upload{:type => "text/x-tmpl"}
-	<div class="upload clearfix">
-	<div class="file-name hide">{%=o.name%}</div>
-	<div class="file-size hide">{%=o.size%} b</div>
-	<div class="progress clearfix">
-	<div class="bar" style="width: 0%"></div>
-	</div>
-	</div>
+  <div class="upload clearfix">
+  <div class="file-name hide">{%=o.name%}</div>
+  <div class="file-size hide">{%=o.size%} b</div>
+  <div class="progress clearfix">
+  <div class="bar" style="width: 0%"></div>
+  </div>
+  </div>
 
 = form_for @file, :url => { :controller => "file_uploads", :action => "create" }, :multipart => false, :html => { :class => "attachment_upload" } do |f|
-	= f.hidden_field :file_type, { :value => @file_type }
-	= f.hidden_field :model_id, { :value => @model_id }
-	= f.hidden_field :model, { :value => @model }
-	= f.hidden_field :user_id, { :value => current_user.id }
-	.hide
-		= f.file_field :upload, :multiple => false
-	.hide
-		= f.submit
+  = f.hidden_field :file_type, { :value => @file_type }
+  = f.hidden_field :model_id, { :value => @model_id }
+  = f.hidden_field :model, { :value => @model }
+  = f.hidden_field :user_id, { :value => current_user.id }
+  .hide
+    = f.file_field :upload, :multiple => false
+  .hide
+    = f.submit

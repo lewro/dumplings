@@ -21,16 +21,19 @@
   background: $theme-2;
 }
 
-.search .icon {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-}
-
 .fa-question-circle {
   font-size: $font-medium !important;
 }
 
-.fa-bell {
+.fa-bell, .fa-search {
   color: $accent-color;
 }
+
+.fa-circle-o-notch {
+   color: $accent-color-secondary;
+}
+
+ .fa-building-o {
+   color: $theme-5;
+   padding-right: 5px;
+ }

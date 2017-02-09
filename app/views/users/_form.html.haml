@@ -50,7 +50,7 @@
   .half-page.scroll
     .content
       - unless @event.nil?
-        = render :partial => "events/events"
+        = render :partial => "events/events", :locals => { :all_users => false }
         = render :partial => 'events/event_form'
 
 

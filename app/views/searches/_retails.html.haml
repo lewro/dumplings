@@ -1,0 +1,22 @@
+.content
+  %table
+
+    = render :partial => "/retails/list_headers"
+
+    - @results.each do |retail|
+
+      %tr.data{"data-retail-id" => retail.id, "data-link" => "retails/#{retail.id}/edit"}
+        %td
+          = retail.id
+        %td
+          = display_date(retail.created_at)
+        %td
+          = retail.payment_type
+        %td
+          = retail.delivery_type
+        %td.currency
+          = number_to_currency(retail.sum, :unit => "")
+        %td.currency
+          = number_to_currency(retail.transport_cost, :unit => "")
+        %td.currency
+          = number_to_currency(retail.transport_cost + retail.sum, :unit => "")

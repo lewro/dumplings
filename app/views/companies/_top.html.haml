@@ -3,9 +3,7 @@
   %h1
     = header
 
-
   - if @category == "clients"
-
     = link_to "/companies/new?category=#{@category}", :class => "button" do
       %i.fa.fa-plus-circle
       = "#{t'client.add'}"
@@ -14,9 +12,7 @@
       %i.fa.fa-list
       = "#{t'clients'}"
 
-
   - elsif @category == "suppliers"
-
     = link_to "/companies/new?category=#{@category}", :class => "button" do
       %i.fa.fa-plus-circle
       = "#{t'supplier.add'}"
@@ -25,13 +21,9 @@
       %i.fa.fa-list
       = "#{t'suppliers'}"
 
+  - unless @category == "ownership"
+    - if @category == "clients"
+      = render :partial => "/generic/search", :locals => {:placeholder => "#{t'client.search'}", :category => "clients" }
+    - else
+      = render :partial => "/generic/search", :locals => {:placeholder => "#{t'supplier.search'}", :category => "suppliers" }
 
-  - if search ==  true
-    .search.clearfix
-      .icon
-        = "⚲ "
-
-      - if header == "clients"
-        %input.input{:placeholder => "#{t'client.search'}" }
-      - else
-        %input.input{:placeholder => "#{t'supplier.search'}" }

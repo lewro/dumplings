@@ -1,0 +1,6 @@
+.search.clearfix
+  #search.clearfix{"data-category" => category}
+    %i.fa-search.fa
+    %i.fa.fa-circle-o-notch.fa-spin
+    %input{:type => "text", :value => "", :id => "q", :autocomplete => "off", :class => "input", :placeholder => placeholder }
+  #search-results{"data-ajax-return" => "search"}

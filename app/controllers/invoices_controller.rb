@@ -175,7 +175,12 @@ class InvoicesController < ApplicationController
       @invoice_link                    = @invoice
     end
 
-    @payments                         = Payment.where(:invoice_id => [@proforma.id, @invoice_link.id])
+    if @proforma.nil?
+      @payments                         = Payment.where(:invoice_id => @invoice_link.id)
+    else
+      @payments                         = Payment.where(:invoice_id => [@proforma.id, @invoice_link.id])
+    end
+
     @payments_sum                     = @payments.sum(:sum)
     @client                           = Company.find_by_id(@invoice.client_id)
     @invoice_sum                      = @invoice.sum_with_tax

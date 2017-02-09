@@ -1,0 +1,22 @@
+.content
+  %table
+
+    = render :partial => "/companies/list_headers"
+
+    - @results.each do |company|
+
+      %tr.data{"data-link" => "/companies/#{company.id}/edit?category=#{@category}"}
+        %td
+          = company.id
+        %td
+          = company.name
+        %td
+          = company.street
+        %td
+          = company.street_number
+        %td
+          = company.city
+        %td
+          = company.zip_code
+        %td
+          = status(company.status)

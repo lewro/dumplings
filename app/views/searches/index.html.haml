@@ -1,0 +1,36 @@
+- if @results.size == 0
+  = render :partial => "searches/no_data"
+
+- if @results.size > 0
+  - puts case @category
+
+  - when "company"
+    = render :partial => "searches/clients"
+
+  - when "offer"
+    = render :partial => "searches/offers"
+
+  - when "client_order"
+    = render :partial => "searches/client_orders"
+
+  - when "delivery_note"
+    = render :partial => "searches/delivery_notes"
+
+  - when "invoice"
+    = render :partial => "searches/invoices"
+
+  - when "proforma-invoice"
+    = render :partial => "searches/proforma_invoices"
+
+  - when "retail"
+    = render :partial => "searches/retails"
+
+  - when "supplier_order"
+    = render :partial => "searches/supplier_orders"
+
+  - when "stock"
+    = render :partial => "searches/stocks"
+
+  - else
+    = render :partial => "searches/no_data"
+
