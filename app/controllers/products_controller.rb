@@ -26,7 +26,6 @@ class ProductsController < ApplicationController
     redirect_to action: "index"
   end
 
-
   def create
     @product             = Product.create(product_params)
     @product_supplies    = params[:product][:productsupplies][:productsupply]

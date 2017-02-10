@@ -11,8 +11,5 @@
     %i.fa.fa-list
     = "#{t'products'}"
 
+  = render :partial => "/generic/search", :locals => {:placeholder => "#{t'product.search'}", :category => "product" }
 
-  .search.clearfix
-    .icon
-      = "⚲ "
-    %input.input{:placeholder => "#{t'product.search'}" }

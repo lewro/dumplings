@@ -65,7 +65,7 @@ en:
   client:
     title: "Client"
     add: "Add new client"
-    search: "Search for a client - Client name, Street, City, Zip code, Contact Person, Bank, Account number, Swift code, Iban code "
+    search: "Search for a client - Client name, Street, City, Zip code, Contact Person"
     new: "New client"
     registration_number: "Registration #"
     vat_number: "VAT #"
@@ -74,7 +74,7 @@ en:
   supplier:
     title: "Supplier"
     add: "Add new supplier"
-    search: "Search for a supplier"
+    search: "Search for a supplier - Supplier name, Street, City, Zip code, Contact Person"
     new: "New supplier"
 
   company:
@@ -128,7 +128,7 @@ en:
     title: "Product"
     name: "Name"
     add: "Add new product"
-    search: "Search products"
+    search: "Search products - Product code, name"
     code: "Product code"
     stock_note: "These supplies will be deducted from stock when one unit of this product is sold. Please specify the unit. "
     unit_note: "Make sure to use the same unit as defined in product settings in order to auto-remove products from stock."
@@ -136,7 +136,7 @@ en:
   supply:
     title: "Supply"
     add: "Add new supply"
-    search: "Search supplies"
+    search: "Search supplies - Supply name, Note, Product_code"
 
   invoice:
     number: "Invoice number"

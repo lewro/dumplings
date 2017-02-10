@@ -13,6 +13,10 @@ class SearchesController < ApplicationController
       @results = Company.with_query(@query)
 .joins('LEFT JOIN client_orders ON client_orders.client_id = companies.id JOIN users ON users.id = companies.sales_id').where(:category => "client").select("users.first_name AS first_name, users.last_name AS last_name, companies.id AS id, companies.name AS name, companies.street AS street, companies.street_number AS street_number, companies.city AS city, companies.zip_code AS zip_code,  companies.country AS country, companies.status AS status, companies.contact_person AS contact_person, count(client_orders.id) AS orders").group("companies.id").order("companies.id DESC")
 
+    when "suppliers"
+      @results = Company.with_query(@query)
+.joins('LEFT JOIN client_orders ON client_orders.client_id = companies.id JOIN users ON users.id = companies.sales_id').where(:category => "supplier").select("users.first_name AS first_name, users.last_name AS last_name, companies.id AS id, companies.name AS name, companies.street AS street, companies.street_number AS street_number, companies.city AS city, companies.zip_code AS zip_code,  companies.country AS country, companies.status AS status, companies.contact_person AS contact_person, count(client_orders.id) AS orders").group("companies.id").order("companies.id DESC")
+
     when "offer"
       @company    = Company.find_with_index(@query,{},{:ids_only => true})
 
@@ -86,6 +90,13 @@ class SearchesController < ApplicationController
         else
           @results = Payment.with_query(@query).joins("JOIN invoices on payments.invoice_id = invoices.id JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id").order("payments.id DESC")
         end
+
+        when "product"
+          @results = Product.with_query(@query).joins("JOIN users ON users.id = products.user_id").where("users.admin_id = #{current_user.admin_id }")
+
+        when "supply"
+          @results = Supply.with_query(@query).joins("JOIN users ON users.id = supplies.user_id").where("users.admin_id = #{current_user.admin_id }").order("supplies.id DESC")
+
 
     end
 

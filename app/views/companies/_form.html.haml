@@ -71,8 +71,9 @@
               .big
                 = number_to_currency(@client.sales, :unit => "")
 
-        .row.clearfix
-          - if @category == "client"
+
+        - if @category == "client"
+          .row.clearfix
             %label
               = t "sales_representative.title"
             = sale_reps_select(f, @reps)
