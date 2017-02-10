@@ -11,9 +11,4 @@
     %i.fa.fa-list
     = "#{t'payments'}"
 
-
-  - if search ==  true
-    .search.clearfix
-      .icon
-        = "⚲ "
-      %input.input{:placeholder => "#{t'payment.search'}" }
+  = render :partial => "/generic/search", :locals => {:placeholder => "#{t'payment.search'}", :category => "payment"}

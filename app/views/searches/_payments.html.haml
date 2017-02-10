@@ -1,0 +1,19 @@
+.content
+  %table
+
+    = render :partial => '/payments/list_headers'
+
+    - @results.each do |payment|
+      %tr.data{"data-link" => "/payments/#{payment.id}/edit"}
+        %td
+          = payment.id
+        %td
+          = payment.invoice_id
+        %td
+          = payment.client_name
+        %td.currency
+          = number_to_currency(payment.sum,  unit: "")
+        %td
+          - unless payment.paid_date.nil?
+            = display_date(payment.paid_date)
+

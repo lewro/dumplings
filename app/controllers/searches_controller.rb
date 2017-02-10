@@ -9,6 +9,9 @@ class SearchesController < ApplicationController
     when "company"
       @results    = Company.with_query(@query)
 
+    when "clients"
+      @results = Company.with_query(@query)
+.joins('LEFT JOIN client_orders ON client_orders.client_id = companies.id JOIN users ON users.id = companies.sales_id').where(:category => "client").select("users.first_name AS first_name, users.last_name AS last_name, companies.id AS id, companies.name AS name, companies.street AS street, companies.street_number AS street_number, companies.city AS city, companies.zip_code AS zip_code,  companies.country AS country, companies.status AS status, companies.contact_person AS contact_person, count(client_orders.id) AS orders").group("companies.id").order("companies.id DESC")
 
     when "offer"
       @company    = Company.find_with_index(@query,{},{:ids_only => true})
@@ -72,10 +75,17 @@ class SearchesController < ApplicationController
 
         @results = Stock.joins("JOIN supplies ON supplies.id = stocks.supply_id").select("stocks.id AS stock_id, stocks.packages_size AS packages_size,  stocks.unit AS unit, supplies.name as product_name").where("stocks.supply_id" => @supply).order("stocks.id DESC")
 
+      when "user"
+        @results = User.with_query(@query).where("users.admin_id =#{current_user.admin_id }").order("users.id DESC")
 
+      when "payment"
+        @company    = Company.find_with_index(@query,{},{:ids_only => true})
 
-
-
+        if @company.size > 0
+          @results = Payment.joins("JOIN invoices on payments.invoice_id = invoices.id JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id").where("invoices.client_id" => @company).order("payments.id DESC")
+        else
+          @results = Payment.with_query(@query).joins("JOIN invoices on payments.invoice_id = invoices.id JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id").order("payments.id DESC")
+        end
 
     end
 

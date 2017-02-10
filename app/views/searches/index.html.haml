@@ -4,7 +4,7 @@
 - if @results.size > 0
   - puts case @category
 
-  - when "company"
+  - when "company", "clients", "suppliers"
     = render :partial => "searches/clients"
 
   - when "offer"
@@ -29,7 +29,14 @@
     = render :partial => "searches/supplier_orders"
 
   - when "stock"
-    = render :partial => "searches/stocks"
+    = render :partial => "searches/stockss"
+
+  - when "user"
+    = render :partial => "searches/users"
+
+  - when "payment"
+    = render :partial => "searches/payments"
+
 
   - else
     = render :partial => "searches/no_data"

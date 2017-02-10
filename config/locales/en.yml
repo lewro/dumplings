@@ -55,8 +55,6 @@ en:
   today: "Today"
   30_days: "30 days"
 
-
-
   delivery_address:
     title: "Delivery Address"
 
@@ -67,7 +65,7 @@ en:
   client:
     title: "Client"
     add: "Add new client"
-    search: "Search for a client"
+    search: "Search for a client - Client name, Street, City, Zip code, Contact Person, Bank, Account number, Swift code, Iban code "
     new: "New client"
     registration_number: "Registration #"
     vat_number: "VAT #"
@@ -178,7 +176,7 @@ en:
     title: "Payment"
     add: "Add new payment"
     add_partial_payment: "Add partial payment"
-    search: "Search payments"
+    search: "Search payments - Client Name, Payment Id, Invoice Id, Sum"
 
   payment_type:
     cash: "Cash"
@@ -226,7 +224,7 @@ en:
   user:
     title: "User"
     add: "Add new user"
-    search: "Search for an user"
+    search: "Search for an user - Email, First name, Last name, Note"
     first_name: "First name"
     last_name: "Last name"
     email: "Email"

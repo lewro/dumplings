@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  acts_as_indexed :fields => [:id, :email, :first_name, :last_name, :note]
+  acts_as_indexed :fields => [:email, :first_name, :last_name, :note]
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable

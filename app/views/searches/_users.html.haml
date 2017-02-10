@@ -1,0 +1,18 @@
+.content
+  %table
+
+    = render :partial => 'users/list_headers'
+
+    - @results.each do |user|
+      %tr.data{"data-user-id" => user.id, "data-link" => "/users/#{user.id}/edit"}
+        %td
+          = user.id
+        %td
+          = user.first_name
+        %td
+          = user.last_name
+        %td
+          = user.email
+        %td
+          = category(user.category.to_i)
+

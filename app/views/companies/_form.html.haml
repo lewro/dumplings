@@ -76,10 +76,11 @@
             %label
               = t "sales_representative.title"
             = sale_reps_select(f, @reps)
-          - else
-            %label
-              = t "contact_person"
-            = f.text_field :contact_person
+
+        .row.clearfix
+          %label
+            = t "contact_person"
+          = f.text_field :contact_person
 
         .row.clearfix
           .half
