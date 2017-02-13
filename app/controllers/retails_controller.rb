@@ -40,7 +40,7 @@ class RetailsController < ApplicationController
 
   def check_stock_update
     @products     = RetailProduct.where(:retail_id => @retail.id)
-    @time         = Time.now + 1.minutes
+    @time         = Time.now
 
     update_stock("retail", @retail,  @products, @time)
   end
@@ -49,8 +49,6 @@ class RetailsController < ApplicationController
     @id                      = params[:id]
     @retail                  = Retail.find_by_id(@id)
     @retail_products         = RetailProduct.where(:retail_id => @id)
-
-    revert_stock(@retail, @retail_products)
 
     @retail.destroy
 

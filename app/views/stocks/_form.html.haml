@@ -25,6 +25,14 @@
             %i.fa.fa-bell
             = t"stock.note"
 
+        .row.clearfix
+          - @disabled = true
+
+          = render :partial => '/generic/products/list_headers', :locals => { :model_name => "stock_product" }
+
+          - @stock_products.each do |sp|
+            = render :partial => '/generic/products/list', :locals => { :product => sp, :update_url => "/stock_products/update/", :model_name => "stock_product" }
+
 
     .clearfix.action-cover
       = f.submit action, :class => "button"

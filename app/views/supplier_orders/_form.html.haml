@@ -99,6 +99,6 @@
 
     - if remove == true
       .hide.hidden-form
-        = render :partial => '/generic/products/form', :locals => { :@product_object => @supplier_order_product , :@object_id => "order_id" }
+        = render :partial => '/supplier_orders/supplier_order_product_form_new', :locals => { :@supplier_order_product => @supplier_order_product }
 
 

@@ -164,61 +164,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  #When deleting client order, delivery note, invoice, retails, check if the stock was deducted and revert the stock values
-  def revert_stock(object, products)
-
-    if object.stock_deducted
-
-      products.each do |product|
-
-        @product_unit = Product.find_by_id(product.product_id).unit
-
-        # Product unit which define the stock rules, set in product settings, for example 1 piece, meter etc
-        @product_supplies = ProductSupply.where(:product_id => product.product_id)
-
-        @product_supplies.each do |product_supply|
-
-          #Convert the unit to the standrd unit (the smallest)
-          @standard_unit  = standardize_unit(product_supply.unit)
-
-          #Multiply the supply element by the product "unit"
-          if @product_unit = product.unit
-
-            @product_supply_value = product_supply.packages_size * (product.packages_quantity * product.packages_size)
-
-            #Convert the values to the smallest unit
-            @value_in_smallest_unit = convert_unit(product_supply.unit, @product_supply_value)
-
-            #Remove supply units from stock
-            @stock_supply = Stock.where(:supply_id => product_supply.supply_id, :unit => @standard_unit).first
-
-            #When supply in the stock
-            if @stock_supply
-
-              @new_size = @stock_supply.packages_size + @value_in_smallest_unit
-
-              #Rails.logger.debug("==========================================")
-              @stock_supply.update(:packages_size => @new_size)
-            else
-              #Supply not in stock?
-              #TODO: SEND EMAIL ?
-            end
-          else
-            #The units product units do not match
-            #TODO: Email?
-          end
-        end
-      end
-    end
-  end
-
   def update_stock(object_name, object, products, time)
 
     puts case object_name
 
     #Client Order
     when "client_order", "retail"
-
       if object.stock_deducted
         #Stock already deducted
       else
@@ -226,75 +177,54 @@ class ApplicationController < ActionController::Base
         remove_from_stock(products, time)
         object.update(:stock_deducted => true)
       end
-
-
     #Delivery Note
     when "delivery_note"
-
       #Stock already deducted from current delivery note
       if object.stock_deducted
-
       #Does Client order exist?
       else
         if object.order_id
-
           client_order  = ClientOrder.where(:id => object.order_id).first
-
           if client_order && client_order.stock_deducted
             #Stock already deducted
           else
             remove_from_stock(products, time)
             object.update(:stock_deducted => true)
           end
-
          else
             remove_from_stock(products, time)
             object.update(:stock_deducted => true)
         end
       end
-
-
     #Invoice
     when "invoice"
-
       if object.stock_deducted
-         Rails.logger.debug("1")
          #Stock already deducted from Invoice
       else
         if object.order_id
-
-          Rails.logger.debug("2")
           #Does Client order exist?
-
           client_order  = ClientOrder.find_by_id(object.order_id)
           delivery_note = DeliveryNote.where(:order_id => client_order.id).first
-
           #Stock deduceted already from client order or delivery note?
           if (client_order && client_order.stock_deducted) or (delivery_note && delivery_note.stock_deducted)
-            Rails.logger.debug("3")
             #Stock already deducted
           else
             #Is this proforma?
             if object.proforma
-              Rails.logger.debug("4")
               remove_from_stock(products, time)
               object.update(:stock_deducted => true)
             else
-              Rails.logger.debug("5")
               #Not proforma. Does proforma exist?
               proforma = Invoice.where(:order_id => object.order_id, :proforma => true).first
               if proforma && proforma.stock_deducted
-                Rails.logger.debug("6")
                 #Stock already deducted from PrormaInvoice
               else
-                Rails.logger.debug("7")
                 remove_from_stock(products, time)
                 object.update(:stock_deducted => true)
               end
             end
           end
         else
-          Rails.logger.debug("8")
            #No Client order - which conects delivery note, proformat, invoice together
           remove_from_stock(products, time)
           object.delay(:run_at => time).update(:stock_deducted => true)
@@ -305,37 +235,42 @@ class ApplicationController < ActionController::Base
 
 
   def remove_from_stock(products, time)
-
     products.each do |product|
-
       @product_unit     = Product.find_by_id(product.product_id).unit # Product unit which define the stock rules, set in product settings, for example 1 piece, meter etc
-
       @product_supplies = ProductSupply.where(:product_id => product.product_id)
-
       @product_supplies.each do |product_supply|
-
         #Convert the unit to the standrd unit (the smallest)
         @standard_unit  = standardize_unit(product_supply.unit)
-
         #Multiply the supply element by the product "unit"
-
         if @product_unit = product.unit
-
           @product_supply_value = product_supply.packages_size * (product.packages_quantity * product.packages_size)
-
           #Convert the values to the smallest unit
-          @value_in_smallest_unit = convert_unit(product_supply.unit, @product_supply_value)
-
+          @ps_value_in_smallest_unit = convert_unit(product_supply.unit, @product_supply_value)
           #Remove supply units from stock
           @stock_supply = Stock.where(:supply_id => product_supply.supply_id, :unit => @standard_unit).first
-
           #When supply in the stock
           if @stock_supply
-
-            @new_size = @stock_supply.packages_size - @value_in_smallest_unit
-
+            #Update the total value of stock
+            @new_size = @stock_supply.packages_size - @ps_value_in_smallest_unit
+            #Update the stock products
+            #Getting the one closes to expiration and updating it
+            @stock_products = StockProduct.where(:stock_id => @stock_supply.id).order(:expiration_date)
+            @stock_products.each do |stock_product|
+              #Is there enought in the current package?
+              @sp_size = stock_product.packages_size - @ps_value_in_smallest_unit
+              #When the package is used move to the next one and remove the current one
+              if @sp_size < 0 or @sp_size == 0
+                stock_product.delay(:run_at => time).destroy
+                #Update the total value so the next package in loop can be updated
+                @ps_value_in_smallest_unit = 0 - @sp_size
+              else
+              #When the package is not used, deduct the values
+                stock_product.delay(:run_at => time).update(:packages_size => @sp_size)
+                #Once the correct product is update stop the loop
+                break
+              end
+            end
             #Rails.logger.debug("==========================================")
-
             @stock_supply.delay(:run_at => time).update(:packages_size => @new_size)
           else
             #Supply not in stock?
@@ -352,23 +287,18 @@ class ApplicationController < ActionController::Base
   def standardize_unit(value)
     value = value.to_i
     puts case value
-
     #Pieces
     when 1
       return 1
-
     #Wieghts (returns mg)
     when 2, 3, 4, 5
       return 5
-
     #Length (returns mm)
     when 6, 7, 8, 9
       return 9
-
     #Liquids (returns ml)
     when 10, 11, 12, 13, 14, 15, 16
       return 16
-
     end
   end
 
@@ -383,8 +313,7 @@ class ApplicationController < ActionController::Base
     #Pieces
     when 1
       return 1 * value
-
-    #Wieghts
+    #Weights
     when 2
       return (1000000000 * value).to_f
     when 3
@@ -393,7 +322,6 @@ class ApplicationController < ActionController::Base
       return (1000 * value).to_f
     when 5
       return (1 * value).to_f
-
     #Length
     when 6
       return (1000000 * value).to_f
@@ -403,7 +331,6 @@ class ApplicationController < ActionController::Base
       return (10 * value).to_f
     when 9
       return (1 * value).to_f
-
     #Liquids
     when 10
       return (1000000 * value).to_f

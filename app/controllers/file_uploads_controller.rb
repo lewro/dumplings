@@ -28,6 +28,45 @@ class FileUploadsController < ApplicationController
     end
   end
 
+  def email_pdf
+    @id           = params[:id]
+    @subject      = params[:subject]
+    @body         = params[:body]
+
+    @file         = FileUpload.find_by_id(@id)
+    @file_name    = @file.upload_file_name
+    @model_name   = @file.model
+
+    #TODO OTHER MODELS
+    case @model_name
+
+    when "offer"
+      @client_id = Offer.find_by_id(@file.model_id).client_id
+
+    when "client_order"
+      @client_id = ClientOrder.find_by_id(@file.model_id).client_id
+
+    when "delivery_note"
+      @client_id = DeliveryNote.find_by_id(@file.model_id).client_id
+
+    when "invoice"
+      @client_id = Invoice.find_by_id(@file.model_id).client_id
+
+    when "supplier_order"
+      @client_id = SupplierOrder.find_by_id(@file.model_id).supplier_id
+
+
+    end
+
+    @email        = Company.find_by_id(@client_id).email
+    @from         = current_user.email
+    @path         = @file_download_pdf_path + @file.id.to_s + "/" + @file.upload_file_name
+
+    UserMailer.email_pdf(@email, @subject, @body, @from, @file_name, @path).deliver_now
+
+    render :text => "#{t'actions.email_sent'}"
+  end
+
   def download_pdf
     @file_upload  = FileUpload.find(params[:id])
     @path         = @file_download_pdf_path + @file_upload.id.to_s + "/" + @file_upload.upload_file_name

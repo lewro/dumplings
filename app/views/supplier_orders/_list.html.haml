@@ -31,13 +31,14 @@
           %td
             - unless @order_disabled
               %span
-                - if  order.order_status == 6
+
+                - unless order.order_status == 7
                   .circle-button.small.float-right.m-l.mark-supplier-order-as-in-stock{ :title => "#{t'status.in_stock'}" }
                     %i.fa.fa-industry
 
-                - if order.order_status == 1
-                  .circle-button.small.float-right.m-l.mark-supplier-order-as-sent{ :title => "#{t'status.order_sent'}" }
-                    %i.fa.fa-paper-plane-o
+                  - unless order.order_status == 6
+                    .circle-button.small.float-right.m-l.mark-supplier-order-as-sent{ :title => "#{t'status.order_sent'}" }
+                      %i.fa.fa-paper-plane-o
 
 
     .clearfix

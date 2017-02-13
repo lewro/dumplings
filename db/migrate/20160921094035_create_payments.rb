@@ -2,7 +2,7 @@ class CreatePayments < ActiveRecord::Migration
   def change
     create_table :payments do |t|
 
-      t.integer :invoice_id, :null => false
+      t.integer :invoice_id
       t.integer :user_id, :null => false
 
       t.decimal :sum

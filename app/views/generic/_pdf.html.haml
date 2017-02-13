@@ -13,8 +13,37 @@
         %td
           .circle-button.small.remove-pdf.float-right.m-l{"remove-message" => "#{t'actions.confirm'}" }
             %i.fa.fa-close{:title => "#{t'actions.remove'}"}
-          = link_to "/file_uploads/download_pdf/#{pdf.id}", :target => "_blank", :class => "circle-button small float-right" do
+          = link_to "/file_uploads/download_pdf/#{pdf.id}", :target => "_blank", :class => "circle-button small float-right m-l" do
             %i.fa.fa-cloud-download{:title => "#{t'actions.download'}"}
+
+          %i.fa.fa-envelope-o.circle-button.small.float-right{:title => "#{t'actions.email'}", "data-id" => pdf.id}
+
+
+  .hide.inline-form.email-form.scroll{"data-link" => "/file_uploads/email_pdf/", "data-id" => ""}
+    .page-top
+      %i{:class => "fa fa-times close-email-sidebar action"}
+      .h-line
+      %h1
+        =  t"user.email"
+      %label
+        - if @client
+          = @client.email
+        - if @supplier
+          = @supplier.email
+
+    .content
+      .row.clearfix
+        %label
+          = t"subject"
+        %input{:type => "text", :name => "email_subject", :id => "email_subject"}
+      .row.clearfix
+        %label
+          = t"message"
+        %textarea{:name => "email_body", :id => "email_body"}
+      .clearfix
+        .pdf-link
+        %input.button{:type => "submit", :value => "#{t'actions.send'}"}
+
 
 - else
   .no-data

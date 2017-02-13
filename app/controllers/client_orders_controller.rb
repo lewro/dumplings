@@ -180,8 +180,6 @@ class ClientOrdersController < ApplicationController
     @client_order            = ClientOrder.find_by_id(@id)
     @client_order_products   = ClientOrderProduct.where(:order_id => @id)
 
-    revert_stock(@client_order, @client_order_products)
-
     @client_order.destroy
 
     @client_order_products.each do |product|
@@ -193,7 +191,7 @@ class ClientOrdersController < ApplicationController
 
   def check_stock_update(client_order_id)
     @products     = ClientOrderProduct.where(:order_id => client_order_id)
-    @time         = Time.now + 1.minutes
+    @time         = Time.now
 
     update_stock("client_order", @client_order, @products, @time) #Application Controller
   end

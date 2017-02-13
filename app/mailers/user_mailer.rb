@@ -1,13 +1,13 @@
 class UserMailer < ActionMailer::Base
 
   #Send PDF Document
-  def pdf_email(email, subject, body, from, file_name, file)
+  def email_pdf(email, subject, body, from, file_name, file)
     @email    = email
     @subject  = subject
     @body     = body
     @from     = from
 
-    attachments[file_name] = file
+    attachments[file_name] = File.read(file)
 
     mail(
       :to => @email,
@@ -16,6 +16,7 @@ class UserMailer < ActionMailer::Base
       :body => @body,
       reply_to: @from
       ) do |format|
-        format.html { render "invoice_email" }
+        format.html { render "email_pdf" }
     end
   end
+end

@@ -19,15 +19,12 @@
   .eight
     %label
       = t"unit.title"
-      - unless model_name == "supplier_order_product"
-        %i{:title => "#{t'product.unit_note'}"}
-          .fa.fa-question-circle
   .sixth.a-r
     %label.a-r
       = t"orders.package_price"
       = " (#{@currency})"
   .sixth
-    %label
+    %label.a-r
       = t"expiration_date"
   .eight
     %label

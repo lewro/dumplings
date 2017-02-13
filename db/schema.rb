@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206151111) do
+ActiveRecord::Schema.define(version: 20170213133557) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.integer  "unit",              limit: 4
     t.datetime "expiration_date"
   end
+
+  add_index "client_order_products", ["order_id"], name: "index_client_order_products_on_order_id", using: :btree
+  add_index "client_order_products", ["product_id"], name: "index_client_order_products_on_product_id", using: :btree
+  add_index "client_order_products", ["user_id"], name: "index_client_order_products_on_user_id", using: :btree
 
   create_table "client_orders", force: :cascade do |t|
     t.integer  "client_id",          limit: 4,                              null: false
@@ -43,6 +47,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "expected_delivery"
     t.boolean  "stock_deducted"
   end
+
+  add_index "client_orders", ["client_id"], name: "index_client_orders_on_client_id", using: :btree
+  add_index "client_orders", ["offer_id"], name: "index_client_orders_on_offer_id", using: :btree
+  add_index "client_orders", ["user_id"], name: "index_client_orders_on_user_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",                limit: 255,   null: false
@@ -67,7 +75,11 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.string   "iban_code",           limit: 255
     t.string   "legal",               limit: 255
     t.boolean  "use_tax"
+    t.string   "email",               limit: 255
   end
+
+  add_index "companies", ["sales_id"], name: "index_companies_on_sales_id", using: :btree
+  add_index "companies", ["user_id"], name: "index_companies_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   limit: 4,     default: 0, null: false
@@ -97,6 +109,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
   end
 
+  add_index "delivery_addresses", ["company_id"], name: "index_delivery_addresses_on_company_id", using: :btree
+  add_index "delivery_addresses", ["user_id"], name: "index_delivery_addresses_on_user_id", using: :btree
+
   create_table "delivery_note_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
     t.integer  "delivery_note_id",  limit: 4,                          null: false
@@ -109,6 +124,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
     t.datetime "expiration_date"
   end
+
+  add_index "delivery_note_products", ["delivery_note_id"], name: "index_delivery_note_products_on_delivery_note_id", using: :btree
+  add_index "delivery_note_products", ["product_id"], name: "index_delivery_note_products_on_product_id", using: :btree
+  add_index "delivery_note_products", ["user_id"], name: "index_delivery_note_products_on_user_id", using: :btree
 
   create_table "delivery_notes", force: :cascade do |t|
     t.integer  "client_id",            limit: 4,                              null: false
@@ -127,6 +146,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.boolean  "stock_deducted"
   end
 
+  add_index "delivery_notes", ["client_id"], name: "index_delivery_notes_on_client_id", using: :btree
+  add_index "delivery_notes", ["order_id"], name: "index_delivery_notes_on_order_id", using: :btree
+  add_index "delivery_notes", ["user_id"], name: "index_delivery_notes_on_user_id", using: :btree
+
   create_table "events", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,     null: false
     t.integer  "client_id",  limit: 4,     null: false
@@ -136,6 +159,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "events", ["client_id"], name: "index_events_on_client_id", using: :btree
+  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "file_uploads", force: :cascade do |t|
     t.string   "upload_file_name",    limit: 255
@@ -149,6 +175,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
   end
 
+  add_index "file_uploads", ["model_id"], name: "index_file_uploads_on_model_id", using: :btree
+  add_index "file_uploads", ["user_id"], name: "index_file_uploads_on_user_id", using: :btree
+
   create_table "invoice_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
     t.integer  "invoice_id",        limit: 4,                          null: false
@@ -161,6 +190,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
     t.datetime "expiration_date"
   end
+
+  add_index "invoice_products", ["invoice_id"], name: "index_invoice_products_on_invoice_id", using: :btree
+  add_index "invoice_products", ["product_id"], name: "index_invoice_products_on_product_id", using: :btree
+  add_index "invoice_products", ["user_id"], name: "index_invoice_products_on_user_id", using: :btree
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "client_id",           limit: 4,                                              null: false
@@ -183,6 +216,11 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.integer  "linked_proforma_id",  limit: 4
   end
 
+  add_index "invoices", ["client_id"], name: "index_invoices_on_client_id", using: :btree
+  add_index "invoices", ["linked_proforma_id"], name: "index_invoices_on_linked_proforma_id", using: :btree
+  add_index "invoices", ["order_id"], name: "index_invoices_on_order_id", using: :btree
+  add_index "invoices", ["user_id"], name: "index_invoices_on_user_id", using: :btree
+
   create_table "offer_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
     t.integer  "offer_id",          limit: 4,                          null: false
@@ -195,6 +233,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.integer  "unit",              limit: 4
     t.datetime "expiration_date"
   end
+
+  add_index "offer_products", ["offer_id"], name: "index_offer_products_on_offer_id", using: :btree
+  add_index "offer_products", ["product_id"], name: "index_offer_products_on_product_id", using: :btree
+  add_index "offer_products", ["user_id"], name: "index_offer_products_on_user_id", using: :btree
 
   create_table "offers", force: :cascade do |t|
     t.integer  "client_id",         limit: 4,                              null: false
@@ -209,6 +251,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.text     "delivery_terms",    limit: 65535
   end
 
+  add_index "offers", ["client_id"], name: "index_offers_on_client_id", using: :btree
+  add_index "offers", ["user_id"], name: "index_offers_on_user_id", using: :btree
+
   create_table "payment_conditions", force: :cascade do |t|
     t.string   "name",       limit: 255,   null: false
     t.integer  "user_id",    limit: 4,     null: false
@@ -217,14 +262,19 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
   end
 
+  add_index "payment_conditions", ["user_id"], name: "index_payment_conditions_on_user_id", using: :btree
+
   create_table "payments", force: :cascade do |t|
-    t.integer  "invoice_id", limit: 4,                          null: false
+    t.integer  "invoice_id", limit: 4
     t.integer  "user_id",    limit: 4,                          null: false
     t.decimal  "sum",                  precision: 16, scale: 2
     t.datetime "paid_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id", using: :btree
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "product_supplies", force: :cascade do |t|
     t.integer  "product_id",    limit: 4, null: false
@@ -236,6 +286,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
   end
 
+  add_index "product_supplies", ["product_id"], name: "index_product_supplies_on_product_id", using: :btree
+  add_index "product_supplies", ["supply_id"], name: "index_product_supplies_on_supply_id", using: :btree
+
   create_table "products", force: :cascade do |t|
     t.string   "name",         limit: 255,   null: false
     t.integer  "user_id",      limit: 4,     null: false
@@ -246,6 +299,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.integer  "tax_group_id", limit: 4
     t.integer  "unit",         limit: 4
   end
+
+  add_index "products", ["tax_group_id"], name: "index_products_on_tax_group_id", using: :btree
+  add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "retail_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                            null: false
@@ -261,6 +317,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
   end
 
+  add_index "retail_products", ["product_id"], name: "index_retail_products_on_product_id", using: :btree
+  add_index "retail_products", ["retail_id"], name: "index_retail_products_on_retail_id", using: :btree
+  add_index "retail_products", ["user_id"], name: "index_retail_products_on_user_id", using: :btree
+
   create_table "retails", force: :cascade do |t|
     t.integer  "user_id",        limit: 4,                              null: false
     t.integer  "payment_type",   limit: 4,                              null: false
@@ -273,6 +333,8 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.boolean  "stock_deducted"
   end
 
+  add_index "retails", ["user_id"], name: "index_retails_on_user_id", using: :btree
+
   create_table "settings", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
     t.integer  "id_format",  limit: 4
@@ -282,6 +344,25 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.boolean  "use_tax"
   end
 
+  add_index "settings", ["user_id"], name: "index_settings_on_user_id", using: :btree
+
+  create_table "stock_products", force: :cascade do |t|
+    t.integer  "stock_id",          limit: 4,                null: false
+    t.integer  "supply_id",         limit: 4,                null: false
+    t.integer  "order_id",          limit: 4,                null: false
+    t.integer  "packages_quantity", limit: 4
+    t.integer  "packages_size",     limit: 4
+    t.decimal  "package_price",               precision: 10
+    t.integer  "unit",              limit: 4
+    t.datetime "expiration_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stock_products", ["order_id"], name: "index_stock_products_on_order_id", using: :btree
+  add_index "stock_products", ["stock_id"], name: "index_stock_products_on_stock_id", using: :btree
+  add_index "stock_products", ["supply_id"], name: "index_stock_products_on_supply_id", using: :btree
+
   create_table "stocks", force: :cascade do |t|
     t.integer  "supply_id",     limit: 4, null: false
     t.integer  "packages_size", limit: 4, null: false
@@ -289,6 +370,8 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "stocks", ["supply_id"], name: "index_stocks_on_supply_id", using: :btree
 
   create_table "supplier_order_products", force: :cascade do |t|
     t.integer  "supply_id",         limit: 4,                          null: false
@@ -303,6 +386,10 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "expiration_date"
   end
 
+  add_index "supplier_order_products", ["order_id"], name: "index_supplier_order_products_on_order_id", using: :btree
+  add_index "supplier_order_products", ["supply_id"], name: "index_supplier_order_products_on_supply_id", using: :btree
+  add_index "supplier_order_products", ["user_id"], name: "index_supplier_order_products_on_user_id", using: :btree
+
   create_table "supplier_orders", force: :cascade do |t|
     t.integer  "supplier_id",       limit: 4,                              null: false
     t.integer  "user_id",           limit: 4,                              null: false
@@ -316,6 +403,9 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "updated_at"
   end
 
+  add_index "supplier_orders", ["supplier_id"], name: "index_supplier_orders_on_supplier_id", using: :btree
+  add_index "supplier_orders", ["user_id"], name: "index_supplier_orders_on_user_id", using: :btree
+
   create_table "supplies", force: :cascade do |t|
     t.string   "name",         limit: 255,   null: false
     t.integer  "user_id",      limit: 4,     null: false
@@ -325,6 +415,8 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.string   "product_code", limit: 255
   end
 
+  add_index "supplies", ["user_id"], name: "index_supplies_on_user_id", using: :btree
+
   create_table "tax_groups", force: :cascade do |t|
     t.integer  "tax",        limit: 4,     null: false
     t.string   "user_id",    limit: 255,   null: false
@@ -332,6 +424,8 @@ ActiveRecord::Schema.define(version: 20170206151111) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tax_groups", ["user_id"], name: "index_tax_groups_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255,   default: "", null: false

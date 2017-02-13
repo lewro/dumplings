@@ -67,7 +67,8 @@
     if $('#client-order').length > 0
       param =  core.getUrlVar "attach_file"
       if param == "true"
-         $('.hidden-upload-form').show()
+        $('.hidden-upload-form').show()
+        core.clearAllParamsFromUrl()
 
   init : () ->
     clientOrder.attachFile()

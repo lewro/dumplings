@@ -54,6 +54,8 @@ en:
   new: "New"
   today: "Today"
   30_days: "30 days"
+  subject: "Subject"
+  message: "Message"
 
   delivery_address:
     title: "Delivery Address"
@@ -208,6 +210,9 @@ en:
     create_pdf_document: "Create PDF document"
     attach: "Attach File"
     saved: "Saved"
+    email: "Send by Email"
+    email_sent: "Email sent"
+    send: "Send"
 
   status:
     title: "Status"

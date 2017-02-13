@@ -1,6 +1,6 @@
 .clearfix.product.list-element{ "data-product-id" => product.product_id, "data-ajax-list" => "true", "data-ajax-url" => update_url+product.product_id.to_s, "data-ajax-object" => model_name }
 
-  - unless model_name == "supplier_order_product"
+  - unless model_name == "supplier_order_product" || model_name == "stock_product"
     - title = product.name  + " - " + "#{t'unit.title'}" + ": " + unit(product.unit)
   - else
     - title = product.name
@@ -12,7 +12,13 @@
   - else
     .quarter
       .input-holder{ "title" => title }
-        = product.name
+        - if model_name == "stock_product"
+          = link_to "/supplier_orders/" + product.order_id.to_s + "/edit" do
+            %i.fa.fa-truck
+            = product.name
+
+        - else
+          = product.name
 
   .sixth
     .input-holder
@@ -43,7 +49,7 @@
       .input-holder
         = product.package_price
 
-  .sixth
+  .sixth.a-r
     .input-holder
       = product.expiration_date
 

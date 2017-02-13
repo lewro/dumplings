@@ -32,6 +32,7 @@ Dumplings::Application.routes.draw do
   get "file_uploads/remove_pdf"
   post "file_uploads/remove_af"
   get "file_uploads/remove_af"
+  post "file_uploads/email_pdf"
 
   #Delivery Notes
   get "delivery_notes/delivery_addresses"

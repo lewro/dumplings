@@ -5,7 +5,10 @@
   #event
     .half-page.left.scroll
       .content
-        = render :partial => 'events/events', :locals => { :all_users => false }
+        - if user_has_access("dashboards")
+          = render :partial => 'events/events', :locals => { :all_users => true }
+        - else
+          = render :partial => 'events/events', :locals => { :all_users => false }
 
     .half-page.scroll
       .content

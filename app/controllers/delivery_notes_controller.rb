@@ -140,8 +140,6 @@ class DeliveryNotesController < ApplicationController
     @delivery_note            = DeliveryNote.find_by_id(@id)
     @delivery_note_products   = DeliveryNoteProduct.where(:delivery_note_id => @id)
 
-    revert_stock(@delivery_note, @delivery_note_products)
-
     @delivery_note.destroy
 
     @delivery_note_products.each do |product|
@@ -158,7 +156,7 @@ class DeliveryNotesController < ApplicationController
     if @delivery_note.issue_date > Time.now
       @time = @delivery_note.issue_date
     else
-      @time = Time.now + 1.minutes
+      @time = Time.now
     end
 
     update_stock("delivery_note", @delivery_note,  @products, @time)

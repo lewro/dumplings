@@ -2,12 +2,12 @@
   .half
     %label
       = t"invoice.number"
-    = f.text_field :invoice_id, "data-required" => "true"
+    = f.text_field :invoice_id
   .half
+    - if @invoice
+      - if @invoice.proforma
+        - link_text = "#{t'invoice.proforma'} →"
+      - else
+        - link_text = "#{t'invoice.title'} →"
 
-    - if @invoice.proforma
-      - link_text = "#{t'invoice.proforma'} →"
-    - else
-      - link_text = "#{t'invoice.title'} →"
-
-    = link_to link_text, {:controller => :invoices, :action => :edit, :id => @payment.invoice_id}, :class => "link-button float-right"
+      = link_to link_text, {:controller => :invoices, :action => :edit, :id => @payment.invoice_id}, :class => "link-button float-right"

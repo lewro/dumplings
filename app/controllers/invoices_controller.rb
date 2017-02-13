@@ -311,8 +311,6 @@ class InvoicesController < ApplicationController
     @invoice          = Invoice.find_by_id(@id)
     @invoice_products = InvoiceProduct.where(:invoice_id => @id)
 
-    revert_stock(@invoice, @invoice_products)
-
     @invoice.destroy
 
     @invoice_products.each do |product|
@@ -329,7 +327,7 @@ class InvoicesController < ApplicationController
       #When date is in the future
       @time = @invoice.taxable_supply_date
     else
-      @time = Time.now + 1.minutes
+      @time = Time.now
     end
 
     update_stock("invoice", @invoice,  @products, @time)

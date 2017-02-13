@@ -233,6 +233,16 @@
     result = new RegExp(key + '=([^&]*)', 'i').exec(window.location.search)
     result and unescape(result[1]) or ''
 
+  clearAllParamsFromUrl : () ->
+    # get the string following the ?
+    query = window.location.search.substring(1)
+    # is there anything there ?
+    if query.length
+      # are the new history methods available ?
+      if window.history != undefined and window.history.pushState != undefined
+        # if pushstate exists, add a new state the the history, this changes the url without reloading the page
+        window.history.pushState {}, document.title, window.location.pathname
+
   scroll : () ->
     if $('.scroll').length > 0
       $('.scroll').jScrollPane({
