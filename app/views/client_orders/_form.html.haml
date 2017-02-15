@@ -164,6 +164,11 @@
 
         - if remove == true
 
+          .link-button.float-right.ajax-refresh{ "data-url" => "/client_orders/pdf/#{@client_order.id}.pdf" }
+            %i.fa.fa-file-pdf-o
+            %i.fa.fa-envelope
+            = "#{t'actions.create_pdf_and_email'}"
+
           = link_to "/client_orders/pdf/#{@client_order.id}.pdf", :target => "_blank", :class => "link-button float-right" do
             %i.fa.fa-file-pdf-o
             = "#{t'actions.create_pdf_document'}"

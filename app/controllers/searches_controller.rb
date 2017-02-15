@@ -77,7 +77,7 @@ class SearchesController < ApplicationController
       when "stock"
         @supply = Supply.find_with_index(@query,{},{:ids_only => true})
 
-        @results = Stock.joins("JOIN supplies ON supplies.id = stocks.supply_id").select("stocks.id AS stock_id, stocks.packages_size AS packages_size,  stocks.unit AS unit, supplies.name as product_name").where("stocks.supply_id" => @supply).order("stocks.id DESC")
+        @results = StockProduct.joins("JOIN supplies ON supplies.id = stock_products.supply_id").select("stock_products.supply_id AS supply_id, stock_products.packages_size AS packages_size,  stock_products.unit AS unit, supplies.name as product_name").where("stock_products.supply_id" => @supply).order("stock_products.id DESC")
 
       when "user"
         @results = User.with_query(@query).where("users.admin_id =#{current_user.admin_id }").order("users.id DESC")

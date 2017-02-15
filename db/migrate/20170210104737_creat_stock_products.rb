@@ -2,7 +2,6 @@ class CreatStockProducts < ActiveRecord::Migration
   def change
     create_table :stock_products do |t|
 
-      t.integer :stock_id, :null => false
       t.integer :supply_id, :null => false
       t.integer :order_id, :null => false
       t.integer :packages_quantity

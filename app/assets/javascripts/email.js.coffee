@@ -21,7 +21,7 @@
       false
 
   showEmailForm : () ->
-    $("body").delegate ".fa-envelope-o", "click", ->
+    $("body").delegate ".fa-envelope", "click", ->
       dataId   = $(this).attr("data-id")
       link     = $(this).parents("td").find("a").clone()
 
@@ -29,6 +29,11 @@
       $('.email-form').show()
       $(".email-form .pdf-link").html(link)
 
+  emailPDFOnLoad : ->
+    param = core.getUrlVar "email_pdf"
+    if param == "true"
+      $(".pdf-file:last").find(".fa-envelope").click()
+      core.clearAllParamsFromUrl()
 
   hideEmailForm : () ->
     $("body").delegate ".close-email-sidebar", "click", ->
@@ -38,6 +43,7 @@
     email.sendPDF()
     email.showEmailForm()
     email.hideEmailForm()
+    email.emailPDFOnLoad()
 
 jQuery ($) ->
   email.init()

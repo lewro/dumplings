@@ -235,32 +235,39 @@ class ApplicationController < ActionController::Base
 
 
   def remove_from_stock(products, time)
+
     products.each do |product|
+
       @product_unit     = Product.find_by_id(product.product_id).unit # Product unit which define the stock rules, set in product settings, for example 1 piece, meter etc
+
       @product_supplies = ProductSupply.where(:product_id => product.product_id)
+
       @product_supplies.each do |product_supply|
         #Convert the unit to the standrd unit (the smallest)
         @standard_unit  = standardize_unit(product_supply.unit)
+
         #Multiply the supply element by the product "unit"
         if @product_unit = product.unit
+
           @product_supply_value = product_supply.packages_size * (product.packages_quantity * product.packages_size)
+
           #Convert the values to the smallest unit
           @ps_value_in_smallest_unit = convert_unit(product_supply.unit, @product_supply_value)
+
           #Remove supply units from stock
-          @stock_supply = Stock.where(:supply_id => product_supply.supply_id, :unit => @standard_unit).first
+          @stock_products = StockProduct.where(:supply_id => product_supply.supply_id, :unit => @standard_unit).order(:expiration_date)
+
           #When supply in the stock
-          if @stock_supply
-            #Update the total value of stock
-            @new_size = @stock_supply.packages_size - @ps_value_in_smallest_unit
-            #Update the stock products
-            #Getting the one closes to expiration and updating it
-            @stock_products = StockProduct.where(:stock_id => @stock_supply.id).order(:expiration_date)
+          if @stock_products.size > 0
+
             @stock_products.each do |stock_product|
+
               #Is there enought in the current package?
               @sp_size = stock_product.packages_size - @ps_value_in_smallest_unit
+
               #When the package is used move to the next one and remove the current one
               if @sp_size < 0 or @sp_size == 0
-                stock_product.delay(:run_at => time).destroy
+                stock_product.update(:gone => true, :packages_size => 0)
                 #Update the total value so the next package in loop can be updated
                 @ps_value_in_smallest_unit = 0 - @sp_size
               else
@@ -270,8 +277,6 @@ class ApplicationController < ActionController::Base
                 break
               end
             end
-            #Rails.logger.debug("==========================================")
-            @stock_supply.delay(:run_at => time).update(:packages_size => @new_size)
           else
             #Supply not in stock?
             #TODO: SEND EMAIL ?

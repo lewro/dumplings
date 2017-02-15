@@ -16,7 +16,7 @@
           = link_to "/file_uploads/download_pdf/#{pdf.id}", :target => "_blank", :class => "circle-button small float-right m-l" do
             %i.fa.fa-cloud-download{:title => "#{t'actions.download'}"}
 
-          %i.fa.fa-envelope-o.circle-button.small.float-right{:title => "#{t'actions.email'}", "data-id" => pdf.id}
+          %i.fa.fa-envelope.circle-button.small.float-right{:title => "#{t'actions.email'}", "data-id" => pdf.id}
 
 
   .hide.inline-form.email-form.scroll{"data-link" => "/file_uploads/email_pdf/", "data-id" => ""}

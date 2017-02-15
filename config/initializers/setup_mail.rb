@@ -11,5 +11,5 @@ ActionMailer::Base.smtp_settings = {
   :domain         => "getquantify.com",
   :authentication => :plain,
   :user_name      => "support@getquantify.com",
-  :password       => "namor070"
+  :password       => "namor007"
 }

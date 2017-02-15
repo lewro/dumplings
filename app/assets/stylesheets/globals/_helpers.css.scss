@@ -26,6 +26,19 @@
   margin-top: 20px;
 }
 
+.opacity {
+  opacity: .5;
+  .working {
+    display: block;
+    position: absolute;
+    text-align: center;
+    font-size: 300px;
+    width: 100%;
+    margin-top: 200px;
+    z-index: 3;
+  }
+}
+
 .h-line {
   background: $accent-color;
   width: 70px;
@@ -52,7 +65,7 @@
 }
 
 .m-l {
-  margin-left: 20px;
+  margin-left: 2%;
 }
 
 .p-b {

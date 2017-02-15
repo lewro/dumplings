@@ -137,6 +137,11 @@
           = link_to "#{t'actions.cancel'}",  @delivery_note, :class => "button remove"
 
 
+        .link-button.float-right.ajax-refresh{ "data-url" => "/delivery_notes/pdf/#{@delivery_note.id}.pdf" }
+          %i.fa.fa-file-pdf-o
+          %i.fa.fa-envelope
+          = "#{t'actions.create_pdf_and_email'}"
+
         = link_to "/delivery_notes/pdf/#{@delivery_note.id}.pdf", :target => "_blank", :class => "link-button float-right" do
           %i.fa.fa-file-pdf-o
           = "#{t'actions.create_pdf_document'}"

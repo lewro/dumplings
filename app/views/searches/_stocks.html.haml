@@ -5,9 +5,9 @@
 
     - @results.each do |stock|
 
-      %tr.data{"data-stock-id" => "#{stock.stock_id}", "data-link" => "/stocks/#{stock.stock_id}/edit"}
+      %tr.data{"data-stock-id" => "#{stock.supply_id}", "data-link" => "/stocks/#{stock.supply_id}/edit?unit=#{stock.unit}"}
         %td
-          = stock.stock_id
+          = stock.supply_id
         %td
           = stock.product_name
         %td.a-r.hide

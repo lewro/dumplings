@@ -213,6 +213,7 @@ en:
     email: "Send by Email"
     email_sent: "Email sent"
     send: "Send"
+    create_pdf_and_email: "Create PDF & Email"
 
   status:
     title: "Status"

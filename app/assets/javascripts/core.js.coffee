@@ -75,7 +75,6 @@
 
       actions.ajax("get", url, $('.notice'))
 
-
   autosubmitLink : () ->
     if $(".autosubmit").length > 0
       url  = $(".autosubmit").data("url")
@@ -154,7 +153,6 @@
       else
         @invalidate element
 
-
   not_empty_input : (element) ->
     filter = new RegExp(/^\s*$/)
 
@@ -214,6 +212,19 @@
           return
         ), 2000
 
+  callAjaxRefresh : () ->
+    $('body').delegate '.ajax-refresh', 'click', ->
+      core.addParamToUrl("?email_pdf=true")
+      actions.ajax "get", $(this).attr("data-url"), ""
+      core.working()
+      delay.setTimeout (->
+        location.reload();
+        return
+      ), 2000
+
+  working: () ->
+    $("body").addClass("opacity")
+
   min_size : (element, size) ->
     if $(element).val().length > size
       @validate element
@@ -232,6 +243,9 @@
   getUrlVar : (key) ->
     result = new RegExp(key + '=([^&]*)', 'i').exec(window.location.search)
     result and unescape(result[1]) or ''
+
+  addParamToUrl : (param) ->
+    window.location.href = window.location.href + param
 
   clearAllParamsFromUrl : () ->
     # get the string following the ?
@@ -267,6 +281,7 @@
     core.autosubmitLink()
     core.refreshOnNewTarget()
     core.ajaxList()
+    core.callAjaxRefresh()
 
   windowResize : () ->
     $(window).resize ->

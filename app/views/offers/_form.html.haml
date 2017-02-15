@@ -91,9 +91,16 @@
         - else
           = link_to "#{t'actions.cancel'}",  @offer, :class => "button remove"
 
+        .link-button.float-right.ajax-refresh{ "data-url" => "/offers/pdf/#{@offer.id}.pdf" }
+          %i.fa.fa-file-pdf-o
+          %i.fa.fa-envelope
+          = "#{t'actions.create_pdf_and_email'}"
+
         = link_to "/offers/pdf/#{@offer.id}.pdf", :target => "_blank", :class => "link-button float-right" do
           %i.fa.fa-file-pdf-o
           = "#{t'actions.create_pdf_document'}"
+
+
 
     - if remove == true
       .hide.hidden-form

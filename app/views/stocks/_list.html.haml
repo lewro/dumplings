@@ -4,10 +4,10 @@
       = render :partial => '/stocks/list_headers'
 
       - if @stock.size > 0
+
         - @stock.each do |stock|
-          %tr.data{"data-stock-id" => "#{stock.stock_id}", "data-remove-message" => "#{t'stock.zero_stock'}", "data-link" => "/stocks/#{stock.stock_id}/edit"}
-            %td
-              = stock.stock_id
+
+          %tr.data{"data-stock-id" => "#{stock.supply_id}", "data-remove-message" => "#{t'stock.zero_stock'}", "data-link" => "/stocks/#{stock.supply_id}/edit?unit=#{stock.unit}" }
             %td
               = stock.product_name
             %td.a-r.hide
@@ -25,6 +25,3 @@
             .note
               = t"no-data"
 
-
-    .clearfix
-      = will_paginate @stock

@@ -142,41 +142,18 @@ class SupplierOrdersController < ApplicationController
 
     @supplier_order_products.each do |product|
 
-      @standard_unit            = standardize_unit(product.unit)
-      @product_value            = product.packages_quantity * product.packages_size
-      @value_in_smallest_unit   = convert_unit(product.unit, @product_value)
-      @stock_products           = Stock.where(:supply_id => product.supply_id)
-
-      #Handle stock object
-      if @stock_products.size > 0
-        @equal_products = Stock.where(:supply_id => product.supply_id, :unit => @standard_unit)
-        if @equal_products.size > 0
-          @stock            = @equal_products.first
-          @new_size         = @value_in_smallest_unit + @stock.packages_size
-          @stock.update(:packages_size => @new_size)
-        else
-          #When supply product are in the stock but with different unit create them in the stock
-          @stock = Stock.create(:supply_id => product.supply_id, :packages_size => @value_in_smallest_unit, :unit => @standard_unit)
-        end
-      else
-        #When the supply products not yet in th stock add them to the stock
-        @stock = Stock.create(:supply_id => product.supply_id, :packages_size => @value_in_smallest_unit, :unit => @standard_unit)
-      end
-
       #Handle stock preducts object
       @stockProduct = StockProduct.new
 
-      @stockProduct.stock_id            = @stock.id
       @stockProduct.supply_id           = product.supply_id
       @stockProduct.order_id            = product.order_id
       @stockProduct.packages_quantity   = product.packages_quantity
       @stockProduct.packages_size       = convert_unit(product.unit, product.packages_size)
       @stockProduct.package_price       = product.package_price
-      @stockProduct.unit                = @standard_unit
+      @stockProduct.unit                = standardize_unit(product.unit)
       @stockProduct.expiration_date     = product.expiration_date
 
       @stockProduct.save!
-
     end
   end
 

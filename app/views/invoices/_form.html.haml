@@ -142,6 +142,12 @@
         - else
           = link_to "#{t'actions.cancel'}",  @invoice, :class => "button remove"
 
+        .link-button.float-right.ajax-refresh{ "data-url" => "/invoices/pdf/#{@invoice.id}.pdf" }
+          %i.fa.fa-file-pdf-o
+          %i.fa.fa-envelope
+          = "#{t'actions.create_pdf_and_email'}"
+
+
         = link_to "/invoices/pdf/#{@invoice.id}.pdf", :target => "_blank", :class => "link-button float-right" do
           %i.fa.fa-file-pdf-o
           = "#{t'actions.create_pdf_document'}"
