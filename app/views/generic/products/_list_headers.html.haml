@@ -10,9 +10,10 @@
   .sixth
     %label
       = t"product.code"
-  .eight
-    %label
-      = t"orders.packages_count"
+  - unless model_name == "stock_product"
+    .eight
+      %label
+        = t"orders.packages_count"
   .eight
     %label
       = t"orders.package_size"
@@ -21,7 +22,10 @@
       = t"unit.title"
   .sixth.a-r
     %label.a-r
-      = t"orders.package_price"
+      - if model_name == "stock_product"
+        = t"orders.unit_price"
+      - else
+        = t"orders.package_price"
       = " (#{@currency})"
   .sixth
     %label.a-r

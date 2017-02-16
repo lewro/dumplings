@@ -144,16 +144,14 @@ class SupplierOrdersController < ApplicationController
 
       #Handle stock preducts object
       @stockProduct = StockProduct.new
-
       @stockProduct.supply_id           = product.supply_id
       @stockProduct.order_id            = product.order_id
-      @stockProduct.packages_quantity   = product.packages_quantity
-      @stockProduct.packages_size       = convert_unit(product.unit, product.packages_size)
-      @stockProduct.package_price       = product.package_price
+      @stockProduct.packages_size       = product.packages_quantity * convert_unit(product.unit, product.packages_size)
+      @stockProduct.unit_price          = product.package_price / convert_unit(product.unit, product.packages_size)
       @stockProduct.unit                = standardize_unit(product.unit)
       @stockProduct.expiration_date     = product.expiration_date
-
       @stockProduct.save!
+
     end
   end
 

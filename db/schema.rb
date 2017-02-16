@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214095718) do
+ActiveRecord::Schema.define(version: 20170215134940) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
@@ -346,33 +346,30 @@ ActiveRecord::Schema.define(version: 20170214095718) do
 
   add_index "settings", ["user_id"], name: "index_settings_on_user_id", using: :btree
 
-  create_table "stock_products", force: :cascade do |t|
-    t.integer  "stock_id",          limit: 4,                                null: false
-    t.integer  "supply_id",         limit: 4,                                null: false
-    t.integer  "order_id",          limit: 4,                                null: false
-    t.integer  "packages_quantity", limit: 4
+  create_table "stock_product_reductions", force: :cascade do |t|
+    t.integer  "stock_product_id",  limit: 4,   null: false
+    t.string   "actual_model_name", limit: 255
+    t.integer  "actual_model_id",   limit: 4
+    t.integer  "user_id",           limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "packages_size",     limit: 4
-    t.decimal  "package_price",               precision: 10
-    t.integer  "unit",              limit: 4
+  end
+
+  create_table "stock_products", force: :cascade do |t|
+    t.integer  "supply_id",       limit: 4,                                           null: false
+    t.integer  "order_id",        limit: 4,                                           null: false
+    t.integer  "packages_size",   limit: 4
+    t.decimal  "unit_price",                precision: 16, scale: 10
+    t.integer  "unit",            limit: 4
     t.datetime "expiration_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "gone",                                       default: false
+    t.boolean  "gone",                                                default: false
   end
 
   add_index "stock_products", ["order_id"], name: "index_stock_products_on_order_id", using: :btree
-  add_index "stock_products", ["stock_id"], name: "index_stock_products_on_stock_id", using: :btree
   add_index "stock_products", ["supply_id"], name: "index_stock_products_on_supply_id", using: :btree
-
-  create_table "stocks", force: :cascade do |t|
-    t.integer  "supply_id",     limit: 4, null: false
-    t.integer  "packages_size", limit: 4, null: false
-    t.integer  "unit",          limit: 4, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "stocks", ["supply_id"], name: "index_stocks_on_supply_id", using: :btree
 
   create_table "supplier_order_products", force: :cascade do |t|
     t.integer  "supply_id",         limit: 4,                          null: false

@@ -4,9 +4,9 @@ class CreatStockProducts < ActiveRecord::Migration
 
       t.integer :supply_id, :null => false
       t.integer :order_id, :null => false
-      t.integer :packages_quantity
+
       t.integer :packages_size
-      t.decimal :package_price
+      t.decimal :unit_price, :precision => 16, :scale => 10
       t.integer :unit
       t.datetime :expiration_date
 

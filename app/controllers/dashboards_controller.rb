@@ -30,5 +30,9 @@ class DashboardsController < ApplicationController
     @payments_30_days       = @payments.where("payments.created_at > ?", DateTime.now - 30.day).sum(:sum)
 
     @payments_today         = @payments.where("payments.created_at > ?", DateTime.now - 1.day).sum(:sum)
+
+
+    @stocks_sum = StockProduct.select("sum(stock_products.packages_size * stock_products.unit_price) AS total_price").where(:gone => false).first
   end
+
 end

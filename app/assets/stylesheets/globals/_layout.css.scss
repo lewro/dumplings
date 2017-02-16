@@ -13,7 +13,9 @@
 
 .page-content {
   width: 100%;
-  padding-bottom: 300px;
+  table {
+    margin-bottom: 50px;
+  }
 }
 
 .float-right {
@@ -27,6 +29,8 @@
 .half-page {
   width: 40%;
   float: left;
+  min-height: 500px;
+  padding-bottom: 300px;
   box-sizing: border-box;
   &.left {
     width: 60%;
@@ -125,10 +129,10 @@
   box-sizing: border-box;
 }
 
-
 @media only screen and (max-width: 1200px){
   .half-page {
     width: 100% !important;
     height: auto !important;
+    padding-bottom: 20px !important;
   }
 }

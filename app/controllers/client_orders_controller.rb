@@ -180,6 +180,8 @@ class ClientOrdersController < ApplicationController
     @client_order            = ClientOrder.find_by_id(@id)
     @client_order_products   = ClientOrderProduct.where(:order_id => @id)
 
+    revert_stock(@client_order_products, "client_order", @id)
+
     @client_order.destroy
 
     @client_order_products.each do |product|

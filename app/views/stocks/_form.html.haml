@@ -28,6 +28,8 @@
 
         = render :partial => '/generic/products/list_headers', :locals => { :model_name => "stock_product" }
 
+
         - @stock_products.each do |sp|
           = render :partial => '/generic/products/list', :locals => { :product => sp, :update_url => "/stock_products/update/", :model_name => "stock_product" }
+
 

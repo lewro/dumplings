@@ -16,7 +16,6 @@ class StocksController < ApplicationController
     @stock = Supply.find_by_sql @sql
     @stock = @stock.first
 
-    @stock_products =  StockProduct.joins("JOIN supplies ON supplies.id = stock_products.supply_id").where(:supply_id => @supply_id, :unit => @unit, :gone => false).select("stock_products.id AS id, stock_products.supply_id AS supply_id, stock_products.packages_quantity AS packages_quantity, stock_products.packages_size AS packages_size, stock_products.unit AS packages_unit, stock_products.package_price AS package_price, stock_products.id AS product_id, stock_products.expiration_date AS expiration_date, stock_products.order_id AS order_id, supplies.name AS name, supplies.product_code AS product_code")
-
+    @stock_products =  StockProduct.joins("JOIN supplies ON supplies.id = stock_products.supply_id").where(:supply_id => @supply_id, :unit => @unit, :gone => false).select("(stock_products.packages_size * stock_products.unit_price) AS total_price, stock_products.id AS id, stock_products.supply_id AS supply_id, stock_products.packages_size AS packages_size, stock_products.unit AS packages_unit, stock_products.unit_price AS unit_price, stock_products.id AS product_id, stock_products.expiration_date AS expiration_date, stock_products.order_id AS order_id, supplies.name AS name, supplies.product_code AS product_code")
   end
 end

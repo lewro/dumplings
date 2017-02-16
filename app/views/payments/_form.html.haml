@@ -34,18 +34,18 @@
               %span.ui-icon.ui-icon-triangle-1-s
 
         - if remove == true
-          .row.clearfix
-            %label
-              = t"client.title"
-            .input-holder
-              = @payment.client_title
+          - if @payment.client_title
+            .row.clearfix
+              %label
+                = t"client.title"
+              .input-holder
+                = @payment.client_title
 
-          .row.clearfix
-            %label
-              = t"sales_representative.title"
-            .input-holder
-              = @payment.sales_representative
-
+            .row.clearfix
+              %label
+                = t"sales_representative.title"
+              .input-holder
+                = @payment.sales_representative
 
 
     .clearfix.action-cover

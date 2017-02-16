@@ -28,8 +28,9 @@
     - unless @disabled
       %input{ :type => "text", :value => product.packages_quantity, :required => true }
     - else
-      .input-holder
-        = product.packages_quantity
+      - unless model_name == "stock_product"
+        .input-holder
+          = product.packages_quantity
 
   .eight{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_size" }
     - unless @disabled
@@ -47,7 +48,10 @@
       %input{:type => "text", :value => product.package_price, :required => true}
     - else
       .input-holder
-        = product.package_price
+        - if model_name == "stock_product"
+          = product.unit_price
+        - else
+          = product.package_price
 
   .sixth.a-r
     .input-holder

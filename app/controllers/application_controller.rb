@@ -174,7 +174,7 @@ class ApplicationController < ActionController::Base
         #Stock already deducted
       else
         #Deduct stock annd mark delivery not as stock deducted
-        remove_from_stock(products, time)
+        remove_from_stock(products, time, object_name, object.id)
         object.update(:stock_deducted => true)
       end
     #Delivery Note
@@ -188,11 +188,11 @@ class ApplicationController < ActionController::Base
           if client_order && client_order.stock_deducted
             #Stock already deducted
           else
-            remove_from_stock(products, time)
+            remove_from_stock(products, time, object_name, object.id)
             object.update(:stock_deducted => true)
           end
          else
-            remove_from_stock(products, time)
+            remove_from_stock(products, time, object_name, object.id)
             object.update(:stock_deducted => true)
         end
       end
@@ -211,7 +211,7 @@ class ApplicationController < ActionController::Base
           else
             #Is this proforma?
             if object.proforma
-              remove_from_stock(products, time)
+              remove_from_stock(products, time, object_name, object.id)
               object.update(:stock_deducted => true)
             else
               #Not proforma. Does proforma exist?
@@ -219,14 +219,14 @@ class ApplicationController < ActionController::Base
               if proforma && proforma.stock_deducted
                 #Stock already deducted from PrormaInvoice
               else
-                remove_from_stock(products, time)
+                remove_from_stock(products, time, object_name, object.id)
                 object.update(:stock_deducted => true)
               end
             end
           end
         else
            #No Client order - which conects delivery note, proformat, invoice together
-          remove_from_stock(products, time)
+          remove_from_stock(products, time, object_name, object.id)
           object.delay(:run_at => time).update(:stock_deducted => true)
         end
       end
@@ -234,15 +234,15 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def remove_from_stock(products, time)
+  def remove_from_stock(products, time, actual_object_name, actual_object_id)
 
     products.each do |product|
 
-      @product_unit     = Product.find_by_id(product.product_id).unit # Product unit which define the stock rules, set in product settings, for example 1 piece, meter etc
-
+      @product_unit     = Product.find_by_id(product.product_id).unit
       @product_supplies = ProductSupply.where(:product_id => product.product_id)
 
       @product_supplies.each do |product_supply|
+
         #Convert the unit to the standrd unit (the smallest)
         @standard_unit  = standardize_unit(product_supply.unit)
 
@@ -255,7 +255,7 @@ class ApplicationController < ActionController::Base
           @ps_value_in_smallest_unit = convert_unit(product_supply.unit, @product_supply_value)
 
           #Remove supply units from stock
-          @stock_products = StockProduct.where(:supply_id => product_supply.supply_id, :unit => @standard_unit).order(:expiration_date)
+          @stock_products = StockProduct.where(:supply_id => product_supply.supply_id, :unit => @standard_unit, :gone => false).order(:expiration_date)
 
           #When supply in the stock
           if @stock_products.size > 0
@@ -267,14 +267,20 @@ class ApplicationController < ActionController::Base
 
               #When the package is used move to the next one and remove the current one
               if @sp_size < 0 or @sp_size == 0
+                #Record the action in the stop_product_reduction table
+                record_stock_product_reduction(stock_product, actual_object_name, actual_object_id, stock_product.packages_size)
+
                 stock_product.update(:gone => true, :packages_size => 0)
+
                 #Update the total value so the next package in loop can be updated
                 @ps_value_in_smallest_unit = 0 - @sp_size
               else
-              #When the package is not used, deduct the values
+                #When the package is not used, deduct the values
                 stock_product.delay(:run_at => time).update(:packages_size => @sp_size)
                 #Once the correct product is update stop the loop
-                break
+
+                #Record the action in the stop_product_reduction table
+                record_stock_product_reduction(stock_product, actual_object_name, actual_object_id, @ps_value_in_smallest_unit)
               end
             end
           else
@@ -287,6 +293,36 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+  end
+
+  def record_stock_product_reduction(stock_product, actual_object_name, actual_object_id, product_supply_value)
+
+    stock_product_redution                     = StockProductReduction.new
+    stock_product_redution.stock_product_id    = stock_product.id
+    stock_product_redution.packages_size       = product_supply_value
+    stock_product_redution.actual_model_name   = actual_object_name
+    stock_product_redution.actual_model_id     = actual_object_id
+    stock_product_redution.user_id             = current_user.id
+    stock_product_redution.save!
+
+  end
+
+  #when deleting objects such are client orders, delivery notes, invoices which were used to reduce stock, we need to add the stock back
+  def revert_stock (products, actual_model_name, actual_model_id)
+
+    products.each do |product|
+      #Find which stock objects were updated by the current model so we can revert them
+      @spr = StockProductReduction.where(:actual_model_name => actual_model_name, :actual_model_id => actual_model_id)
+
+      @spr.each do |spr|
+        @stock_product      = StockProduct.find_by_id(spr.stock_product_id)
+        @new_package_size   = @stock_product.packages_size + spr.packages_size
+        @stock_product.update(:packages_size => @new_package_size, :gone => false)
+      end
+    end
+
+    #Remove the reductions
+    @spr.destroy_all
   end
 
   def standardize_unit(value)

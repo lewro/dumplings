@@ -113,6 +113,7 @@ en:
     packages_count: "Packages"
     package_size: "Size"
     package_price: "Package price"
+    unit_price : "Unit price"
     status: "Status"
     mark_as_distributed: "Mark as Distributed Today"
     mark_as_delivered: "Mark as Delivered Today"

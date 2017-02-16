@@ -1,55 +1,65 @@
-.page-top.clearfix
-  .half
-    .half.left
-      .stats-box
-        %h2
-          = t "customers"
-        %label
-          = t "total"
-          = " / "
-          = t "active"
-          = " / "
-          = t "new"
-          = t "30_days"
-        .big
-          = @total_clients.to_s + " / " + @active_clients.to_s + " / " + @last_clients.to_s
-    .half
-      .stats-box
-        %h2
-          = t "client_orders"
-        %label
-          = t "today"
-          = " / "
-          = t "30_days"
-        .big
-          = @client_orders_today.to_s + " / " + @client_orders_30_days.to_s
+.page-top
+  .clearfix
+    .stats-box
+      %h2
+        = t "customers"
+      %label
+        = t "total"
+        = " / "
+        = t "active"
+        = " / "
+        = t "new"
+        = t "30_days"
+      .big
+        = @total_clients.to_s + " / " + @active_clients.to_s + " / " + @last_clients.to_s
 
-  .half
-    .half.left
-      .stats-box
-        %h2
-          = t "invoices"
-        %label
-          = t "today"
-          = " / "
-          = t "30_days"
-          = "(" + @currency + ")"
-        .big
-          = number_to_currency(@invoices_today, :unit => "")
-          = "/"
-          = number_to_currency(@invoices_30_days, :unit => "")
-    .half
-      .stats-box
-        %h2
-          = t "payments"
-        %label
-          = t "today"
-          = " / "
-          = t "30_days"
-          = "(" + @currency + ")"
-        .big
-          = number_to_currency(@payments_today, :unit => "")
-          = "/"
-          = number_to_currency(@payments_30_days, :unit => "")
+    .stats-box
+      %h2
+        = t "client_orders"
+      %label
+        = t "today"
+        = " / "
+        = t "30_days"
+      .big
+        = @client_orders_today.to_s + " / " + @client_orders_30_days.to_s
+
+    .stats-box
+      %h2
+        = t "invoices"
+      %label
+        = t "today"
+        = " / "
+        = t "30_days"
+        = "(" + @currency + ")"
+      .big
+        = number_to_currency(@invoices_today, :unit => "")
+        = "/"
+        = number_to_currency(@invoices_30_days, :unit => "")
+
+    .stats-box
+      %h2
+        = t "payments"
+      %label
+        = t "today"
+        = " / "
+        = t "30_days"
+        = "(" + @currency + ")"
+      .big
+        = number_to_currency(@payments_today, :unit => "")
+        = "/"
+        = number_to_currency(@payments_30_days, :unit => "")
+
+    .stats-box
+      %h2
+        = t "stocks"
+      %label
+        = "(" + @currency + ")"
+      .big
+        = @stocks_sum.total_price
+
+
+
+
+
 
 
