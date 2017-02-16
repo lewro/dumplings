@@ -4,16 +4,16 @@
 
     .row.clearfix
 
-      .fifth
+      .fifth.product-select
         = products_select(retailproduct, @products)
 
       .sixth.packages-quantity
         = retailproduct.text_field :packages_quantity, "data-required" => "true"
 
-      .sixth
+      .sixth.packages-size
         = retailproduct.text_field :packages_size
 
-      .sixth
+      .sixth.unit-select
         = units_select(retailproduct)
 
       .sixth.package-price.a-r

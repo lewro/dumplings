@@ -17,6 +17,53 @@ class ApplicationController < ActionController::Base
   before_filter :set_id_format
 
   helper_method :user_has_access
+  helper_method :unit
+
+  def unit(value)
+    value = value.to_i
+    puts case value
+
+    #Pieces
+    when 1
+      return "#{t'unit.pieces'}"
+
+    #Wieghts
+    when 2
+      return "#{t'unit.t'}"
+    when 3
+      return "#{t'unit.kg'}"
+    when 4
+      return "#{t'unit.g'}"
+    when 5
+      return "#{t'unit.mg'}"
+
+    #Length
+    when 6
+      return "#{t'unit.km'}"
+    when 7
+      return "#{t'unit.m'}"
+    when 8
+      return "#{t'unit.cm'}"
+    when 9
+      return "#{t'unit.mm'}"
+
+    #Liquids
+    when 10
+      return "#{t'unit.kl'}"
+    when 11
+      return "#{t'unit.hl'}"
+    when 12
+      return "#{t'unit.dal'}"
+    when 13
+      return "#{t'unit.l'}"
+    when 14
+      return "#{t'unit.dl'}"
+    when 15
+      return "#{t'unit.cl'}"
+    when 16
+      return "#{t'unit.ml'}"
+    end
+  end
 
   def set_pagination
      return @pagination = 20

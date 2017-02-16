@@ -18,8 +18,12 @@
 
   #Top messages
   messages: () ->
-    if $.trim($('.notice, .alert').html()).length > 0
-      $('.notice, .alert').slideDown('slow').delay(5000).slideUp('slow')
+    if $.trim($('.notice').html()).length > 0
+      $('.notice').slideDown('slow').delay(5000).slideUp('slow')
+
+    if $.trim($('.alert').html()).length > 0
+      $('.alert').slideDown('slow').delay(20000).slideUp('slow')
+
 
   #Make half boxes equal
   halfBoxes : () ->

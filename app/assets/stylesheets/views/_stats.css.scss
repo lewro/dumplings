@@ -9,17 +9,22 @@
 @import "globals/mixins";
 @import "globals/sizes";
 
+
+#stats {
+  background: $theme-2;
+}
+
 .stats-box {
   color: $primary-color;
   float: left;
-  margin-right: 50px;
-  .big {
-     padding-top: 40px;
-     font-size: $font-h1;
-  }
+  margin: 2%;
+  padding: 30px;
+  background: $accent-color;
+  width: 46%;
+  @include box_sizing();
+
   label {
     color: $primary-color;
-    opacity: .4;
+    opacity: .8;
   }
 }
-

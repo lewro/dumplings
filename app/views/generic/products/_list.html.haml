@@ -32,7 +32,7 @@
         .input-holder
           = product.packages_quantity
 
-  .eight{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_size" }
+  .eight.packages-size{ "data-ajax-list-element" => "true", "data-ajax-element" => "packages_size" }
     - unless @disabled
       %input{ :type => "text", :value => product.packages_size, :required => true }
     - else

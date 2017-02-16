@@ -25,7 +25,8 @@ gem 'will_paginate'
 
 #Server
 #gem 'puma'
-gem 'passenger'
+#gem 'passenger'
+gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
 
 #Auth
 gem 'devise', '4.0.0'

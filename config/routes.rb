@@ -37,6 +37,9 @@ Dumplings::Application.routes.draw do
   #Delivery Notes
   get "delivery_notes/delivery_addresses"
 
+  #Stock
+  get "stocks/check_product_availability"
+
   #Resources
   resources :searches
   resources :companies

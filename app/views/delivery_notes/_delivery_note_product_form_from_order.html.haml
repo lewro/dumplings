@@ -4,16 +4,16 @@
 
     = deliverynoteproduct.fields_for "deliverynoteproduct[#{index}]" do |deliverynoteproduct|
 
-      .fifth
+      .fifth.product-select
         = products_select(deliverynoteproduct, @products, op.product_id)
 
       .sixth.packages-quantity
         = deliverynoteproduct.text_field :packages_quantity,  "value" => op.packages_quantity, "data-required" => "true"
 
-      .sixth
+      .sixth.packages-size
         = deliverynoteproduct.text_field :packages_size , "value" => op.packages_size
 
-      .sixth
+      .sixth.unit-select
         = units_select(deliverynoteproduct, op.unit)
 
       .sixth.package-price.a-r

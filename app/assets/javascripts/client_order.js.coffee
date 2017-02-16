@@ -63,6 +63,22 @@
 
       false
 
+  checkStockAvailability : () ->
+    $('body').delegate '.packages-size input, .packages-quantity input', 'change', ->
+
+      productRow          = $(this).parents(".product")
+      packagesQuantity    = $(productRow).find(".packages-quantity input").val()
+      packagesSize        = $(productRow).find(".packages-size input").val()
+      unit                = $(productRow).find('.unit-select select').val()
+      product             = $(productRow).find('.product-select select').val()
+
+      if packagesQuantity > 0 && packagesSize > 0
+
+        vars = "?product_id=" + product + "&unit=" +  unit + "&packages_quantity=" + packagesQuantity + "&packages_size=" + packagesSize
+
+        actions.ajax 'get', "/stocks/check_product_availability/"+vars, $(".alert")
+
+
   attachFile : () ->
     if $('#client-order').length > 0
       param =  core.getUrlVar "attach_file"
@@ -75,6 +91,7 @@
     clientOrder.markOrderAsInProgress()
     clientOrder.markOrderAsDistributed()
     clientOrder.calculateClientOrderPrice()
+    clientOrder.checkStockAvailability()
 
 
 jQuery ($) ->

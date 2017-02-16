@@ -263,6 +263,9 @@ en:
     percent_in_stock: "Percent in stock"
     zero_stock: "Setting stock to 0% will remove the stock item. Are you sure?"
     note: "Please note: Stock values are updated automatically based on goods coming in and out (supplier orders/ client orders)."
+    error: "Currently there is not enough stock"
+    currently_in_stock: "Currently in stock"
+    your_requirements: "Your requirements"
 
   payment_condition:
     title: "Payment condition"
@@ -277,6 +280,7 @@ en:
   unit:
     title: "units"
     pieces: "pieces"
+    mismatch: "The unit you have chosen is different the the unit defined in the product settings, the stock will not be properly adjusted if you keep it. "
 
     t: "tonne"                #1000000000 mg
     kg: "kilogram"            #1000000 mg

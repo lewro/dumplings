@@ -50,6 +50,8 @@ class RetailsController < ApplicationController
     @retail                  = Retail.find_by_id(@id)
     @retail_products         = RetailProduct.where(:retail_id => @id)
 
+    revert_stock(@retail_products, "retail", @id)
+
     @retail.destroy
 
     @retail_products.each do |product|

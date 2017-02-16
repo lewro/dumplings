@@ -140,6 +140,8 @@ class DeliveryNotesController < ApplicationController
     @delivery_note            = DeliveryNote.find_by_id(@id)
     @delivery_note_products   = DeliveryNoteProduct.where(:delivery_note_id => @id)
 
+    revert_stock(@delivery_note_products, "delivery_note", @id)
+
     @delivery_note.destroy
 
     @delivery_note_products.each do |product|

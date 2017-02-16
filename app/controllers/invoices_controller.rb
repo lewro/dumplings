@@ -311,6 +311,8 @@ class InvoicesController < ApplicationController
     @invoice          = Invoice.find_by_id(@id)
     @invoice_products = InvoiceProduct.where(:invoice_id => @id)
 
+    revert_stock(@invoice_products, "invoice", @id)
+
     @invoice.destroy
 
     @invoice_products.each do |product|
