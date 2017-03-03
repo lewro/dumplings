@@ -78,7 +78,7 @@ label {
     border-bottom: 1px solid $primary-color;
     font-family: $font-family2;
     line-hieight: 1em;
-
+    background: inherit;
     &:focus {
       border-bottom: 1px solid $accent-color-secondary;
     }

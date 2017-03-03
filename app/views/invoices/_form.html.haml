@@ -129,6 +129,9 @@
             .row.clearfix.m-t
               = render :partial => '/generic/pdf'
 
+          .row.clearfix.hide
+            .qr
+              =# raw @qr.as_html
 
       .clearfix.action-cover
 
@@ -144,7 +147,7 @@
 
         .link-button.float-right.ajax-refresh{ "data-url" => "/invoices/pdf/#{@invoice.id}.pdf" }
           %i.fa.fa-file-pdf-o
-          %i.fa.fa-envelope
+          %i.fa.fa-envelope-o
           = "#{t'actions.create_pdf_and_email'}"
 
 

@@ -14,9 +14,9 @@
           %td
             = display_date(retail.created_at)
           %td
-            = retail.payment_type
+            = payment_type(retail.payment_type)
           %td
-            = retail.delivery_type
+            = delivery_type(retail.delivery_type)
           %td.currency
             = number_to_currency(retail.sum, :unit => "")
           %td.currency

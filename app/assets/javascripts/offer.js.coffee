@@ -32,7 +32,7 @@
 
   #Show today's date when creating new offer
   checkTodaysDate : () ->
-    if $('form').attr('action') == "/offers"
+    if $('#new_offer').length > 0
       $(".datepicker" ).datepicker("setDate", new Date());
 
   init : () ->

@@ -1,0 +1,63 @@
+.filter-form
+  .content
+    = form_for action, :method => :get do |f|
+      .clearfix
+        .filter-item.clearfix.icon
+          %label
+            %i.fa.fa-filter
+
+        - unless action == "retail" ||  action == "supplier_order" || action == "payment"
+          .filter-item.clearfix
+            %label
+              = t"clients"
+              = ":"
+            .filter-form-element
+              - if @client_id
+                - if @client_id > 0
+                  = clients_select_preselected(f, @clients, @client_id)
+                - else
+                  = clients_select(f, @clients, true)
+              - else
+                = clients_select(f, @clients, true)
+
+        - if action == "supplier_order"
+          .filter-item.clearfix
+            %label
+              = t"suppliers"
+              = ":"
+            .filter-form-element
+              - if @supplier_id
+                - if @supplier_id > 0
+                  = suppliers_select_preselected(f, @suppliers, @supplier_id)
+                - else
+                  = suppliers_select(f, @suppliers, true)
+              - else
+                = suppliers_select(f, @suppliers, true)
+
+        .filter-item.clearfix
+          %label
+            = t"from"
+            = ":"
+          .filter-form-element
+            .ui-selectmenu-button
+              = f.text_field :from,  :class => "datepicker", :value => @from
+              %span.ui-icon.ui-icon-triangle-1-s
+        .filter-item.clearfix
+          %label
+            = t"to"
+            = ":"
+          .filter-form-element
+            .ui-selectmenu-button
+              = f.text_field :to,  :class => "datepicker", :value => @to
+              %span.ui-icon.ui-icon-triangle-1-s
+
+        .filter-item.clearfix
+          - if action == "client_order"
+            %label
+              = t"orders.status"
+            .filter-form-element
+              = client_order_status_select(f, @status)
+
+
+        .filter-item.clearfix
+          = f.submit "filter data", :class => "button"

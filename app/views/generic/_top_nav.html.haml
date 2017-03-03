@@ -45,5 +45,9 @@
       %li.tax-groups
         = link_to "#{t'tax_groups'}", :controller => :tax_groups, :action => :index
 
+    - if user_has_access("tasks")
+      %li.tax-groups
+        = link_to "#{t'tasks'}", :controller => :tasks, :action => :index
+
 
 

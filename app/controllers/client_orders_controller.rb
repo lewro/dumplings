@@ -31,8 +31,44 @@ class ClientOrdersController < ApplicationController
   end
 
   def index
-    @client_orders  = ClientOrder.paginate(:page => params[:page], :per_page => "#{@pagination}").joins("JOIN companies ON companies.id = client_orders.client_id").select('companies.name AS company_name, client_orders.id AS order_id, client_orders.sum AS order_sum, client_orders.expected_delivery AS order_expected_delivery, client_orders.distribution AS order_distribution, client_orders.status AS order_status, client_orders.reference_id AS reference_id').order("client_orders.id DESC")
+
     @pdf_id         = params[:pdf_id]
+
+    #Filtering
+    if params[:client_order]
+
+      @client_id  = params[:client_order][:client_id].to_i
+      @from       = params[:client_order][:from]
+      @to         = params[:client_order][:to]
+      @status     = params[:client_order][:status].to_i
+
+      if @client_id > 0
+        @client = "client_orders.client_id = ?", @client_id
+      else
+        @client = "client_orders.client_id > ?", 0
+      end
+
+      if @from != ""
+        @from_date = "client_orders.distribution > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "client_orders.distribution < ?", @to
+      else
+        @to_date = ""
+      end
+
+    if @status != ""
+        @status = "client_orders.status = ?", @status
+      else
+        @status = "client_orders.status = ?", 1
+      end
+    end
+
+    @client_orders  = ClientOrder.paginate(:page => params[:page], :per_page => "#{@pagination}").joins("JOIN companies ON companies.id = client_orders.client_id").select('companies.name AS company_name, client_orders.id AS order_id, client_orders.sum AS order_sum, client_orders.expected_delivery AS order_expected_delivery, client_orders.distribution AS order_distribution, client_orders.status AS order_status, client_orders.reference_id AS reference_id, client_orders.client_id AS client_id').order("client_orders.id DESC").where(@client).where(@from_date).where(@to_date).where(@status)
+
   end
 
   def mark_order_as_distributed

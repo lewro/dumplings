@@ -1,0 +1,3 @@
+= render :partial => 'generic/top', :locals => {:current_view => 'events'}
+= render :partial => "tasks/top", :locals => { :header => "#{t'task.title'}" }
+= render :partial => "tasks/form", :locals => { :action =>  "#{t'actions.save'}", :remove => false }

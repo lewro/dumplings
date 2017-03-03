@@ -11,7 +11,7 @@ en:
   proforma_invoices: "Proforma invoices"
   payments: "Payments"
   products: "Products"
-  stuff: "Stuff"
+  stuff: "Employees"
   sales: "Sales"
   invoiced: "Invoiced"
   supplies: "Supplies"
@@ -56,6 +56,17 @@ en:
   30_days: "30 days"
   subject: "Subject"
   message: "Message"
+  remind_when: "Remind when"
+
+  task:
+    title: "Task"
+    name: "Name"
+    description: "description"
+
+  operator:
+    less_then: "Less then"
+    greater_then: "Greater then"
+    equals: "Equals"
 
   delivery_address:
     title: "Delivery Address"
@@ -72,6 +83,7 @@ en:
     registration_number: "Registration #"
     vat_number: "VAT #"
     reference: "Client reference"
+    all: "All"
 
   supplier:
     title: "Supplier"
@@ -140,6 +152,7 @@ en:
     title: "Supply"
     add: "Add new supply"
     search: "Search supplies - Supply name, Note, Product_code"
+    select: "Select supply"
 
   invoice:
     number: "Invoice number"
@@ -266,6 +279,7 @@ en:
     error: "Currently there is not enough stock"
     currently_in_stock: "Currently in stock"
     your_requirements: "Your requirements"
+    stock_value: "Stock value"
 
   payment_condition:
     title: "Payment condition"
@@ -299,5 +313,13 @@ en:
     dl: "deciliter"           #100 ml
     cl: "centiliter"          #10 ml
     ml: "milliliter"
+
+  frequency:
+    title: "frequency"
+    every_hour: "Every hour"
+    every_day: "Every day"
+    every_week: "Every week"
+    every_month: "Every month"
+    when_condition_reached: "When condition met"
 
 

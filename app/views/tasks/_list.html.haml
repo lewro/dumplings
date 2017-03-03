@@ -1,0 +1,14 @@
+%table
+  = render :partial => 'tasks/list_headers'
+
+  - @tasks.each do |task|
+    %tr
+      %td
+        = task.id
+      %td
+        = task.name
+      %td
+        = task.message
+
+.clearfix
+  = will_paginate @tasks

@@ -75,6 +75,8 @@
   display: inline-block;
   color: $accent-color-secondary;
   text-transform: uppercase;
+  border: none;
+  background: inherit;
   &:hover {
     color: $accent-color;
   }

@@ -3,7 +3,27 @@ class RetailsController < ApplicationController
   before_action :access_controll
 
   def index
-    @retails = Retail.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users on retails.user_id = users.id").where("users.admin_id = #{current_user.admin_id}").order("retails.id DESC")
+
+    #Filtering
+    if params[:retail]
+
+      @from       = params[:retail][:from]
+      @to         = params[:retail][:to]
+
+      if @from != ""
+        @from_date = "retails.created_at > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "retails.created_at < ?", @to
+      else
+        @to_date = ""
+      end
+    end
+
+    @retails = Retail.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users on retails.user_id = users.id").where("users.admin_id = #{current_user.admin_id}").order("retails.id DESC").where(@from_date).where(@to_date)
   end
 
   def new

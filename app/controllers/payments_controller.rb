@@ -29,8 +29,28 @@ class PaymentsController < ApplicationController
   end
 
   def index
+
+    #Filtering
+    if params[:payment]
+
+      @from         = params[:payment][:from]
+      @to           = params[:payment][:to]
+
+      if @from != ""
+        @from_date = "payments.paid_date > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "payments.paid_date < ?", @to
+      else
+        @to_date = ""
+      end
+    end
+
     #LEFT JOINS - INCLUDING PAYMENTS WTIH NO INVOICES
-    @payments = Payment.paginate(:page => params[:page], :per_page => @pagination).joins("LEFT JOIN invoices on payments.invoice_id = invoices.id LEFT JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id").order("payments.id DESC")
+    @payments = Payment.paginate(:page => params[:page], :per_page => @pagination).joins("LEFT JOIN invoices on payments.invoice_id = invoices.id LEFT JOIN companies on companies.id = invoices.client_id").select("companies.name AS client_name, payments.id AS id, payments.sum AS sum, payments.paid_date AS paid_date, invoices.id AS invoice_id").order("payments.id DESC").where(@from_date).where(@to_date)
   end
 
   def edit

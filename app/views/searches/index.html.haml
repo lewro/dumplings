@@ -1,7 +1,8 @@
-- if @results.size == 0
+  - if @results.size < 1
   = render :partial => "searches/no_data"
 
 - if @results.size > 0
+
   - puts case @category
 
   - when "clients"
@@ -22,7 +23,7 @@
   - when "invoice"
     = render :partial => "searches/invoices"
 
-  - when "proforma-invoice"
+  - when "proforma_invoice"
     = render :partial => "searches/proforma_invoices"
 
   - when "retail"

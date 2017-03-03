@@ -3,4 +3,5 @@
 
 = render :partial => 'generic/top', :locals => { :current_view =>  current_view }
 = render :partial => 'retails/top', :locals => { :header => header, :current_view =>  current_view }
+= render :partial => "generic/filter", :locals => { :action => "retail" }
 = render :partial => 'retails/list'

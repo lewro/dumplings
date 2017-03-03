@@ -69,6 +69,7 @@ Dumplings::Application.routes.draw do
   resources :events
   resources :delivery_addresses
   resources :tax_groups
+  resources :tasks
 
 
   get ":controller(/:action(/:id(.:format)))"

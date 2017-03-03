@@ -1,5 +1,6 @@
 = render :partial => 'generic/top', :locals => {:current_view => 'supplier-orders'}
 = render :partial => 'supplier_orders/top', :locals => { :header => "#{t'orders.supplier_orders'}" }
+= render :partial => "generic/filter", :locals => { :action => "supplier_order" }
 = render :partial => 'supplier_orders/list'
 
 - if @pdf_id

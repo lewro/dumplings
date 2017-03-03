@@ -1,0 +1,48 @@
+#task
+  = form_for(@task) do  |f|
+
+    = f.hidden_field :user_id, :value => current_user.id
+
+    .row.clearfix
+      %label
+        = t"task.name"
+      = f.text_field :name, "data-required" => "true"
+
+    .row.clearfix
+      %label
+        = t"task.description"
+      = f.text_field :message
+
+    #stock-condition.clearfix
+      %label
+        = "Stock condition"
+
+    %fieldset
+      .row.clearfix.m-t
+        %label
+          = t"remind_when"
+        = task_supplies_select(f, @supplies)
+
+      .row.clearfix
+        .third
+          %label
+            = t"stock.stock_value"
+          = operator_select(f, 1)
+
+        .third
+          %label
+            = "-"
+          = f.text_field :condition_value
+
+        .third
+          %label
+            = "-"
+          = task_units_select(f, "")
+
+    .row.clearfix
+      %label
+        = t"frequency.title"
+      =task_frequency_select(f, 1)
+
+    .clearfix
+      = f.submit action, :class => "button"

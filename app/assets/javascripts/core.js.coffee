@@ -47,16 +47,22 @@
     $("input[type='checkbox']:visible").switchable()
 
   uiElements : () ->
-    $(".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
+    $(".datepicker" ).datepicker({
+      dateFormat: 'yy-mm-dd'
+    })
+
     $("select:visible").selectmenu()
 
     #Tooltip
     $( document ).tooltip();
 
+
   fixUiElements : () ->
     $(".ui-selectmenu-button").each ->
       widthSize = $(this).parents("div").css("width")
       $(this).css("width", widthSize)
+
+
 
   formSubmit : () ->
     $("form").on 'submit', (e) ->

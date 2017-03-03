@@ -55,7 +55,6 @@ class FileUploadsController < ApplicationController
     when "supplier_order"
       @client_id = SupplierOrder.find_by_id(@file.model_id).supplier_id
 
-
     end
 
     @email        = Company.find_by_id(@client_id).email
@@ -71,7 +70,9 @@ class FileUploadsController < ApplicationController
     @file_upload  = FileUpload.find(params[:id])
     @path         = @file_download_pdf_path + @file_upload.id.to_s + "/" + @file_upload.upload_file_name
 
-    send_file(@path, filename: 'PDF', type: 'application/pdf', disposition: :inline)
+    if file_access(@file_upload) == true
+      send_file(@path, filename: 'PDF', type: 'application/pdf', disposition: :inline)
+    end
   end
 
   def download_af
@@ -82,10 +83,14 @@ class FileUploadsController < ApplicationController
       render :partial => "image"
     elsif @file_upload.upload_content_type.include? "pdf"
       @path = @file_download_attachment_path + @file_upload.id.to_s + "/" + @file_upload.upload_file_name
-      send_file(@path, filename: 'PDF', type: 'application/pdf', disposition: :inline)
+      if file_access(@file_upload) == true
+        send_file(@path, filename: 'PDF', type: 'application/pdf', disposition: :inline)
+      end
     else
       @path = @file_download_attachment_path + @file_upload.id.to_s + "/" + @file_upload.upload_file_name
-      send_file(@path)
+      if file_access(@file_upload) == true
+        send_file(@path)
+      end
     end
   end
 
@@ -96,12 +101,15 @@ class FileUploadsController < ApplicationController
     @model        = @file_upload.model
     @model_id     = @file_upload.model_id
 
-    @file_upload.destroy
+    if file_access(@file_upload) == true
 
-    #FileUtils.rm(@path)
-    FileUtils.rm_rf(@folder)
+      @file_upload.destroy
 
-    redirect_to "/#{@model}s/#{@model_id}/edit"
+      #FileUtils.rm(@path)
+      FileUtils.rm_rf(@folder)
+
+      redirect_to "/#{@model}s/#{@model_id}/edit"
+    end
   end
 
   def remove_af
@@ -111,14 +119,23 @@ class FileUploadsController < ApplicationController
     @model        = @file_upload.model
     @model_id     = @file_upload.model_id
 
-    @file_upload.destroy
+    if file_access(@file_upload) == true
+      @file_upload.destroy
 
-    #FileUtils.rm(@path)
-    FileUtils.rm_rf(@folder)
+      #FileUtils.rm(@path)
+      FileUtils.rm_rf(@folder)
 
-    render :text => "#{t'actions.saved'}"
+      render :text => "#{t'actions.saved'}"
+     end
   end
 
+  def file_access(file)
+    if User.find_by_id(file.user_id).admin_id == current_user.admin_id
+      return true
+    else
+      redirect_to events_path
+    end
+  end
 
   def file_params
     params.require(:file_upload).

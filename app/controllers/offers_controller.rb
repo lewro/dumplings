@@ -8,8 +8,37 @@ class OffersController < ApplicationController
   end
 
   def index
-    @offers       = Offer.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = offers.client_id").select('companies.name AS company_name, offers.id AS offer_id, offers.sum AS offer_sum, offers.client_id AS client_id, offers.reference_id AS reference_id, offers.issue_date AS issue_date').order("offers.id DESC")
-    @pdf_id       = params[:pdf_id]
+
+    @pdf_id        = params[:pdf_id]
+
+    #Filtering
+    if params[:offer]
+
+      @client_id  = params[:offer][:client_id].to_i
+      @from       = params[:offer][:from]
+      @to         = params[:offer][:to]
+
+      if @client_id > 0
+        @client = "offers.client_id = ?", @client_id
+      else
+        @client = "offers.client_id > ?", 0
+      end
+
+      if @from != ""
+        @from_date = "issue_date > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "issue_date < ?", @to
+      else
+        @to_date = ""
+      end
+    end
+
+    @offers = Offer.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = offers.client_id").select('companies.name AS company_name, offers.id AS offer_id, offers.sum AS offer_sum, offers.client_id AS client_id, offers.reference_id AS reference_id, offers.issue_date AS issue_date').order("offers.id DESC").where(@client).where(@from_date).where(@to_date)
+
   end
 
   def edit

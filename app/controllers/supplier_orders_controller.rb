@@ -3,8 +3,36 @@ class SupplierOrdersController < ApplicationController
   before_action :access_controll
 
   def index
-    @supplier_orders  = SupplierOrder.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ").order("supplier_orders.id DESC")
     @pdf_id           = params[:pdf_id]
+
+    #Filtering
+    if params[:supplier_order]
+
+      @supplier_id  = params[:supplier_order][:supplier_id].to_i
+      @from         = params[:supplier_order][:from]
+      @to           = params[:supplier_order][:to]
+
+      if @supplier_id > 0
+        @supplier = "supplier_orders.supplier_id = ?", @supplier_id
+      else
+        @supplier = "supplier_orders.supplier_id > ?", 0
+      end
+
+      if @from != ""
+        @from_date = "supplier_orders.delivery > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "supplier_orders.delivery < ?", @to
+      else
+        @to_date = ""
+      end
+    end
+
+    @supplier_orders  = SupplierOrder.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ").order("supplier_orders.id DESC").where(@supplier).where(@from_date).where(@to_date)
+
   end
 
   def new

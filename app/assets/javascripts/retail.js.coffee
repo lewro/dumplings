@@ -33,7 +33,7 @@
 
   # Show today's date when creating new offer
   checkTodaysDate : () ->
-    if $('form').attr('action') == "/retails"
+    if $('#new_retail').length > 0
       $(".datepicker" ).datepicker("setDate", new Date());
 
   init : () ->

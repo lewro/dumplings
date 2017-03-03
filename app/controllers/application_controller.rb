@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_reps
   before_filter :set_clients
   before_filter :set_suppliers
+  before_filter :set_tasks
   before_filter :set_products
   before_filter :set_payment_conditions
   before_filter :set_supplies
@@ -104,7 +105,7 @@ class ApplicationController < ActionController::Base
           return true
         end
 
-      when  "dashboards", "your_company", "suppliers", "offers", "offer_products", "client_orders", "delivery_addresses", "client_order_products", "delivery_notes", "delivery_note_products", "file_uploads", "invoices", "invoice_products", "retails", "retail_products", "supplier_orders", "supplier_order_products", "stocks", "settings", "users", "payments", "payment_conditions", "products", "product_supplies", "supplies", "payment_conditions", "tax_groups"
+      when  "dashboards", "your_company", "suppliers", "offers", "offer_products", "client_orders", "delivery_addresses", "client_order_products", "delivery_notes", "delivery_note_products", "file_uploads", "invoices", "invoice_products", "retails", "retail_products", "supplier_orders", "supplier_order_products", "stocks", "settings", "users", "payments", "payment_conditions", "products", "product_supplies", "supplies", "payment_conditions", "tax_groups", "tasks"
         if [3, 5].include? current_user.category
           return true
         end
@@ -177,13 +178,15 @@ class ApplicationController < ActionController::Base
 
   def set_clients
     if current_user
-     @clients = Company.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = companies.user_id").where(:status => 4, :category => "client").where("users.admin_id = #{current_user.admin_id }").order("companies.id DESC")
+      #No pagination, used for drop-downs
+      @clients = Company.joins("JOIN users ON users.id = companies.user_id").where(:status => 4, :category => "client").where("users.admin_id = #{current_user.admin_id }").order("companies.id DESC")
     end
   end
 
   def set_suppliers
     if current_user
-      @suppliers = Company.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = companies.user_id").where(:status => 4, :category => "supplier").where("users.admin_id = #{current_user.admin_id }").order("companies.id DESC")
+      #No pagination, used for drop-downs
+      @suppliers = Company.joins("JOIN users ON users.id = companies.user_id").where(:status => 4, :category => "supplier").where("users.admin_id = #{current_user.admin_id }").order("companies.id DESC")
     end
   end
 
@@ -202,6 +205,12 @@ class ApplicationController < ActionController::Base
   def set_supplies
     if current_user
       @supplies =  Supply.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = supplies.user_id").where("users.admin_id = #{current_user.admin_id }").order("supplies.id DESC")
+    end
+  end
+
+  def set_tasks
+    if current_user
+        @tasks = Task.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = tasks.user_id").where("users.admin_id = #{current_user.admin_id }").order("tasks.id DESC")
     end
   end
 

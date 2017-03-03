@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215134940) do
+ActiveRecord::Schema.define(version: 20170303063634) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
@@ -414,6 +414,20 @@ ActiveRecord::Schema.define(version: 20170215134940) do
   end
 
   add_index "supplies", ["user_id"], name: "index_supplies_on_user_id", using: :btree
+
+  create_table "tasks_tables", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.text     "message",          limit: 65535
+    t.string   "condition_object", limit: 255
+    t.string   "operator",         limit: 255
+    t.integer  "condition_value",  limit: 4
+    t.integer  "condition_unit",   limit: 4
+    t.integer  "frequency_value",  limit: 4
+    t.integer  "frequency_unit",   limit: 4
+    t.integer  "status",           limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tax_groups", force: :cascade do |t|
     t.integer  "tax",        limit: 4,     null: false

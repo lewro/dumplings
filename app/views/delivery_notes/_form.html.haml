@@ -106,7 +106,8 @@
               - unless @disabled
                 .big#delivery-note-sum
                   = number_to_currency(@delivery_note.sum, :unit => "")
-                  = f.text_field :sum, :placeholder => 0
+                  .hide
+                    = f.text_field :sum, :placeholder => 0
               - else
                 .input-holder.big#delivery_note_sum-holder
                   = number_to_currency(@delivery_note.sum, :unit => "")

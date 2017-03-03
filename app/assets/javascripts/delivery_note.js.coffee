@@ -31,7 +31,7 @@
 
   #Show today's date when creating new delivery date
   checkTodaysDate : () ->
-    if $('form').attr('action') == "/delivery_notes"
+    if $('#new_delivery_note').length > 0
       $(".datepicker" ).datepicker("setDate", new Date());
 
 

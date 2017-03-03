@@ -82,6 +82,35 @@ module ApplicationHelper
     end
   end
 
+  def operator(value)
+    value = value.to_i
+    put case value
+
+    when 1
+      return "#{t'operator.less_then'}"
+    when 2
+      return "#{t'operator.greater_then'}"
+    when 3
+      return "#{t'operator.equals'}"
+    end
+  end
+
+  def frequency(value)
+    value = value.to_i
+    put case value
+
+    when 1
+      return "#{t'frequency.when_condition_reached'}"
+    when 2
+      return "#{t'frequency.every_hour'}"
+    when 3
+      return "#{t'frequency.every_day'}"
+    when 4
+      return "#{t'frequency.every_week'}"
+    when 5
+      return "#{t'frequency.every_month'}"
+    end
+  end
 
   def print_unit(value)
     value = value.to_i
@@ -204,8 +233,20 @@ module ApplicationHelper
     return f.select(:unit, options_for_select([[unit(1),1], [unit(2),2], [unit(3),3], [unit(4),4], [unit(5),5], [unit(6),6], [unit(7),7], [unit(8),8], [unit(9),9], [unit(10),10], [unit(11),11], [unit(12),12], [unit(13),13], [unit(14),14], [unit(15),15], [unit(16),16]], preselected  ),)
   end
 
+  def task_units_select(f, preselected=nil)
+    return f.select(:condition_unit, options_for_select([[unit(1),1], [unit(2),2], [unit(3),3], [unit(4),4], [unit(5),5], [unit(6),6], [unit(7),7], [unit(8),8], [unit(9),9], [unit(10),10], [unit(11),11], [unit(12),12], [unit(13),13], [unit(14),14], [unit(15),15], [unit(16),16]], preselected  ),)
+  end
+
+  def task_frequency_select(f, preselected=nil)
+    return f.select(:frequency_value, options_for_select([[frequency(1),1], [frequency(2),2], [frequency(3),3], [frequency(4),4],[frequency(5),5]], preselected  ),)
+  end
+
   def stuff_category_select(f, preselected=nil)
     return f.select(:category, options_for_select([[category(1),1], [category(2),2], [category(3),3], [category(4),4], [category(5),5]], preselected  ),)
+  end
+
+  def operator_select(f, preselected=nil)
+    return f.select(:operator, options_for_select([[operator(1),1], [operator(2),2], [operator(3),3]], preselected  ),)
   end
 
   def id_format_select(f, preselected=nil)
@@ -217,16 +258,24 @@ module ApplicationHelper
     #full_name defined in User model
   end
 
-  def clients_select(f, clients)
-    return f.collection_select(:client_id, clients, :id, :name)
+  def clients_select(f, clients, prompt=false)
+    return f.collection_select(:client_id, clients, :id, :name, :prompt => prompt, include_blank: "#{t('client.all')}")
+  end
+
+  def clients_select_preselected(f, clients, preselected=nil)
+    return f.collection_select(:client_id, clients, :id, :name, selected: preselected, include_blank: "#{t('client.all')}")
   end
 
   def tax_groups_select(f, tax_groups)
     return f.collection_select(:tax_group_id, tax_groups, :id, :full_tax)
   end
 
-  def suppliers_select(f, suppliers)
-    return f.collection_select(:supplier_id, suppliers, :id, :name)
+  def suppliers_select(f, suppliers, prompt=false)
+    return f.collection_select(:supplier_id, suppliers, :id, :name, :prompt => prompt, include_blank: "#{t('client.all')}")
+  end
+
+  def suppliers_select_preselected(f, suppliers, preselected=nil)
+    return f.collection_select(:supplier_id, suppliers, :id, :name, selected: preselected, include_blank: "#{t('client.all')}")
   end
 
   def products_select(f, products, preselected=nil)
@@ -240,6 +289,11 @@ module ApplicationHelper
   def supplies_select(f, supplies, preselected=nil)
     return f.collection_select(:supply_id, supplies, :id, :product_code_and_name, selected: preselected)
   end
+
+  def task_supplies_select(f, supplies, preselected=nil)
+    return f.collection_select(:condition_object, supplies, :id, :product_code_and_name, selected: preselected, include_blank: "#{t('supply.select')}")
+  end
+
 
   def payment_conditions_select(f, payment_conditions, preselected=nil)
     return f.collection_select(:payment_condition, payment_conditions, :id, :name_and_text, selected: preselected)

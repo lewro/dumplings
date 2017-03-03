@@ -87,3 +87,33 @@
     }
   }
 }
+
+.filter-form {
+  width: 100%;
+  background: $theme-6;
+  @include box_sizing();
+  .content {
+    padding: 5px 30px 5px 30px;
+  }
+  .filter-item,
+  .filter-form-element {
+    float: left;
+  }
+  .filter-item {
+    margin-right: 30px;
+    margin-top: 8px;
+    &.icon {
+      margin-right: 0px;
+    }
+  }
+  label {
+    float: left;
+    line-height: 40px;
+    margin-right: 10px;
+  }
+  .ui-selectmenu-button span.ui-selectmenu-text,
+  .content .ui-selectmenu-button .datepicker {
+    border: 1px solid $theme-6 !important;
+    color: $primary-color !important;
+  }
+}

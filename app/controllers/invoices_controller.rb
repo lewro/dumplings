@@ -6,10 +6,36 @@ class InvoicesController < ApplicationController
     @proforma = params[:proforma]
     @pdf_id   = params[:pdf_id]
 
+    #Filtering
+    if params[:invoice]
+
+      @client_id  = params[:invoice][:client_id].to_i
+      @from       = params[:invoice][:from]
+      @to         = params[:invoice][:to]
+
+      if @client_id > 0
+        @client = "invoices.client_id = ?", @client_id
+      else
+        @client = "invoices.client_id > ?", 0
+      end
+
+      if @from != ""
+        @from_date = "invoices.issue_date > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "invoices.issue_date < ?", @to
+      else
+        @to_date = ""
+      end
+    end
+
     if @proforma == 'true'
-      @invoices = Invoice.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = invoices.client_id").select("companies.name AS client_name, invoices.id AS id, invoices.sum_with_tax AS sum, invoices.due_date AS due_date, invoices.paid_date AS paid_date, (SELECT SUM(sum) FROM payments WHERE invoices.id = payments.invoice_id) AS balance, (SELECT SUM(sum) FROM payments WHERE payments.invoice_id in (SELECT I2.id FROM invoices AS I2 where I2.linked_proforma_id = invoices.id)) AS proforma_balance").where(:proforma => true).order("id DESC")
+      @invoices = Invoice.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = invoices.client_id").select("companies.name AS client_name, invoices.id AS id, invoices.sum_with_tax AS sum, invoices.due_date AS due_date, invoices.paid_date AS paid_date, (SELECT SUM(sum) FROM payments WHERE invoices.id = payments.invoice_id) AS balance, (SELECT SUM(sum) FROM payments WHERE payments.invoice_id in (SELECT I2.id FROM invoices AS I2 where I2.linked_proforma_id = invoices.id)) AS proforma_balance").where(:proforma => true).order("id DESC").where(@client).where(@from_date).where(@to_date)
     else
-      @invoices = Invoice.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = invoices.client_id").select("companies.name AS client_name, invoices.id AS id, invoices.sum_with_tax AS sum, invoices.due_date AS due_date, invoices.paid_date AS paid_date, (SELECT SUM(sum) FROM payments WHERE invoices.id = payments.invoice_id) AS balance, (SELECT SUM(sum) FROM payments WHERE payments.invoice_id = invoices.linked_proforma_id) AS proforma_balance").where(:proforma => false).order("id DESC")
+      @invoices = Invoice.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = invoices.client_id").select("companies.name AS client_name, invoices.id AS id, invoices.sum_with_tax AS sum, invoices.due_date AS due_date, invoices.paid_date AS paid_date, (SELECT SUM(sum) FROM payments WHERE invoices.id = payments.invoice_id) AS balance, (SELECT SUM(sum) FROM payments WHERE payments.invoice_id = invoices.linked_proforma_id) AS proforma_balance").where(:proforma => false).order("id DESC").where(@client).where(@from_date).where(@to_date)
     end
   end
 
@@ -228,6 +254,12 @@ class InvoicesController < ApplicationController
     end
 
     define_balance
+
+    #QRCODE SECTION
+    #@string = "IBAN={{SK7700000000000000000000}}&Currency={{EUR}}&Amount={{1000}}&DueDate={{2018-05-05}}"
+
+    #@qr = RQRCode::QRCode.new(@string, :size => 10, :level => :h )
+
 
     if @invoice.stock_deducted
       @disabled = true

@@ -37,8 +37,36 @@ class DeliveryNotesController < ApplicationController
   end
 
   def index
-    @delivery_notes = DeliveryNote.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = delivery_notes.user_id").joins("JOIN companies ON companies.id = delivery_notes.client_id").where("users.admin_id = #{current_user.admin_id}").select("delivery_notes.reference_id AS reference_id, delivery_notes.order_id AS order_id, delivery_notes.sum AS sum, delivery_notes.note AS note, delivery_notes.payment_condition AS payment_condition, delivery_notes.id AS id, companies.name AS company_name").order("delivery_notes.id DESC")
+
     @pdf_id         = params[:pdf_id]
+
+    #Filtering
+    if params[:delivery_note]
+
+      @client_id  = params[:delivery_note][:client_id].to_i
+      @from       = params[:delivery_note][:from]
+      @to         = params[:delivery_note][:to]
+
+      if @client_id > 0
+        @client = "delivery_notes.client_id = ?", @client_id
+      else
+        @client = "delivery_notes.client_id > ?", 0
+      end
+
+      if @from != ""
+        @from_date = "delivery_notes.issue_date > ?", @from
+      else
+        @from_date = ""
+      end
+
+      if @to != ""
+        @to_date = "delivery_notes.issue_date < ?", @to
+      else
+        @to_date = ""
+      end
+    end
+
+    @delivery_notes = DeliveryNote.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = delivery_notes.user_id").joins("JOIN companies ON companies.id = delivery_notes.client_id").where("users.admin_id = #{current_user.admin_id}").select("delivery_notes.reference_id AS reference_id, delivery_notes.order_id AS order_id, delivery_notes.sum AS sum, delivery_notes.note AS note, delivery_notes.payment_condition AS payment_condition, delivery_notes.id AS id, companies.name AS company_name").order("delivery_notes.id DESC").where(@client).where(@from_date).where(@to_date)
   end
 
   def edit

@@ -40,6 +40,9 @@ gem 'haml'
 #Fonts
 gem "font-awesome-rails"
 
+#QR
+gem "rqrcode"
+
 # PDF
 gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
 gem 'pdfkit'
