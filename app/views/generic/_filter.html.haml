@@ -16,9 +16,9 @@
                 - if @client_id > 0
                   = clients_select_preselected(f, @clients, @client_id)
                 - else
-                  = clients_select(f, @clients, true)
+                  = clients_select_with_all(f, @clients, true)
               - else
-                = clients_select(f, @clients, true)
+                = clients_select_with_all(f, @clients, true)
 
         - if action == "supplier_order"
           .filter-item.clearfix

@@ -127,6 +127,7 @@ class ClientOrdersController < ApplicationController
     unit, client_order_products.package_price AS package_price, client_order_products.id AS product_id, client_order_products.expiration_date AS expiration_date, products.name AS name, products.product_code AS product_code, products.tax_group_id AS tax_group_id")
     @pc                     = PaymentCondition.find_by_id(@client_order.payment_condition)
 
+
     #PDF
     html_string             = render_to_string(:layout => 'pdf_document')
     kit                     = PDFKit.new(html_string)

@@ -8,7 +8,8 @@ class PdfFileUpload < FileUpload
 
   has_attached_file :upload,
                     path: path,
-                    url:  "/assets/uploads/pdf/:user_id/:id/:basename.:extension"
+                    url:  "/assets/uploads/pdf/:user_id/:id/:basename.:extension",
+                    :whiny => false
 
 	def self.upload_pdf_file(file, model_id, user_id, model, file_type)
     @file_upload = PdfFileUpload.new(:upload => file)

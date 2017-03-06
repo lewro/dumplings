@@ -57,11 +57,14 @@ en:
   subject: "Subject"
   message: "Message"
   remind_when: "Remind when"
+  condition: "Condition"
+  reminders: "Reminders"
 
   task:
     title: "Task"
     name: "Name"
-    description: "description"
+    add: "Add new task"
+    description: "Alert Message"
 
   operator:
     less_then: "Less then"
@@ -280,6 +283,8 @@ en:
     currently_in_stock: "Currently in stock"
     your_requirements: "Your requirements"
     stock_value: "Stock value"
+    expiration_reminder: "Remind me before supply expiration (in days)"
+    about_to_expire: "Expiration Alert"
 
   payment_condition:
     title: "Payment condition"

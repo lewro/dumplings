@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303063634) do
+ActiveRecord::Schema.define(version: 20170306093515) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
@@ -336,12 +336,13 @@ ActiveRecord::Schema.define(version: 20170303063634) do
   add_index "retails", ["user_id"], name: "index_retails_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4,   null: false
-    t.integer  "id_format",  limit: 4
-    t.string   "currency",   limit: 255
+    t.integer  "user_id",          limit: 4,   null: false
+    t.integer  "id_format",        limit: 4
+    t.string   "currency",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "use_tax"
+    t.integer  "expiration_alert", limit: 4
   end
 
   add_index "settings", ["user_id"], name: "index_settings_on_user_id", using: :btree
@@ -415,7 +416,7 @@ ActiveRecord::Schema.define(version: 20170303063634) do
 
   add_index "supplies", ["user_id"], name: "index_supplies_on_user_id", using: :btree
 
-  create_table "tasks_tables", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.string   "name",             limit: 255
     t.text     "message",          limit: 65535
     t.string   "condition_object", limit: 255
@@ -423,10 +424,10 @@ ActiveRecord::Schema.define(version: 20170303063634) do
     t.integer  "condition_value",  limit: 4
     t.integer  "condition_unit",   limit: 4
     t.integer  "frequency_value",  limit: 4
-    t.integer  "frequency_unit",   limit: 4
     t.integer  "status",           limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",          limit: 4
   end
 
   create_table "tax_groups", force: :cascade do |t|

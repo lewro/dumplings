@@ -1,12 +1,7 @@
-= render :partial => 'generic/top', :locals => {:current_view => 'events'}
+= render :partial => 'generic/top', :locals => {:current_view => 'tasks'}
 = render :partial => "tasks/top", :locals => { :header => "#{t'tasks'}"}
 
 .page-content.clearfix
   #task
-    .half-page.left.scroll
-      .content
-        = render :partial => 'tasks/list'
-
-    .half-page.scroll
-      .content
-        = render :partial => 'tasks/form', :locals => { :action =>  "#{t'actions.save'}", :remove => false }
+    .content
+      = render :partial => 'tasks/list'

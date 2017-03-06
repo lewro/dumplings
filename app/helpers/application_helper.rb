@@ -65,6 +65,19 @@ module ApplicationHelper
     end
   end
 
+  def task_status(value)
+    value = value.to_i
+    puts case value
+
+    when 1
+      return "#{t'status.open'}"
+    when 2
+      return "#{t'status.out_of_stock'}"
+    when 4
+      return "#{t'stock.about_to_expire'}"
+    end
+  end
+
   def category(value)
     value = value.to_i
     puts case value
@@ -258,8 +271,12 @@ module ApplicationHelper
     #full_name defined in User model
   end
 
-  def clients_select(f, clients, prompt=false)
+  def clients_select_with_all(f, clients, prompt=false)
     return f.collection_select(:client_id, clients, :id, :name, :prompt => prompt, include_blank: "#{t('client.all')}")
+  end
+
+  def clients_select(f, clients, prompt=false)
+    return f.collection_select(:client_id, clients, :id, :name, :prompt => prompt)
   end
 
   def clients_select_preselected(f, clients, preselected=nil)

@@ -1,4 +1,8 @@
 = render :partial => 'generic/top', :locals => {:current_view => 'dashboard'}
 
-.page-content.clearfix
-  = render :partial => 'dashboards/stats'
+.page-content.clearfix#dashbaord
+  .half-page.left.scroll
+    = render :partial => 'reminders_list'
+
+  .half-page.scroll
+    = render :partial => 'dashboards/stats'

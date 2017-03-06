@@ -1,14 +1,35 @@
 %table
   = render :partial => 'tasks/list_headers'
 
-  - @tasks.each do |task|
+
+  - if @tasks.size > 0
+
+    - @tasks.each do |task|
+      %tr
+        %td
+          = task.id
+        %td
+          = task.name
+        %td
+          = task.message
+        %td
+          = task.supply_name
+        %td
+          - unless task.condition_value.nil?
+            = operator(task.operator)
+        %td
+          = task.condition_value
+        %td
+          = unit(task.condition_unit)
+        %td
+          = frequency(task.frequency_value)
+
+  - else
     %tr
-      %td
-        = task.id
-      %td
-        = task.name
-      %td
-        = task.message
+      %td{:colspan => 8}
+        .note
+          = t"no_data"
+
 
 .clearfix
   = will_paginate @tasks

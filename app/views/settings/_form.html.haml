@@ -40,6 +40,12 @@
             .input-holder
               = f.check_box :use_tax
 
+          .half
+            %label
+              = t"stock.expiration_reminder"
+            .input-holder
+              = f.text_field :expiration_alert
+
 
       .clearfix.action-cover
         = f.submit action, :class => "button"

@@ -1,24 +1,20 @@
 /**
-  * File          Search
+  * File          Dashboard
   * Application   Little Factory
   * Copyright     All rights reserved by Roman Leinwather - Lewro
-  * Description   Defines Search classes
+  * Description   Defines Dashboard classes
  **/
 
 @import "globals/colours";
 @import "globals/mixins";
 @import "globals/sizes";
 
-#search-results {
-  position: absolute;
-  width: 100%;
-  top: 330px;
-  left: 0px;
-  z-index: 99;
-  @include box_sizing();
+#dashbaord {
   color: $primary-color;
   background: $theme-2;
-  @include drop-shadow(0px, 5px, 50px);
+
+  .half-page.left {border: 1px solid $theme-2;}
+
   table {
     tr:nth-child(even) {
       background: $theme-5;
@@ -26,14 +22,5 @@
     tr.data:hover {
      background: $accent-color;
     }
-  }
-}
-
-#search {
-  .fa-spin {
-    display: none;
-  }
-  #q {
-    color: $primary-color;
   }
 }

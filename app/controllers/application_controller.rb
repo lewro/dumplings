@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :set_domain
   before_filter :set_pagination
   before_filter :set_reps
   before_filter :set_clients
@@ -17,8 +18,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_tax_groups
   before_filter :set_id_format
 
+
   helper_method :user_has_access
   helper_method :unit
+
 
   def unit(value)
     value = value.to_i
@@ -64,6 +67,11 @@ class ApplicationController < ActionController::Base
     when 16
       return "#{t'unit.ml'}"
     end
+  end
+
+  def set_domain
+    #TODO: on production
+    return @domain = "http://localhost:3000"
   end
 
   def set_pagination
@@ -116,7 +124,7 @@ class ApplicationController < ActionController::Base
 
   def set_file_upload_path
     if current_user
-      @file_upload_images_path              = "/assets/img/"
+      @file_upload_images_path              = "#{@domain}/assets/img/"
       @file_upload_pdf_path                 = "/assets/pdf/#{current_user.admin_id}/"
       @file_download_pdf_path               = "#{Rails.root}/app/assets/uploads/pdf/" + current_user.admin_id.to_s + "/"
       @file_download_attachment_path        = "#{Rails.root}/app/assets/uploads/attachment/" + current_user.id.to_s + "/"
@@ -210,7 +218,7 @@ class ApplicationController < ActionController::Base
 
   def set_tasks
     if current_user
-        @tasks = Task.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = tasks.user_id").where("users.admin_id = #{current_user.admin_id }").order("tasks.id DESC")
+      @tasks = Task.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = tasks.user_id").joins("LEFT JOIN supplies ON tasks.condition_object = supplies.id").where("users.admin_id = #{current_user.admin_id }").order("tasks.id DESC").select("*, supplies.name AS supply_name")
     end
   end
 

@@ -1,48 +1,47 @@
-#task
+.page-content.clearfix
   = form_for(@task) do  |f|
-
     = f.hidden_field :user_id, :value => current_user.id
-
-    .row.clearfix
-      %label
-        = t"task.name"
-      = f.text_field :name, "data-required" => "true"
-
-    .row.clearfix
-      %label
-        = t"task.description"
-      = f.text_field :message
-
-    #stock-condition.clearfix
-      %label
-        = "Stock condition"
-
-    %fieldset
-      .row.clearfix.m-t
-        %label
-          = t"remind_when"
-        = task_supplies_select(f, @supplies)
-
-      .row.clearfix
-        .third
+    .half-page.left
+      .content
+        .row.clearfix
           %label
-            = t"stock.stock_value"
-          = operator_select(f, 1)
-
-        .third
+            = t"task.name"
+          = f.text_field :name, "data-required" => "true"
+        .row.clearfix
           %label
-            = "-"
-          = f.text_field :condition_value
+            = t"task.description"
+          = f.text_field :message
 
-        .third
+        .row.clearfix.m-t
           %label
-            = "-"
-          = task_units_select(f, "")
+            = t"frequency.title"
+          = task_frequency_select(f, 1)
 
-    .row.clearfix
-      %label
-        = t"frequency.title"
-      =task_frequency_select(f, 1)
+    .half-page
+      .content
+        .clearfix
+          .button#show-stock-option
+            %i.fa.fa-plus-circle
+            = "Stock condition"
 
-    .clearfix
+        .hidden-form.hide.clearfix.m-t#stock-value
+          .row.clearfix.m-t
+            %label
+              = t"remind_when"
+            = task_supplies_select(f, @supplies)
+
+          .row.clearfix
+            .half
+              %label
+                = t"stock.stock_value"
+              = operator_select(f, 1)
+            .quarter
+              .m-t
+                = f.text_field :condition_value
+            .quarter
+              .m-t
+                = task_units_select(f, "")
+
+
+    .clearfix.action-cover
       = f.submit action, :class => "button"

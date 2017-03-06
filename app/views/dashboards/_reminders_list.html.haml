@@ -1,0 +1,20 @@
+.content
+  %h2
+    = t"reminders"
+
+  %table.m-t
+    = render :partial => 'reminder_list_headers'
+
+    - if @reminders.size > 0
+      - @reminders.each do |task|
+        %tr.data{"data-order-id" => "#{task.condition_object}", "data-link" => "/stocks"}
+          %td
+            %i.fa.fa-bell
+            %span.m-l
+              = task.message
+          %td
+            - if task.status == 1
+            - else
+              %i.fa.fa-exclamation-triangle
+              %span.m-l
+                = task_status(task.status)

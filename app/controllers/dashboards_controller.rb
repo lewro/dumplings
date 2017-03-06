@@ -33,6 +33,11 @@ class DashboardsController < ApplicationController
 
 
     @stocks_sum = StockProduct.select("sum(stock_products.packages_size * stock_products.unit_price) AS total_price").where(:gone => false).first
+
+
+    @reminders = Task.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = tasks.user_id").joins("LEFT JOIN supplies ON tasks.condition_object = supplies.id").where("users.admin_id = #{current_user.admin_id }").order("tasks.id DESC").select("*, supplies.name AS supply_name").where(:status => [1,2,4])
+
+
   end
 
 end

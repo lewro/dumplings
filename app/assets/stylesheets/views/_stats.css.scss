@@ -9,18 +9,13 @@
 @import "globals/mixins";
 @import "globals/sizes";
 
-
-#stats {
-  background: $theme-2;
-}
-
 .stats-box {
   color: $primary-color;
   float: left;
-  margin: 2%;
+  margin-bottom: 30px;
   padding: 30px;
   background: $accent-color;
-  width: 46%;
+  width: 100%;
   @include box_sizing();
 
   label {

@@ -44,7 +44,7 @@ class SettingsController < ApplicationController
 
 
   def settings_params
-     params.require(:setting).permit(:user_id, :currency, :use_tax, :id_format)
+     params.require(:setting).permit(:user_id, :currency, :use_tax, :id_format, :expiration_alert)
   end
 
 end
