@@ -18,6 +18,7 @@
   table {
     tr:nth-child(even) {
       background: $theme-5;
+      cursor: default;
     }
     tr.data:hover {
      background: $accent-color;

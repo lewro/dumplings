@@ -59,6 +59,7 @@ en:
   remind_when: "Remind when"
   condition: "Condition"
   reminders: "Reminders"
+  done: "Mark as Done"
 
   task:
     title: "Task"
@@ -138,6 +139,7 @@ en:
     total_price: "Total price"
     order_confirmation_date: "Order Confirmation Date"
     id: "Order ID"
+    date_time: "Order Date & Time"
 
   supplier_order:
      search: "Search for an order - Supplier name, Supplier Order ID, Contact Person, Sum, Note"

@@ -15,8 +15,6 @@ class TasksController < ApplicationController
   def edit
     @id          = params[:id]
     @task        = Task.find_by_id(@id)
-
-    redirect_to action: "index"
   end
 
   def index
@@ -31,6 +29,15 @@ class TasksController < ApplicationController
     @task.update(task_params)
 
     redirect_to action: "index"
+  end
+
+  def mark_task_as_done
+    @id          = params[:id]
+    @task        = Task.find_by_id(@id)
+
+    @task.update(:status => 0)
+
+    render :nothing => true
   end
 
   def destroy

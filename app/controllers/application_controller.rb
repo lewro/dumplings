@@ -218,7 +218,7 @@ class ApplicationController < ActionController::Base
 
   def set_tasks
     if current_user
-      @tasks = Task.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = tasks.user_id").joins("LEFT JOIN supplies ON tasks.condition_object = supplies.id").where("users.admin_id = #{current_user.admin_id }").order("tasks.id DESC").select("*, supplies.name AS supply_name")
+      @tasks = Task.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = tasks.user_id").joins("LEFT JOIN supplies ON tasks.condition_object = supplies.id").where("users.admin_id = #{current_user.admin_id }").order("tasks.id DESC").select("*, supplies.name AS supply_name, tasks.id AS id")
     end
   end
 

@@ -5,7 +5,7 @@
 
     - @results.each do |retail|
 
-      %tr.data{"data-retail-id" => retail.id, "data-link" => "retails/#{retail.id}/edit"}
+      %tr.data{"data-retail-id" => retail.id, "data-link" => "/retails/#{retail.id}/edit"}
         %td
           = retail.id
         %td
@@ -14,6 +14,12 @@
           = retail.payment_type
         %td
           = retail.delivery_type
+        %td
+          = retail.customer_name
+        %td
+          = retail.customer_phone
+        %td
+          = retail.customer_email
         %td.currency
           = number_to_currency(retail.sum, :unit => "")
         %td.currency

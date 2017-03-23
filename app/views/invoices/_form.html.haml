@@ -126,7 +126,7 @@
             = render :partial => "invoices/payments", :locals => { :remove => remove }
 
           - unless @pdfs.nil?
-            .row.clearfix.m-t
+            .row.clearfix
               = render :partial => '/generic/pdf'
 
           .row.clearfix.hide

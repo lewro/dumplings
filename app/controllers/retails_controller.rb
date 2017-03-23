@@ -1,6 +1,9 @@
 class RetailsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :access_controll
+  before_action :authenticate_user!, :except => [:create_from_marketing_site]
+  before_action :access_controll, :except => [:create_from_marketing_site]
+
+  skip_before_action :verify_authenticity_token, only: [:create_from_marketing_site]
+
 
   def index
 
@@ -44,6 +47,47 @@ class RetailsController < ApplicationController
     check_stock_update
 
     redirect_to action: "index"
+  end
+
+
+  #Only Applies to Dumplings Project
+  def create_from_marketing_site
+
+    @retail = Retail.new
+
+    #Dummy Data For Now
+    @retail.user_id          = 1
+    @retail.payment_type     = 1
+    @retail.delivery_type    = 1
+    @retail.transport_cost   = 0
+    @retail.stock_deducted   = 0
+
+    @retail.customer_name    = params[:customerName]
+    @retail.customer_phone   = params[:customerPhone]
+    @retail.customer_email   = params[:customerEmail]
+    @retail.sum              = params[:totalPrice]
+
+    @retail.save!
+
+    @retail_products         = params[:retails_product]
+
+    @retail_products.each_with_index do |rp, index|
+
+      unless rp[1]["product_name"] == ""
+
+        #1. Find product by name
+        @product      = Product.where(:name => rp[1]["product_name"]).first
+        @unit         = @product.unit
+
+        RetailProduct.create(:product_id => @product.id, :packages_quantity => 1, :packages_size => rp[1]["packages_quantity"], :package_price => rp[1]["product_price"],  :unit => @unit, :retail_id => @retail.id, :user_id => 1)
+      end
+    end
+
+    #TODO: Send confirmation email???
+
+    check_stock_update
+
+    render nothing: true
   end
 
   def edit

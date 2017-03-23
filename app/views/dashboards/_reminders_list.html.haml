@@ -7,7 +7,7 @@
 
     - if @reminders.size > 0
       - @reminders.each do |task|
-        %tr.data{"data-order-id" => "#{task.condition_object}", "data-link" => "/stocks"}
+        %tr.data{"data-task-id" => task.id}
           %td
             %i.fa.fa-bell
             %span.m-l
@@ -18,3 +18,7 @@
               %i.fa.fa-exclamation-triangle
               %span.m-l
                 = task_status(task.status)
+          %td
+            .circle-button.small.float-right.m-l.mark-task-as-done{ :title => "#{t'done'}" }
+              %i.fa.fa-check
+

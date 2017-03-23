@@ -31,7 +31,7 @@ class SupplierOrdersController < ApplicationController
       end
     end
 
-    @supplier_orders  = SupplierOrder.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status ").order("supplier_orders.id DESC").where(@supplier).where(@from_date).where(@to_date)
+    @supplier_orders  = SupplierOrder.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN companies ON companies.id = supplier_orders.supplier_id").select("companies.name AS company_name, supplier_orders.id AS order_id, supplier_orders.sum AS order_sum, supplier_orders.expected_delivery AS order_expected_delivery, supplier_orders.delivery AS order_delivery, supplier_orders.status AS order_status").order("supplier_orders.id DESC").where(@supplier).where(@from_date).where(@to_date)
 
   end
 

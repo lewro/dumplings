@@ -15,32 +15,41 @@
         .row.clearfix.m-t
           %label
             = t"frequency.title"
-          = task_frequency_select(f, 1)
+          = task_frequency_select(f, @task.frequency_value)
 
     .half-page
+
+      - if @task.condition_object
+        - @section_class = ""
+        - @button_class = "hide"
+      - else
+        - @section_class = "hide"
+        - @button_class = ""
+
+
       .content
         .clearfix
-          .button#show-stock-option
+          .button#show-stock-option{:class => @button_class}
             %i.fa.fa-plus-circle
             = "Stock condition"
 
-        .hidden-form.hide.clearfix.m-t#stock-value
-          .row.clearfix.m-t
-            %label
-              = t"remind_when"
-            = task_supplies_select(f, @supplies)
-
-          .row.clearfix
-            .half
+          .hidden-form.clearfix.m-t#stock-value{:class => @section_class}
+            .row.clearfix.m-t
               %label
-                = t"stock.stock_value"
-              = operator_select(f, 1)
-            .quarter
-              .m-t
-                = f.text_field :condition_value
-            .quarter
-              .m-t
-                = task_units_select(f, "")
+                = t"remind_when"
+              = task_supplies_select(f, @supplies)
+
+            .row.clearfix
+              .half
+                %label
+                  = t"stock.stock_value"
+                = operator_select(f, 1)
+              .quarter
+                .m-t
+                  = f.text_field :condition_value
+              .quarter
+                .m-t
+                  = task_units_select(f, "")
 
 
     .clearfix.action-cover

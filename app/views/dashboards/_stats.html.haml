@@ -51,6 +51,21 @@
 
     .stats-box
       %h2
+        = t "retails"
+      %label
+        = t "today"
+        = " / "
+        = t "30_days"
+        = "(" + @currency + ")"
+      .big
+        = number_to_currency(@retails_today, :unit => "")
+        = "/"
+        = number_to_currency(@retails_30_days, :unit => "")
+
+
+
+    .stats-box
+      %h2
         = t "stocks"
       %label
         = "(" + @currency + ")"

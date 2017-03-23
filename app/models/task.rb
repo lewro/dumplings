@@ -7,6 +7,9 @@ class Task < ActiveRecord::Base
   # - 3 - Stopped Task
   # - 4 - Expiration Alert
 
+
+  # - Tasks checked when condition met, should be checked when stock product or supply order is updated
+
   def self.check_expiration_dates
     @settings                 = Setting.where("expiration_alert > ?", 0)
 
@@ -19,6 +22,18 @@ class Task < ActiveRecord::Base
         @task.save!
       end
     end
+  end
+
+  #1 - When conditions met
+  def self.check_tasks_when_condition_met
+    @tasks = get_tasks(1)
+    check_task_conditions(@tasks)
+  end
+
+  #1 - Every minute --- Should we remove the condition one ?
+  def self.check_tasks_every_minute
+    @tasks = get_tasks(1)
+    check_task_conditions(@tasks)
   end
 
   #2 - Every hour

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306093515) do
+ActiveRecord::Schema.define(version: 20170321134231) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
@@ -322,15 +322,19 @@ ActiveRecord::Schema.define(version: 20170306093515) do
   add_index "retail_products", ["user_id"], name: "index_retail_products_on_user_id", using: :btree
 
   create_table "retails", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4,                              null: false
-    t.integer  "payment_type",   limit: 4,                              null: false
-    t.integer  "delivery_type",  limit: 4,                              null: false
+    t.integer  "user_id",        limit: 4,                                          null: false
+    t.integer  "payment_type",   limit: 4,                                          null: false
+    t.integer  "delivery_type",  limit: 4,                                          null: false
     t.decimal  "sum",                          precision: 16, scale: 2
     t.decimal  "transport_cost",               precision: 10
     t.text     "note",           limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "stock_deducted"
+    t.string   "customer_name",  limit: 255
+    t.string   "customer_phone", limit: 255
+    t.string   "customer_email", limit: 255
+    t.integer  "status",         limit: 4,                              default: 1
   end
 
   add_index "retails", ["user_id"], name: "index_retails_on_user_id", using: :btree
@@ -419,12 +423,12 @@ ActiveRecord::Schema.define(version: 20170306093515) do
   create_table "tasks", force: :cascade do |t|
     t.string   "name",             limit: 255
     t.text     "message",          limit: 65535
-    t.string   "condition_object", limit: 255
-    t.string   "operator",         limit: 255
+    t.integer  "condition_object", limit: 4
+    t.integer  "operator",         limit: 4
     t.integer  "condition_value",  limit: 4
     t.integer  "condition_unit",   limit: 4
-    t.integer  "frequency_value",  limit: 4
-    t.integer  "status",           limit: 4
+    t.integer  "frequency_value",  limit: 4,     default: 1
+    t.integer  "status",           limit: 4,     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id",          limit: 4

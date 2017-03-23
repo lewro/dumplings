@@ -288,7 +288,7 @@ module ApplicationHelper
   end
 
   def suppliers_select(f, suppliers, prompt=false)
-    return f.collection_select(:supplier_id, suppliers, :id, :name, :prompt => prompt, include_blank: "#{t('client.all')}")
+    return f.collection_select(:supplier_id, suppliers, :id, :name, :prompt => prompt)
   end
 
   def suppliers_select_preselected(f, suppliers, preselected=nil)

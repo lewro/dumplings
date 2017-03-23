@@ -5,7 +5,7 @@
   - if @tasks.size > 0
 
     - @tasks.each do |task|
-      %tr
+      %tr.data{"data-product-id" => "#{task.id}", "data-link" => "/tasks/#{task.id}/edit"}
         %td
           = task.id
         %td

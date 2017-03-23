@@ -14,6 +14,28 @@
               - else
                 .input-holder
                   = payment_type(@retail.payment_type)
+            .half.last
+              %label
+                = t "orders.date_time"
+              .input-holder
+                - if @retail.created_at
+                  = @retail.created_at.strftime("%Y-%m-%d %H: %M")
+                - else
+                  = Time.now.strftime("%Y-%m-%d %H: %M")
+
+
+          .row.clearfix
+            .half
+              %label
+                = t"orders.status"
+
+              - status = @retail.status
+
+              - unless @disabled
+                = client_order_status_select(f, status)
+              - else
+                .input-holder
+                  = status(@retail.status)
 
             .half.last
               %label
@@ -22,7 +44,7 @@
                 = delivery_type_select(f, @retail.delivery_type)
               - else
                 .input-holder
-                  = @retail.delivery_type
+                  = delivery_type(@retail.delivery_type)
 
           - unless remove == true
             = render :partial => '/retails/retail_products_form', :locals => { :f => f }
@@ -33,6 +55,34 @@
       .half-page.scroll
         .content
           = render :partial => "retails/sum", :locals => { :current_view => current_view, :f => f }
+
+
+          .row.clearfix
+            %label
+              = t"client.title"
+            - unless @disabled
+              = f.text_field :customer_name
+            - else
+              .input-holder
+                = @retail.customer_name
+
+          .row.clearfix
+            %label
+              = t"phone"
+            - unless @disabled
+              = f.text_field :customer_phone
+            - else
+              .input-holder
+                = @retail.customer_phone
+
+          .row.clearfix
+            %label
+              = t"user.email"
+            - unless @disabled
+              = f.text_field :customer_email
+            - else
+              .input-holder
+                = @retail.customer_email
 
           .row.clearfix
             %label

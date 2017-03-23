@@ -40,6 +40,10 @@ Dumplings::Application.routes.draw do
   #Stock
   get "stocks/check_product_availability"
 
+  #Retails
+  get "retails/create_from_marketing_site"
+  post "retails/create_from_marketing_site"
+
   #Resources
   resources :searches
   resources :companies

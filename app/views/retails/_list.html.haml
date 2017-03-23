@@ -12,11 +12,20 @@
           %td
             = retail.id
           %td
+            %strong
+              = retail.created_at.strftime("%H: %M")
+            = " - "
             = display_date(retail.created_at)
           %td
             = payment_type(retail.payment_type)
           %td
             = delivery_type(retail.delivery_type)
+          %td
+            = retail.customer_name
+          %td
+            = retail.customer_phone
+          %td
+            = retail.customer_email
           %td.currency
             = number_to_currency(retail.sum, :unit => "")
           %td.currency
