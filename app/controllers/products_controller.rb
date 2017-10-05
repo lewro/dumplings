@@ -31,9 +31,7 @@ class ProductsController < ApplicationController
     @product_supplies    = params[:product][:productsupplies][:productsupply]
 
     @product_supplies.each do |ps|
-      unless ps[1]["packages_quantity"] == ""
-        ProductSupply.create(:product_id => @product.id, :packages_quantity => ps[1]["packages_quantity"], :packages_size => ps[1]["packages_size"], :package_price => ps[1]["package_price"],  :unit => ps[1]["unit"],  :supply_id => ps[1]["supply_id"], :user_id => current_user.id)
-      end
+      ProductSupply.create(:product_id => @product.id,  :packages_size => ps[1]["packages_size"],  :unit => ps[1]["unit"],  :supply_id => ps[1]["supply_id"], :user_id => current_user.id)
     end
 
     redirect_to action: "index"

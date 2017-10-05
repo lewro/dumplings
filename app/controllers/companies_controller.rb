@@ -16,11 +16,13 @@ class CompaniesController < ApplicationController
 
     @url_category     = translate_categories(@category)
 
-    @company_delivery_adddresses  = params[:company][:companydeliveryaddress][:companydeliveryaddress]
+    if params[:company][:companydeliveryaddress]
 
-    @company_delivery_adddresses.each do |cda|
-      unless cda[1]["street"] == ""
-        DeliveryAddress.create(:user_id => @current_user.id, :company_id => @company.id, :street => cda[1]["street"], :street_number => cda[1]["street_number"], :city => cda[1]["city"], :zip_code => cda[1]["zip_code"])
+      @company_delivery_adddresses  = params[:company][:companydeliveryaddress][:companydeliveryaddress]
+      @company_delivery_adddresses.each do |cda|
+        unless cda[1]["street"] == ""
+          DeliveryAddress.create(:user_id => @current_user.id, :company_id => @company.id, :street => cda[1]["street"], :street_number => cda[1]["street_number"], :city => cda[1]["city"], :zip_code => cda[1]["zip_code"])
+        end
       end
     end
 
@@ -63,7 +65,6 @@ class CompaniesController < ApplicationController
     @category = @company.category
 
     @company.update(company_params)
-
 
     @url_category     = translate_categories(@category)
 

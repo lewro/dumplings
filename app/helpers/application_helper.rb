@@ -162,37 +162,37 @@ module ApplicationHelper
 
     #Wieghts to kg
     when 2
-      return (value / 1000000).to_f
+      return (value * 1000).to_f
     when 3
-      return (value / 1000000).to_f
+      return (value / 1).to_f
     when 4
-      return (value / 1000000).to_f
+      return (value / 1000).to_f
     when 5
       return (value / 1000000).to_f
 
     #Length to meters
     when 6
-      return (value / 1000).to_f
+      return (value * 1000).to_f
     when 7
-      return (value / 1000).to_f
+      return (value / 1).to_f
     when 8
-      return (value / 1000).to_f
+      return (value / 100).to_f
     when 9
       return (value / 1000).to_f
 
     #Liquids to liters
     when 10
-      return (value / 1000).to_f
+      return (value * 1000).to_f
     when 11
-      return (value / 1000).to_f
+      return (value * 100).to_f
     when 12
-      return (value / 1000).to_f
+      return (value * 10).to_f
     when 13
-      return (value / 1000).to_f
+      return (value / 1).to_f
     when 14
-      return (value / 1000).to_f
+      return (value / 10).to_f
     when 15
-      return (value / 1000).to_f
+      return (value / 100).to_f
     when 16
       return (value / 1000).to_f
     end
@@ -225,6 +225,7 @@ module ApplicationHelper
   def payment_type_select(f, preselected=nil)
     return f.select(:payment_type, options_for_select([[payment_type(1),1], [payment_type(2),2], [payment_type(3),3]], preselected  ),)
   end
+
 
   def delivery_type_select(f, preselected=nil)
     return f.select(:delivery_type, options_for_select([[delivery_type(1),1], [delivery_type(2),2]], preselected  ),)
@@ -279,6 +280,10 @@ module ApplicationHelper
     return f.collection_select(:client_id, clients, :id, :name, :prompt => prompt)
   end
 
+  def payment_conditions_select(f, payment_conditions, prompt=false)
+    return f.collection_select(:payment_condition, payment_conditions, :id, :name, :prompt => prompt)
+  end
+
   def clients_select_preselected(f, clients, preselected=nil)
     return f.collection_select(:client_id, clients, :id, :name, selected: preselected, include_blank: "#{t('client.all')}")
   end
@@ -311,9 +316,8 @@ module ApplicationHelper
     return f.collection_select(:condition_object, supplies, :id, :product_code_and_name, selected: preselected, include_blank: "#{t('supply.select')}")
   end
 
-
-  def payment_conditions_select(f, payment_conditions, preselected=nil)
-    return f.collection_select(:payment_condition, payment_conditions, :id, :name_and_text, selected: preselected)
+  def location_select(f, locations, preselected=nil)
+    return f.collection_select(:product_stock_location, locations, :id, :name, selected: preselected)
   end
 
   def balance_class(balance)

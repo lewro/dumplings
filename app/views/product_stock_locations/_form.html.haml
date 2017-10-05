@@ -1,0 +1,46 @@
+.page-content.clearfix
+  = form_for(@product_stock_location) do  |f|
+    = f.hidden_field :user_id, :value => current_user.id
+    .half-page.left
+      .content
+        .row.clearfix
+          %label
+            = t"task.name"
+            = f.text_field :name
+
+
+        - if @product_stock_products.size > 0
+          .row.clearfix
+            %label
+              = t"products"
+
+            %table
+              %tr
+                %th
+                  = t"product.name"
+                %th
+                  = t"orders.package_size"
+                %th
+                  = t"unit.title"
+
+
+              - @product_stock_products.each do |product_stock_product|
+                %tr
+                  %td
+                    = product_stock_product.product_name
+                  %td
+                    = product_stock_product.packages_size
+                  %td
+                    = product_stock_product.unit
+
+
+    .half-page
+      .content
+        - if remove != false
+          = link_to "/product_stock_products/new?location=#{@product_stock_location.id}", :class => "link-button" do
+            %i.fa.fa-plus-circle
+            = "#{t'product.add'}"
+
+    .clearfix.action-cover
+      = f.submit action, :class => "button"
+      = link_to "#{t'actions.remove'}",  @product_stock_location,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"

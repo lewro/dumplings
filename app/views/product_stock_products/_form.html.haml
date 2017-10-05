@@ -1,0 +1,30 @@
+.page-content.clearfix
+  = form_for(@product_stock_product) do  |f|
+    = f.hidden_field :user_id, :value => current_user.id
+    .half-page.left
+      .content
+        .row.clearfix
+          .half
+            %label
+              = t"product.name"
+              = products_select(f, @products)
+          .half
+            %label
+              = t"product.location"
+              = location_select(f, @product_stock_locations, @location)
+
+        .row.clearfix
+          .half
+            %label
+              = t"orders.package_size"
+            = f.text_field :packages_size
+
+          .half
+            %label
+              = t"unit.title"
+            = units_select(f)
+
+
+    .clearfix.action-cover
+      = f.submit action, :class => "button"
+      = link_to "#{t'actions.remove'}",  @product_stock_product,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"

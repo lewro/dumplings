@@ -1,0 +1,29 @@
+.page-content.clearfix
+  .content
+    %table
+      = render :partial => '/stock_supply_reductions/list_headers'
+
+      - if @stock_supply_reductions.size > 0
+
+        - @stock_supply_reductions.each do |stock_problem|
+
+          %tr.data
+            %td
+              = stock_problem.supply_name
+            %td
+              = stock_problem.reason
+            %td
+              = display_date_time(stock_problem.created_at)
+            %td
+              = stock_problem.first_name
+              = "   "
+              = stock_problem.last_name
+            %td.a-r.hide
+              = stock_problem.packages_size
+              = " "
+              = unit(stock_problem.unit)
+            %td.a-r
+              = convert_to_print_value(stock_problem.unit, stock_problem.packages_size)
+              = " "
+              = unit(print_unit(stock_problem.unit))
+

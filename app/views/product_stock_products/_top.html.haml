@@ -1,0 +1,17 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header
+
+  = link_to "/product_stock_products/new", :class => "button" do
+    %i.fa.fa-plus-circle
+    = "#{t'stock_product.add'}"
+
+  = link_to "/product_stock_locations", :class => "button"  do
+    = "#{t'stock.product_locations'}"
+
+  = link_to "/stock_problems", :class => "button"  do
+    = "#{t'stock.problems'}"
+
+
+  = render :partial => "/generic/search", :locals => {:placeholder => "#{t'stock.search'}", :category => "stock"}

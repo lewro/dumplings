@@ -60,6 +60,10 @@ en:
   condition: "Condition"
   reminders: "Reminders"
   done: "Mark as Done"
+  logout: "Logout"
+  reason: "Reason"
+  stock_in_products: "Stock In products"
+  totals: "Totals"
 
   task:
     title: "Task"
@@ -287,6 +291,21 @@ en:
     stock_value: "Stock value"
     expiration_reminder: "Remind me before supply expiration (in days)"
     about_to_expire: "Expiration Alert"
+    problems: "Stock problems - Products"
+    problems_2: "Stock problems - Supplies"
+    product_locations: "Product Stock Locations"
+    products: "Stock Products"
+
+
+  location:
+    add: "Add new location"
+
+  stock_product:
+    add: "Add new stock product"
+
+  stock_problems:
+    new: "Remove Products"
+    new_supplies: "Remove Supplies"
 
   payment_condition:
     title: "Payment condition"

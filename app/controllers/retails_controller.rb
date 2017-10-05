@@ -40,7 +40,29 @@ class RetailsController < ApplicationController
 
     @retail_products.each do |rp|
       unless rp[1]["packages_quantity"] == ""
+
         RetailProduct.create(:product_id => rp[1]["product_id"], :packages_quantity => rp[1]["packages_quantity"], :packages_size => rp[1]["packages_size"], :package_price => rp[1]["package_price"],  :unit => rp[1]["unit"], :expiration_date => rp[1]["expiration_date"], :retail_id => @retail.id, :user_id => current_user.id)
+
+        #Update  Location Products
+        @product_id               = rp[1]["product_id"]
+        @packages_quantity        = rp[1]["packages_quantity"]
+        @packages_size            = rp[1]["packages_size"]
+        @unit                     = rp[1]["unit"]
+
+        @product_stock_location   = params[:retail]["product_stock_location"].to_i
+
+        @product_stock_product    = ProductStockProduct.where(:product_id => @product_id, :unit => @unit, :product_stock_location => @product_stock_location)
+
+        if @product_stock_product.size > 0
+
+          @product_stock_product    = @product_stock_product.first
+          @new_package_size         = @product_stock_product.packages_size.to_i - (@packages_quantity.to_i * @packages_size.to_i)
+
+          @product_stock_product.update(:packages_size => @new_package_size)
+
+        else
+          #TODO: Error! There should be a product on locatio....!
+        end
       end
     end
 
@@ -49,6 +71,46 @@ class RetailsController < ApplicationController
     redirect_to action: "index"
   end
 
+
+
+  def destroy
+    @id                      = params[:id]
+    @retail                  = Retail.find_by_id(@id)
+    @retail_products         = RetailProduct.where(:retail_id => @id)
+
+    revert_stock(@retail_products, "retail", @id)
+
+    #Revert Location Products
+    @product_stock_location = @retail.product_stock_location
+
+    @retail_products.each do |rp|
+      @product_id              = rp.product_id
+      @packages_quantity       = rp.packages_quantity
+      @packages_size           = rp.packages_size
+      @unit                    = rp.unit
+
+      @product_stock_product    = ProductStockProduct.where(:product_id => @product_id, :unit => @unit, :product_stock_location => @product_stock_location)
+
+       if @product_stock_product.size > 0
+
+          @product_stock_product    = @product_stock_product.first
+          @new_package_size         = @product_stock_product.packages_size.to_i + (@packages_quantity.to_i * @packages_size.to_i)
+
+          @product_stock_product.update(:packages_size => @new_package_size)
+
+        else
+          #TODO: Error! There should be a product on locatio....!
+        end
+    end
+
+    @retail.destroy
+
+    @retail_products.each do |product|
+      product.destroy
+    end
+
+    redirect_to action: "index"
+  end
 
   #Only Applies to Dumplings Project
   def create_from_marketing_site
@@ -96,6 +158,8 @@ class RetailsController < ApplicationController
     @retail_product         = RetailProduct.new
     @retail_products        = RetailProduct.joins("JOIN products ON retail_products.product_id = products.id").where(:retail_id => @id).select("retail_products.packages_quantity AS packages_quantity, retail_products.packages_size AS packages_size, retail_products.unit AS packages_unit, retail_products.package_price AS package_price, retail_products.id AS product_id, retail_products.expiration_date AS expiration_date, products.name AS name,  products.unit AS unit, products.product_code AS product_code")
 
+    @location               = ProductStockLocation.find_by_id(@retail.product_stock_location).name
+
     if @retail.stock_deducted
       @disabled = true
     end
@@ -109,25 +173,10 @@ class RetailsController < ApplicationController
     update_stock("retail", @retail,  @products, @time)
   end
 
-  def destroy
-    @id                      = params[:id]
-    @retail                  = Retail.find_by_id(@id)
-    @retail_products         = RetailProduct.where(:retail_id => @id)
-
-    revert_stock(@retail_products, "retail", @id)
-
-    @retail.destroy
-
-    @retail_products.each do |product|
-      product.destroy
-    end
-
-    redirect_to action: "index"
-  end
 
 
   def retail_params
-    params.require(:retail).permit(:user_id, :sum, :transport_cost, :retialproducts, :note, :payment_type, :delivery_type)
+    params.require(:retail).permit(:user_id, :sum, :transport_cost, :retialproducts, :note, :payment_type, :delivery_type, :product_stock_location)
   end
 
 end

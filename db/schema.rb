@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321134231) do
+ActiveRecord::Schema.define(version: 20171005090853) do
 
   create_table "client_order_products", force: :cascade do |t|
     t.integer  "product_id",        limit: 4,                          null: false
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   add_index "client_orders", ["user_id"], name: "index_client_orders_on_user_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
-    t.string   "name",                limit: 255,   null: false
-    t.string   "registration_number", limit: 255,   null: false
+    t.string   "name",                limit: 255
+    t.string   "registration_number", limit: 255
     t.string   "vat_number",          limit: 255
     t.string   "street",              limit: 255
     t.string   "street_number",       limit: 255
@@ -99,9 +99,9 @@ ActiveRecord::Schema.define(version: 20170321134231) do
 
   create_table "delivery_addresses", force: :cascade do |t|
     t.integer  "company_id",    limit: 4,   null: false
-    t.string   "street",        limit: 255, null: false
+    t.string   "street",        limit: 255
     t.string   "street_number", limit: 255
-    t.string   "city",          limit: 255, null: false
+    t.string   "city",          limit: 255
     t.string   "zip_code",      limit: 255
     t.string   "country",       limit: 255
     t.string   "user_id",       limit: 255, null: false
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   add_index "offers", ["user_id"], name: "index_offers_on_user_id", using: :btree
 
   create_table "payment_conditions", force: :cascade do |t|
-    t.string   "name",       limit: 255,   null: false
+    t.string   "name",       limit: 255
     t.integer  "user_id",    limit: 4,     null: false
     t.text     "text",       limit: 65535
     t.datetime "created_at"
@@ -276,6 +276,26 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id", using: :btree
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
+  create_table "product_stock_locations", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id",    limit: 4
+  end
+
+  create_table "product_stock_products", force: :cascade do |t|
+    t.integer  "product_id",             limit: 4, null: false
+    t.integer  "product_stock_location", limit: 4, null: false
+    t.integer  "user_id",                limit: 4, null: false
+    t.integer  "packages_size",          limit: 4
+    t.integer  "unit",                   limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_stock_products", ["product_id"], name: "index_product_stock_products_on_product_id", using: :btree
+  add_index "product_stock_products", ["user_id"], name: "index_product_stock_products_on_user_id", using: :btree
+
   create_table "product_supplies", force: :cascade do |t|
     t.integer  "product_id",    limit: 4, null: false
     t.integer  "supply_id",     limit: 4, null: false
@@ -290,7 +310,7 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   add_index "product_supplies", ["supply_id"], name: "index_product_supplies_on_supply_id", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",         limit: 255,   null: false
+    t.string   "name",         limit: 255
     t.integer  "user_id",      limit: 4,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -322,19 +342,20 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   add_index "retail_products", ["user_id"], name: "index_retail_products_on_user_id", using: :btree
 
   create_table "retails", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4,                                          null: false
-    t.integer  "payment_type",   limit: 4,                                          null: false
-    t.integer  "delivery_type",  limit: 4,                                          null: false
-    t.decimal  "sum",                          precision: 16, scale: 2
-    t.decimal  "transport_cost",               precision: 10
-    t.text     "note",           limit: 65535
+    t.integer  "user_id",                limit: 4,                                          null: false
+    t.integer  "payment_type",           limit: 4,                                          null: false
+    t.integer  "delivery_type",          limit: 4,                                          null: false
+    t.decimal  "sum",                                  precision: 16, scale: 2
+    t.decimal  "transport_cost",                       precision: 10
+    t.text     "note",                   limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "stock_deducted"
-    t.string   "customer_name",  limit: 255
-    t.string   "customer_phone", limit: 255
-    t.string   "customer_email", limit: 255
-    t.integer  "status",         limit: 4,                              default: 1
+    t.string   "customer_name",          limit: 255
+    t.string   "customer_phone",         limit: 255
+    t.string   "customer_email",         limit: 255
+    t.integer  "status",                 limit: 4,                              default: 1
+    t.integer  "product_stock_location", limit: 4
   end
 
   add_index "retails", ["user_id"], name: "index_retails_on_user_id", using: :btree
@@ -350,6 +371,20 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   end
 
   add_index "settings", ["user_id"], name: "index_settings_on_user_id", using: :btree
+
+  create_table "stock_problems", force: :cascade do |t|
+    t.integer  "product_id",             limit: 4,     null: false
+    t.integer  "user_id",                limit: 4,     null: false
+    t.integer  "packages_size",          limit: 4
+    t.integer  "unit",                   limit: 4
+    t.text     "reason",                 limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_stock_location", limit: 4
+  end
+
+  add_index "stock_problems", ["product_id"], name: "index_stock_problems_on_product_id", using: :btree
+  add_index "stock_problems", ["user_id"], name: "index_stock_problems_on_user_id", using: :btree
 
   create_table "stock_product_reductions", force: :cascade do |t|
     t.integer  "stock_product_id",  limit: 4,   null: false
@@ -375,6 +410,19 @@ ActiveRecord::Schema.define(version: 20170321134231) do
 
   add_index "stock_products", ["order_id"], name: "index_stock_products_on_order_id", using: :btree
   add_index "stock_products", ["supply_id"], name: "index_stock_products_on_supply_id", using: :btree
+
+  create_table "stock_supply_reductions", force: :cascade do |t|
+    t.integer  "supply_id",     limit: 4,                           null: false
+    t.integer  "packages_size", limit: 4
+    t.decimal  "unit_price",              precision: 16, scale: 10
+    t.integer  "unit",          limit: 4
+    t.integer  "user_id",       limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stock_supply_reductions", ["supply_id"], name: "index_stock_supply_reductions_on_supply_id", using: :btree
+  add_index "stock_supply_reductions", ["user_id"], name: "index_stock_supply_reductions_on_user_id", using: :btree
 
   create_table "supplier_order_products", force: :cascade do |t|
     t.integer  "supply_id",         limit: 4,                          null: false
@@ -445,7 +493,7 @@ ActiveRecord::Schema.define(version: 20170321134231) do
   add_index "tax_groups", ["user_id"], name: "index_tax_groups_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255,   default: "", null: false
+    t.string   "email",                  limit: 255
     t.string   "encrypted_password",     limit: 255,   default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"

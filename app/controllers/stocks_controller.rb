@@ -5,6 +5,7 @@ class StocksController < ApplicationController
   def index
     @sql = "SELECT SUM(stock_products.packages_size) AS packages_size, stock_products.unit AS unit, supplies.name as product_name, stock_products.supply_id AS supply_id FROM `stock_products` JOIN supplies ON supplies.id = stock_products.supply_id WHERE `stock_products`.`gone` = 0 GROUP BY supplies.id, unit"
     @stock = Supply.find_by_sql @sql
+
   end
 
   def edit

@@ -51,7 +51,7 @@ class SupplierOrdersController < ApplicationController
       end
     end
 
-    if params[:supplier_order][:status] == 7
+    if params[:supplier_order][:status].to_i == 7
       update_stock(@supplier_order.id)
     end
 
@@ -107,7 +107,7 @@ class SupplierOrdersController < ApplicationController
       update_stock(@id)
     end
 
-    if params[:supplier_order][:status] == 7
+    if params[:supplier_order][:status].to_i == 7
       update_stock(@id)
     end
 

@@ -23,6 +23,14 @@
                 - else
                   = Time.now.strftime("%Y-%m-%d %H: %M")
 
+          .row.clearfix
+            %label
+              = t"product.location"
+              - unless @disabled
+                = location_select(f, @product_stock_locations)
+              - else
+                .input-holder
+                  = @location
 
           .row.clearfix
             .half

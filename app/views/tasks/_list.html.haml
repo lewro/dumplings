@@ -24,12 +24,6 @@
         %td
           = frequency(task.frequency_value)
 
-  - else
-    %tr
-      %td{:colspan => 8}
-        .note
-          = t"no_data"
-
 
 .clearfix
   = will_paginate @tasks

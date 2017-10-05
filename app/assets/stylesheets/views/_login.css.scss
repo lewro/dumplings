@@ -1,0 +1,28 @@
+/**
+  * File          Login
+  * Application   Little Factory
+  * Copyright     All rights reserved by Roman Leinwather - Lewro
+  * Description   Defines helper classes
+ **/
+
+@import "globals/colours";
+@import "globals/mixins";
+@import "globals/sizes";
+
+.stranger-form {
+  color: $primary-color;
+  background: $theme-2;
+  padding: 100px;
+
+  form {
+    margin: 50px 0;
+    width: 300px;
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      background: $theme-2;
+      border: none;
+      width: 100%;
+    }
+  }
+}

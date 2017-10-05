@@ -1,0 +1,41 @@
+.page-content.clearfix
+  .half-page.left.scroll
+    = form_for(@stock_problem) do  |f|
+      = f.hidden_field :user_id, :value => current_user.id
+      .content
+        .row.clearfix
+          .half
+            %label
+              = t"product.name"
+              = products_select(f, @products)
+
+          .half
+            %label
+              = t"product.location"
+              = location_select(f, @product_stock_locations)
+
+        .row.clearfix
+          .half
+            %label
+              = t"orders.package_size"
+            = f.text_field :packages_size
+
+          .half
+            %label
+              = t"unit.title"
+            = units_select(f)
+
+        .row.clearfix
+          %label
+            = t"reason"
+          = f.text_area :reason
+
+        .row.clearfix.last
+          = f.submit action, :class => "button"
+          - if remove == true
+            - unless @user.id == @user.admin_id
+              = link_to "#{t'actions.remove'}",  @stock_problem,  method: :delete, data: { confirm: "#{t'actions.confirm'}" }, :class => "button remove"
+          - else
+            = link_to "#{t'actions.cancel'}",  @stock_problem, :class => "button remove"
+  .half-page.scroll
+    .content

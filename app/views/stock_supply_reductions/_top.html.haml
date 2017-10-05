@@ -1,0 +1,12 @@
+.page-top.clearfix
+  .h-line
+  %h1
+    = header
+
+  = link_to "/stock_problems/new_supplies", :class => "button"  do
+    %i.fa.fa-plus-circle
+    = "#{t'stock_problems.new_supplies'}"
+
+  = link_to "/stock_supply_reductions", :class => "link-button float-right"  do
+    %i.fa.fa-list
+    = "#{t'stock.problems_2'}"

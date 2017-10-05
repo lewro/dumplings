@@ -15,13 +15,40 @@
               = " "
               = unit(stock.unit)
             %td.a-r
-              = convert_to_print_value(stock.unit, stock.packages_size)
-              = " "
-              = unit(print_unit(stock.unit))
+              - stock_total = convert_to_print_value(stock.unit, stock.packages_size)
 
-      - else
-        %tr
-          %td{:colspan => 4}
-            .note
-              = t"no_data"
+              - results  =  ProductSupply.where(:supply_id => stock.supply_id).joins("JOIN product_stock_products ON product_stock_products.product_id = product_supplies.product_id").joins("JOIN product_stock_locations ON product_stock_products.product_stock_location = product_stock_locations.id").joins("JOIN products ON product_supplies.product_id = products.id").select("product_stock_locations.id AS location_id, product_supplies.packages_size AS psps ,product_stock_products.packages_size AS pspps, product_stock_locations.name AS location, product_supplies.unit AS unit, product_supplies.packages_size * product_stock_products.packages_size AS total, products.name AS product_name")
 
+              - total = 0
+
+              - results.each do |r|
+                = r.product_name
+                = " / "
+                = r.location
+                = ": "
+                = convert_to_print_value(r.unit, r.total)
+                = unit(print_unit(r.unit))
+
+                - total = total + convert_to_print_value(r.unit, r.total)
+                %br
+
+              %td.a-r
+                = t "total"
+                = ":"
+                = stock_total
+                = " "
+                = unit(print_unit(stock.unit))
+                %br
+
+
+                - if total > 0
+                  = t"total_in_products"
+                  = ":"
+                  = total
+                  = unit(print_unit(stock.unit))
+                  %br
+
+                  = t"total_in_supplies"
+                  = ":"
+                  = stock_total - total
+                  = unit(print_unit(stock.unit))

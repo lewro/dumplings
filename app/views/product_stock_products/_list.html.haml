@@ -1,0 +1,13 @@
+.page-content.clearfix
+  .content
+    %table
+      = render :partial => '/product_stock_products/list_headers'
+
+      - if @product_stock_products.size > 0
+
+        - @product_stock_products.each do |product_stock_product|
+
+          %tr.data{"data-stock-id" => "#{product_stock_product.id}", "data-remove-message" => "#{t'stock.zero_stock'}", "data-link" => "/product_stock_locations/#{product_stock_product.id}/edit" }
+            %td
+              = product_stock_product.name
+

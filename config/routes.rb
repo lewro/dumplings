@@ -44,6 +44,9 @@ Dumplings::Application.routes.draw do
   get "retails/create_from_marketing_site"
   post "retails/create_from_marketing_site"
 
+  #Stock problems
+  get "stock_problems/new_supplies"
+
   #Resources
   resources :searches
   resources :companies
@@ -74,7 +77,10 @@ Dumplings::Application.routes.draw do
   resources :delivery_addresses
   resources :tax_groups
   resources :tasks
-
+  resources :stock_problems
+  resources :product_stock_locations
+  resources :product_stock_products
+  resources :stock_supply_reductions
 
   get ":controller(/:action(/:id(.:format)))"
 end

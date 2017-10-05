@@ -1,21 +1,15 @@
 = f.fields_for :productsupplies do |productsupply|
   #product-supplies
     .clearfix.list-headers
-      .two-sixths
+      .half
         %label
           = t"product.name"
-      .sixth.packages-quantity
-        %label
-          = t"orders.packages_count"
-      .sixth
+      .quarter
         %label
           = t"orders.package_size"
-      .sixth
+      .quarter
         %label
           = t"unit.title"
-      .sixth.package-price
-        %label
-          = t"orders.package_price"
 
     = render :partial => '/products/product_supply_form', :locals => { :f => f , :productsupply => productsupply}
 

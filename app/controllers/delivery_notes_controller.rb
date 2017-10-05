@@ -28,8 +28,11 @@ class DeliveryNotesController < ApplicationController
       @delivery_note.client_id           = @order.client_id
     else
       #Define delivery address for fist client as that is what is displayed in the view as default
-      @first_client = @clients.first.id
-      @delivery_addresses = DeliveryAddress.where(:company_id => @first_client)
+      if @clients.size > 0
+        @first_client = @clients.first.id
+        @delivery_addresses = DeliveryAddress.where(:company_id => @first_client)
+      end
+
     end
 
     @invoice        = Invoice.where(:order_id => @order_id, :proforma => false).first

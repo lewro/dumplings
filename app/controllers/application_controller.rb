@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_images
   before_filter :set_tax_groups
   before_filter :set_id_format
+  before_filter :set_stock_problems
+  before_filter :set_product_stock_locations
 
 
   helper_method :user_has_access
@@ -113,7 +115,7 @@ class ApplicationController < ActionController::Base
           return true
         end
 
-      when  "dashboards", "your_company", "suppliers", "offers", "offer_products", "client_orders", "delivery_addresses", "client_order_products", "delivery_notes", "delivery_note_products", "file_uploads", "invoices", "invoice_products", "retails", "retail_products", "supplier_orders", "supplier_order_products", "stocks", "settings", "users", "payments", "payment_conditions", "products", "product_supplies", "supplies", "payment_conditions", "tax_groups", "tasks"
+      when  "dashboards", "your_company", "suppliers", "offers", "offer_products", "client_orders", "delivery_addresses", "client_order_products", "delivery_notes", "delivery_note_products", "file_uploads", "invoices", "invoice_products", "retails", "retail_products", "supplier_orders", "supplier_order_products", "stocks", "settings", "users", "payments", "payment_conditions", "products", "product_supplies", "supplies", "payment_conditions", "tax_groups", "tasks", "stock_problems", "product_stock_locations",  "product_stock_products", "stock_supply_reductions"
         if [3, 5].include? current_user.category
           return true
         end
@@ -228,6 +230,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_stock_problems
+    @stock_problems = StockProblem.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = stock_problems.user_id").joins('JOIN products on products.id = stock_problems.product_id').joins("JOIN product_stock_locations ON product_stock_locations.id = stock_problems.product_stock_location").select('*, products.name AS product_name, users.first_name  AS first_name,  users.last_name AS last_name, product_stock_locations.name AS location').where("users.admin_id =#{current_user.admin_id }").order("users.id DESC")
+  end
+
+  def set_product_stock_locations
+    @product_stock_locations = ProductStockLocation.paginate(:page => params[:page], :per_page => @pagination).joins("JOIN users ON users.id = product_stock_locations.user_id").where("users.admin_id = #{current_user.admin_id }").order("product_stock_locations.id DESC")
+  end
+
+
+
   def update_stock(object_name, object, products, time)
 
     puts case object_name
@@ -241,6 +253,7 @@ class ApplicationController < ActionController::Base
         remove_from_stock(products, time, object_name, object.id)
         object.update(:stock_deducted => true)
       end
+
     #Delivery Note
     when "delivery_note"
       #Stock already deducted from current delivery note
