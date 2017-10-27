@@ -65,6 +65,9 @@ module Dumplings
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    #HEROKU REQUIREMENT?
+    config.assets.initialize_on_precompile = false
+
     # PDF Gem
     require 'pdfkit'
     config.middleware.use PDFKit::Middleware
